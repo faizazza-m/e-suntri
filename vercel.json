@@ -1,12 +1,9 @@
 {
-    "version": 2,
-    "buildCommand": "composer install --no-dev --optimize-autoloader && npm install && npm run build && php artisan optimize",
-    "builds": [
-        {
-            "src": "api/index.php",
-            "use": "vercel-php@0.7.3"
+    "functions": {
+        "api/index.php": {
+            "runtime": "vercel-php@0.7.3"
         }
-    ],
+    },
     "routes": [
         {
             "src": "/build/(.*)",
