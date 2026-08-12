@@ -5,7 +5,7 @@ use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
 use Illuminate\Http\Request;
 
-$app = Application::configure(basePath: dirname(__DIR__))
+return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
         web: __DIR__.'/../routes/web.php',
         commands: __DIR__.'/../routes/console.php',
@@ -20,10 +20,3 @@ $app = Application::configure(basePath: dirname(__DIR__))
             fn (Request $request) => $request->is('api/*'),
         );
     })->create();
-
-// Vercel: redirect storage to writable /tmp directory
-if (!empty($_ENV['APP_STORAGE'])) {
-    $app->useStoragePath($_ENV['APP_STORAGE']);
-}
-
-return $app;
