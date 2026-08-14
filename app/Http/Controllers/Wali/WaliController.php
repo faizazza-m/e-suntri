@@ -83,7 +83,7 @@ class WaliController extends Controller
                     
                 $jadwalSeminggu = \App\Models\JadwalPelajaran::with('mapel')
                     ->where('kelas_id', $activeSantri->kelas_id)
-                    ->orderByRaw("FIELD(hari, 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu', 'Minggu')")
+                    ->orderByRaw("CASE hari WHEN 'Senin' THEN 1 WHEN 'Selasa' THEN 2 WHEN 'Rabu' THEN 3 WHEN 'Kamis' THEN 4 WHEN 'Jumat' THEN 5 WHEN 'Sabtu' THEN 6 WHEN 'Minggu' THEN 7 END")
                     ->orderBy('jam_mulai')
                     ->get()
                     ->groupBy('hari');

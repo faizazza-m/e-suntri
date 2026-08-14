@@ -56,7 +56,7 @@ class AkademikController extends Controller
         // ── Seluruh Jadwal (Untuk Modal Semua Jadwal) ─────────────────────
         // Urutkan berdasarkan custom order hari (Senin=1 ... Ahad=7)
         $seluruhJadwal = JadwalPelajaran::with(['kelas', 'mapel', 'mapel.guru'])
-                            ->orderByRaw("FIELD(hari, 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu', 'Minggu')")
+                            ->orderByRaw("CASE hari WHEN 'Senin' THEN 1 WHEN 'Selasa' THEN 2 WHEN 'Rabu' THEN 3 WHEN 'Kamis' THEN 4 WHEN 'Jumat' THEN 5 WHEN 'Sabtu' THEN 6 WHEN 'Minggu' THEN 7 END")
                             ->orderBy('jam_mulai')
                             ->get();
 
