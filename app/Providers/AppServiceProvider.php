@@ -19,6 +19,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        if (config('app.env') === 'production') {
+            \Illuminate\Support\Facades\URL::forceScheme('https');
+        }
+
         \Illuminate\Support\Facades\View::composer('layouts.mobile', function ($view) {
             $globalNotifs = collect();
             if (auth()->check() && auth()->user()->role_id == 3) {
