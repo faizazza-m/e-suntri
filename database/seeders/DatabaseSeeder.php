@@ -18,7 +18,13 @@ class DatabaseSeeder extends Seeder
         // 1. Eksekusi data asli dari suntri_postgres.sql
         $sqlPath = database_path('suntri_postgres.sql');
         if (file_exists($sqlPath)) {
+            // Disable foreign key checks for Postgres
+            \Illuminate\Support\Facades\DB::statement("SET session_replication_role = 'replica';");
+            
             \Illuminate\Support\Facades\DB::unprepared(file_get_contents($sqlPath));
+            
+            // Re-enable foreign key checks
+            \Illuminate\Support\Facades\DB::statement("SET session_replication_role = 'origin';");
         }
 
         // 2. Update PostgreSQL sequences

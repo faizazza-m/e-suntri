@@ -15,25 +15,16 @@ return new class extends Migration
     {
         // 1. Roles
         Schema::create('roles', function (Blueprint $table) {
-            $table->unsignedTinyInteger('id')->autoIncrement();
-            $table->string('name', 30)->unique();
+            $table->id();
+            $table->string('name')->unique();
         });
-
-        // Insert Default Roles immediately so users table can reference them
-        DB::table('roles')->insert([
-            ['id' => 1, 'name' => 'admin'],
-            ['id' => 2, 'name' => 'musyrif'],
-            ['id' => 3, 'name' => 'wali'],
-            ['id' => 4, 'name' => 'santri'],
-            ['id' => 6, 'name' => 'mudir'], // mudir
-        ]);
 
         // 2. Alter existing Users table
         Schema::table('users', function (Blueprint $table) {
             $table->unsignedTinyInteger('role_id')->after('password')->default(4);
             $table->string('phone', 20)->nullable()->after('role_id');
             $table->string('foto', 255)->nullable()->after('phone');
-            $table->boolean('is_active')->default(true)->after('foto');
+            $table->tinyInteger('is_active')->default(1)->after('foto');
             
             $table->foreign('role_id')->references('id')->on('roles');
         });
@@ -43,8 +34,9 @@ return new class extends Migration
             $table->id();
             $table->string('nama', 50);
             $table->string('julukan', 50)->nullable();
-            $table->unsignedTinyInteger('tingkat')->nullable();
+            $table->string('tingkat', 50)->nullable();
             $table->foreignId('wali_kelas_id')->nullable()->constrained('users')->nullOnDelete();
+            $table->unsignedTinyInteger('kapasitas')->default(15);
         });
 
         // 4. Halaqoh
@@ -102,6 +94,7 @@ return new class extends Migration
             $table->date('tanggal');
             $table->enum('jenis', ['hafalan_baru', 'murajaah', 'tasmi']);
             $table->string('surah', 80)->nullable();
+            $table->unsignedTinyInteger('juz')->nullable();
             $table->unsignedSmallInteger('ayat_dari')->nullable();
             $table->unsignedSmallInteger('ayat_sampai')->nullable();
             $table->enum('nilai', ['Mumtaz', 'Jayyid Jiddan', 'Jayyid', 'Maqbul', 'Rosib'])->nullable();
@@ -232,7 +225,7 @@ return new class extends Migration
             $table->text('diagnosa')->nullable();
             $table->text('tindakan')->nullable();
             $table->foreignId('petugas_id')->nullable()->constrained('users')->nullOnDelete();
-            $table->boolean('dirujuk')->default(false);
+            $table->tinyInteger('dirujuk')->default(0);
             $table->string('tempat_rujukan', 150)->nullable();
             $table->timestamps();
         });
@@ -244,7 +237,7 @@ return new class extends Migration
             $table->text('isi');
             $table->enum('target', ['semua', 'wali', 'santri', 'musyrif'])->default('semua');
             $table->foreignId('dibuat_oleh')->nullable()->constrained('users')->nullOnDelete();
-            $table->boolean('is_pinned')->default(false);
+            $table->tinyInteger('is_pinned')->default(0);
             $table->timestamp('published_at')->nullable();
             $table->timestamps();
         });
@@ -266,7 +259,7 @@ return new class extends Migration
             $table->foreignId('konsultasi_id')->constrained('konsultasi')->cascadeOnDelete();
             $table->foreignId('pengirim_id')->constrained('users')->cascadeOnDelete();
             $table->text('isi');
-            $table->boolean('is_read')->default(false);
+            $table->tinyInteger('is_read')->default(0);
             $table->timestamps();
         });
 
@@ -331,7 +324,7 @@ return new class extends Migration
             $table->string('judul', 200);
             $table->text('pesan');
             $table->enum('tipe', ['hafalan', 'keuangan', 'perizinan', 'pengumuman', 'kesehatan'])->default('pengumuman');
-            $table->boolean('is_read')->default(false);
+            $table->tinyInteger('is_read')->default(0);
             $table->timestamps();
         });
     }
