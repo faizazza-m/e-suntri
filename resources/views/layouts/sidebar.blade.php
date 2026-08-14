@@ -3,7 +3,7 @@
 
     {{-- Logo --}}
     <div class="px-6 mb-8 flex items-center gap-3">
-        <div class="w-10 h-10 rounded-lg bg-white/20 flex items-center justify-center overflow-hidden border border-white/20 shadow-sm">
+        <div class="w-10 h-10 rounded-lg flex items-center justify-center overflow-hidden shrink-0">
             <img src="{{ asset('logo.jpg') }}" alt="Logo" class="w-full h-full object-cover">
         </div>
         <div>
