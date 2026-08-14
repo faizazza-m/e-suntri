@@ -64,8 +64,8 @@
     {{-- Mobile Top App Bar --}}
     <header class="fixed top-0 w-full z-40 bg-white/95 backdrop-blur border-b border-outline shadow-sm flex justify-between items-center px-5 h-16">
         <div class="flex items-center gap-3">
-            <div class="w-10 h-10 rounded-full bg-primary-container flex items-center justify-center overflow-hidden shrink-0">
-                <span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">person</span>
+            <div class="w-10 h-10 rounded-full bg-primary-container flex items-center justify-center overflow-hidden shrink-0 border border-outline-variant/20 shadow-sm">
+                <img src="{{ asset('logo.jpg') }}" alt="Logo" class="w-full h-full object-cover">
             </div>
             <div class="min-w-0">
                 <p class="text-[11px] font-medium text-on-surface-variant truncate">Assalamu'alaikum,</p>

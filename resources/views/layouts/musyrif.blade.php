@@ -67,8 +67,8 @@
 
     {{-- Logo --}}
     <div class="flex items-center gap-3 px-5 py-5 border-b border-white/10 shrink-0">
-        <div class="w-10 h-10 rounded-2xl bg-white/15 flex items-center justify-center shadow-inner">
-            <span class="material-symbols-outlined text-white text-xl" style="font-variation-settings:'FILL' 1;">mosque</span>
+        <div class="w-10 h-10 rounded-2xl bg-white/15 flex items-center justify-center shadow-inner overflow-hidden border border-white/20">
+            <img src="{{ asset('logo.jpg') }}" alt="Logo" class="w-full h-full object-cover">
         </div>
         <div>
             <p class="text-white font-black text-lg leading-tight tracking-tight">SUNTRI</p>
@@ -125,7 +125,9 @@
 {{-- ===================== TOP BAR (Mobile) ===================== --}}
 <header class="lg:hidden fixed top-0 inset-x-0 z-30 bg-primary shadow-lg flex items-center justify-between px-5 h-14">
     <div class="flex items-center gap-2">
-        <span class="material-symbols-outlined text-white text-lg" style="font-variation-settings:'FILL' 1;">mosque</span>
+        <div class="w-6 h-6 rounded-md overflow-hidden bg-white">
+            <img src="{{ asset('logo.jpg') }}" alt="Logo" class="w-full h-full object-cover">
+        </div>
         <span class="text-white font-bold text-base tracking-tight">SUNTRI <span class="text-white/50 font-normal text-sm">Musyrif</span></span>
     </div>
     <div class="flex items-center gap-2">

@@ -91,8 +91,8 @@
 
         {{-- Logo --}}
         <div class="px-6 mb-2 flex items-center gap-3">
-            <div class="w-10 h-10 rounded-lg flex items-center justify-center" style="background:rgba(251,191,36,0.2); border:1px solid rgba(251,191,36,0.3);">
-                <span class="material-symbols-outlined text-gold-accent" style="font-variation-settings:'FILL' 1;">mosque</span>
+            <div class="w-10 h-10 rounded-lg flex items-center justify-center overflow-hidden" style="background:rgba(251,191,36,0.2); border:1px solid rgba(251,191,36,0.3);">
+                <img src="{{ asset('logo.jpg') }}" alt="Logo" class="w-full h-full object-cover">
             </div>
             <div>
                 <h1 class="text-xl font-bold text-white leading-tight tracking-tight">SUNTRI</h1>

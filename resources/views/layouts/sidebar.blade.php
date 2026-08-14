@@ -3,8 +3,8 @@
 
     {{-- Logo --}}
     <div class="px-6 mb-8 flex items-center gap-3">
-        <div class="w-10 h-10 rounded-lg bg-white/20 flex items-center justify-center">
-            <span class="material-symbols-outlined text-white" style="font-variation-settings: 'FILL' 1;">mosque</span>
+        <div class="w-10 h-10 rounded-lg bg-white/20 flex items-center justify-center overflow-hidden border border-white/20 shadow-sm">
+            <img src="{{ asset('logo.jpg') }}" alt="Logo" class="w-full h-full object-cover">
         </div>
         <div>
             <h1 class="text-xl font-bold text-on-primary leading-tight tracking-tight">SUNTRI</h1>

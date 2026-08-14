@@ -93,8 +93,8 @@
             {{-- Brand --}}
             <div class="mb-12 fade-in-up">
                 <div class="flex items-center gap-4 mb-6">
-                    <div class="w-16 h-16 rounded-2xl bg-white/15 border border-white/20 backdrop-blur flex items-center justify-center">
-                        <span class="material-symbols-outlined text-4xl text-white" style="font-variation-settings: 'FILL' 1;">mosque</span>
+                    <div class="w-16 h-16 rounded-2xl bg-white/15 border border-white/20 backdrop-blur flex items-center justify-center overflow-hidden">
+                        <img src="{{ asset('logo.jpg') }}" alt="Logo" class="w-full h-full object-cover">
                     </div>
                     <div>
                         <h1 class="text-4xl font-extrabold text-white tracking-tight">SUNTRI</h1>
@@ -151,8 +151,8 @@
 
             {{-- Logo (Mobile only / Card header) --}}
             <div class="text-center mb-8">
-                <div class="w-14 h-14 rounded-2xl bg-primary flex items-center justify-center mx-auto mb-4">
-                    <span class="material-symbols-outlined text-2xl text-white" style="font-variation-settings: 'FILL' 1;">mosque</span>
+                <div class="w-16 h-16 rounded-2xl bg-primary flex items-center justify-center mx-auto mb-4 overflow-hidden border border-outline-variant/30 shadow-sm">
+                    <img src="{{ asset('logo.jpg') }}" alt="Logo" class="w-full h-full object-cover">
                 </div>
                 <h2 class="text-2xl font-bold text-on-surface">Selamat Datang</h2>
                 <p class="text-on-surface-variant text-sm mt-1">Silakan masuk ke akun SUNTRI Anda</p>
