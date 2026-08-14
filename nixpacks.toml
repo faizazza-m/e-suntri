@@ -1,0 +1,4 @@
+[variables]
+    NODE_OPTIONS = "--max_old_space_size=400"
+    NPM_CONFIG_UPDATE_NOTIFIER = "false"
+    NPM_CONFIG_FUND = "false"
