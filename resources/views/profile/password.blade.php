@@ -4,6 +4,10 @@
         $layout = 'layouts.guru';
     } elseif ($role == 2) {
         $layout = 'layouts.musyrif';
+    } elseif ($role == 6) {
+        $layout = 'layouts.mudir';
+    } elseif ($role == 3) {
+        $layout = 'layouts.wali';
     } else {
         $layout = 'layouts.app';
     }

@@ -6,6 +6,12 @@
     } elseif ($role == 2) {
         $layout = 'layouts.musyrif';
         $dashboardRoute = 'musyrif.dashboard';
+    } elseif ($role == 6) {
+        $layout = 'layouts.mudir';
+        $dashboardRoute = 'mudir.dashboard';
+    } elseif ($role == 3) {
+        $layout = 'layouts.wali';
+        $dashboardRoute = 'wali.home';
     } else {
         $layout = 'layouts.app';
         $dashboardRoute = 'dashboard';

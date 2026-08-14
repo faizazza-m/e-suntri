@@ -411,6 +411,7 @@
                     <select name="role_id" required class="w-full h-12 px-4 border border-outline-variant rounded-xl text-sm focus:ring-2 focus:ring-indigo-600 outline-none appearance-none bg-white">
                         <option value="5">Ustadz (Akademik)</option>
                         <option value="2">Musyrif (Asrama/Tahfizh)</option>
+                        <option value="6">Mudir (Kepala Pesantren)</option>
                         <option value="1">Admin</option>
                     </select>
                 </div>

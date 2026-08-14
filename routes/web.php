@@ -50,6 +50,9 @@ Route::post('/login', function (\Illuminate\Http\Request $request) {
         if ($role == 5) {
             return redirect()->route('guru.dashboard');
         }
+        if ($role == 6) {
+            return redirect()->route('mudir.dashboard');
+        }
         
         return redirect()->route('dashboard');
     }
@@ -233,4 +236,16 @@ Route::middleware(['auth'])->prefix('musyrif')->name('musyrif.')->group(function
     // Rekap Data
     Route::get('/rekap', [\App\Http\Controllers\Musyrif\MusyrifController::class, 'rekap'])->name('rekap');
     Route::get('/rekap/export', [\App\Http\Controllers\Musyrif\MusyrifController::class, 'exportCsv'])->name('rekap.export');
+});
+
+// =============================================
+// Mudir Routes (Role 6 — Executive Read-Only)
+// =============================================
+Route::middleware(['auth'])->prefix('mudir')->name('mudir.')->group(function () {
+    Route::get('/dashboard', [\App\Http\Controllers\Mudir\MudirController::class, 'dashboard'])->name('dashboard');
+    Route::get('/hafalan', [\App\Http\Controllers\Mudir\MudirController::class, 'hafalan'])->name('hafalan');
+    Route::get('/kehadiran', [\App\Http\Controllers\Mudir\MudirController::class, 'kehadiran'])->name('kehadiran');
+    Route::get('/keuangan', [\App\Http\Controllers\Mudir\MudirController::class, 'keuangan'])->name('keuangan');
+    Route::get('/santri', [\App\Http\Controllers\Mudir\MudirController::class, 'santri'])->name('santri');
+    Route::get('/pengumuman', [\App\Http\Controllers\Mudir\MudirController::class, 'pengumuman'])->name('pengumuman');
 });
