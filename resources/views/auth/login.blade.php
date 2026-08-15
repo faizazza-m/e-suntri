@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="id" class="light">
 <head>
-    <link rel="icon" type="image/jpeg" href="{{ asset('logo.jpg') }}">
+    <link rel="icon" type="image/png" href="{{ asset('favicon.png') }}">
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Login — SUNTRI Islamic Education Platform</title>
