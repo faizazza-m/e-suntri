@@ -1,115 +1,65 @@
 @extends('layouts.app')
 @section('title', 'Laporan Mingguan Guru')
 
-@push('styles')
-<style>
-    .brutal-card {
-        background: #ffffff;
-        border: 3px solid #000;
-        border-radius: 16px;
-        box-shadow: 6px 6px 0px #000;
-        transition: all 0.2s ease;
-    }
-    .brutal-card:hover {
-        transform: translate(-2px, -2px);
-        box-shadow: 8px 8px 0px #000;
-    }
-    .brutal-input {
-        border: 2px solid #000;
-        border-radius: 8px;
-        transition: all 0.2s ease;
-    }
-    .brutal-input:focus {
-        box-shadow: 4px 4px 0px #000;
-        outline: none;
-    }
-    .brutal-btn {
-        background: #fbbf24;
-        border: 2px solid #000;
-        box-shadow: 4px 4px 0px #000;
-        transition: all 0.2s ease;
-    }
-    .brutal-btn:hover {
-        transform: translate(-2px, -2px);
-        box-shadow: 6px 6px 0px #000;
-    }
-    .brutal-btn:active {
-        transform: translate(0px, 0px);
-        box-shadow: 0px 0px 0px #000;
-    }
-    .status-badge {
-        border: 2px solid #000;
-        box-shadow: 2px 2px 0px #000;
-        border-radius: 99px;
-        font-weight: 800;
-        text-transform: uppercase;
-        font-size: 0.65rem;
-        padding: 4px 10px;
-    }
-    .status-menunggu { background-color: #fef08a; color: #854d0e; }
-    .status-dibaca { background-color: #bbf7d0; color: #166534; }
-</style>
-@endpush
-
 @section('content')
 <div class="space-y-6">
 
     {{-- Page Header --}}
-    <div class="brutal-card p-6 bg-[#fde68a] flex flex-col md:flex-row justify-between items-start md:items-center gap-4 relative overflow-hidden fade-up">
-        <div class="absolute -right-10 -bottom-10 opacity-20 pointer-events-none">
-            <span class="material-symbols-outlined text-[150px]" style="font-variation-settings:'FILL' 1;">assignment</span>
+    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 fade-in-up mb-6">
+        <div class="flex items-center gap-4">
+            <div class="p-3 bg-primary-container rounded-2xl shadow-lg">
+                <span class="material-symbols-outlined text-white text-3xl" style="font-variation-settings: 'FILL' 1;">assignment</span>
+            </div>
+            <div>
+                <h2 class="text-3xl font-bold text-primary">Laporan Mingguan Guru</h2>
+                <p class="text-sm text-on-surface-variant">Pantau progres dan aktivitas mengajar Ustadz/Guru setiap pekannya.</p>
+            </div>
         </div>
-        <div class="relative z-10">
-            <h2 class="text-3xl font-black text-black uppercase tracking-tight" style="text-shadow: 2px 2px 0px rgba(0,0,0,0.1);">Laporan Mingguan Guru</h2>
-            <p class="font-bold text-black/70 mt-1">Pantau progres dan aktivitas mengajar Ustadz/Guru setiap pekannya.</p>
-        </div>
-        <div class="relative z-10 flex gap-2 w-full md:w-auto">
-            {{-- Filter Form --}}
-            <form action="{{ route('laporan-guru') }}" method="GET" class="flex gap-2 w-full">
-                <select name="guru_id" class="brutal-input flex-1 px-4 py-2 font-bold bg-white" onchange="this.form.submit()">
-                    <option value="">-- Semua Guru --</option>
-                    @foreach($gurus as $guru)
-                    <option value="{{ $guru->id }}" {{ request('guru_id') == $guru->id ? 'selected' : '' }}>
-                        {{ $guru->name }}
-                    </option>
-                    @endforeach
-                </select>
-            </form>
-        </div>
+        
+        {{-- Filter Form --}}
+        <form action="{{ route('laporan-guru') }}" method="GET" class="flex gap-2 w-full md:w-auto">
+            <select name="guru_id" class="px-4 py-2 text-sm rounded-xl border border-outline-variant/30 bg-white/60 backdrop-blur-md shadow-sm focus:ring-primary focus:border-primary transition-colors" onchange="this.form.submit()">
+                <option value="">-- Semua Guru --</option>
+                @foreach($gurus as $guru)
+                <option value="{{ $guru->id }}" {{ request('guru_id') == $guru->id ? 'selected' : '' }}>
+                    {{ $guru->name }}
+                </option>
+                @endforeach
+            </select>
+        </form>
     </div>
 
     {{-- Laporan Grid --}}
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 fade-up fade-up-1">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 fade-in-up delay-1">
         @forelse($laporans as $laporan)
-        <div class="brutal-card p-6 flex flex-col h-full bg-white relative group cursor-pointer" onclick="openDetail({{ $laporan->id }})">
+        <div class="glassmorphism p-6 rounded-2xl border border-white/20 shadow-sm flex flex-col h-full relative group cursor-pointer hover:scale-[1.02] transition-all duration-300" onclick="openDetail({{ $laporan->id }})">
             
             <div class="flex justify-between items-start mb-4">
-                <div class="flex items-center gap-2">
-                    <div class="w-8 h-8 rounded-full border-2 border-black bg-[#bfdbfe] flex items-center justify-center shadow-[2px_2px_0px_#000]">
-                        <span class="material-symbols-outlined text-[16px] text-black">person</span>
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
+                        <span class="material-symbols-outlined text-[18px] text-primary">person</span>
                     </div>
                     <div>
-                        <p class="font-black text-sm text-black truncate max-w-[120px]">{{ $laporan->guru->name }}</p>
+                        <p class="font-bold text-sm text-on-surface truncate max-w-[120px]">{{ $laporan->guru->name }}</p>
                     </div>
                 </div>
-                <span class="status-badge status-{{ $laporan->status }}">
+                <span class="px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider rounded-lg 
+                    {{ $laporan->status === 'dibaca' ? 'bg-green-100 text-green-700' : 'bg-yellow-100 text-yellow-700' }} status-badge">
                     {{ $laporan->status }}
                 </span>
             </div>
 
-            <h3 class="text-xl font-black text-black leading-tight mb-2">{{ $laporan->judul }}</h3>
+            <h3 class="text-lg font-bold text-on-surface leading-tight mb-2">{{ $laporan->judul }}</h3>
             
-            <div class="inline-block border-2 border-black rounded-lg px-2 py-1 bg-gray-100 mb-3 self-start shadow-[2px_2px_0px_#000]">
-                <p class="text-[10px] font-bold text-black uppercase">
-                    Periode: {{ \Carbon\Carbon::parse($laporan->tanggal_awal)->format('d/m/Y') }} - {{ \Carbon\Carbon::parse($laporan->tanggal_akhir)->format('d/m/Y') }}
-                </p>
-            </div>
+            <p class="text-[10px] font-bold text-on-surface-variant uppercase tracking-widest mb-3">
+                Periode: {{ \Carbon\Carbon::parse($laporan->tanggal_awal)->format('d/m/Y') }} - {{ \Carbon\Carbon::parse($laporan->tanggal_akhir)->format('d/m/Y') }}
+            </p>
 
-            <p class="text-sm text-black/70 font-medium line-clamp-3 leading-relaxed mb-4 flex-1">
+            <p class="text-sm text-on-surface-variant font-medium line-clamp-3 leading-relaxed mb-4 flex-1">
                 {{ $laporan->isi_laporan }}
             </p>
 
-            <div class="mt-auto pt-4 border-t-2 border-black border-dashed flex justify-between items-center text-[10px] font-bold text-black/50">
+            <div class="mt-auto pt-4 border-t border-outline-variant/30 flex justify-between items-center text-[10px] font-bold text-on-surface-variant">
                 <span>Dikirim: {{ $laporan->created_at->diffForHumans() }}</span>
                 <span class="flex items-center gap-1 group-hover:text-primary transition-colors">
                     Baca Detail <span class="material-symbols-outlined text-[14px]">arrow_forward</span>
@@ -117,10 +67,10 @@
             </div>
         </div>
         @empty
-        <div class="col-span-full py-16 brutal-card bg-gray-50 flex flex-col items-center justify-center text-center">
-            <span class="material-symbols-outlined text-6xl text-black/20 mb-4" style="font-variation-settings:'FILL' 1;">assignment</span>
-            <h3 class="text-2xl font-black text-black">Belum Ada Laporan</h3>
-            <p class="font-bold text-black/60 mt-1">Tidak ada laporan guru yang ditemukan saat ini.</p>
+        <div class="col-span-full py-16 glassmorphism rounded-3xl border border-dashed border-outline-variant/50 flex flex-col items-center justify-center text-center">
+            <span class="material-symbols-outlined text-6xl text-outline-variant mb-4" style="font-variation-settings:'FILL' 1;">assignment</span>
+            <h3 class="text-xl font-bold text-on-surface">Belum Ada Laporan</h3>
+            <p class="text-sm text-on-surface-variant mt-1">Tidak ada laporan guru yang ditemukan saat ini.</p>
         </div>
         @endforelse
     </div>
@@ -134,41 +84,39 @@
 
 {{-- Modal Detail Laporan --}}
 <div id="modalDetail" class="fixed inset-0 z-[60] hidden">
-    <div class="absolute inset-0 bg-black/60 backdrop-blur-sm" onclick="closeDetail()"></div>
+    <div class="absolute inset-0 bg-black/40 backdrop-blur-sm" onclick="closeDetail()"></div>
     <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-2xl p-4">
-        <div class="brutal-card bg-white overflow-hidden flex flex-col max-h-[90vh]">
+        <div class="bg-surface rounded-3xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
             
             {{-- Modal Header --}}
-            <div class="p-6 border-b-4 border-black bg-[#bfdbfe] shrink-0 flex justify-between items-start">
+            <div class="p-6 border-b border-outline-variant/30 bg-white/60 shrink-0 flex justify-between items-start">
                 <div>
-                    <h3 class="text-2xl font-black text-black mb-1 uppercase tracking-tight">Detail Laporan</h3>
+                    <h3 class="text-xl font-bold text-on-surface mb-1">Detail Laporan</h3>
                     <div class="flex items-center gap-2">
-                        <div class="w-6 h-6 rounded-full border-2 border-black bg-white flex items-center justify-center">
-                            <span class="material-symbols-outlined text-[12px] text-black">person</span>
+                        <div class="w-6 h-6 rounded-full bg-primary-container flex items-center justify-center">
+                            <span class="material-symbols-outlined text-[12px] text-primary">person</span>
                         </div>
-                        <p class="font-bold text-sm text-black" id="detailGuruName">-</p>
+                        <p class="font-bold text-sm text-on-surface-variant" id="detailGuruName">-</p>
                     </div>
                 </div>
-                <button type="button" onclick="closeDetail()" class="w-10 h-10 border-2 border-black bg-white shadow-[2px_2px_0px_#000] flex items-center justify-center rounded-lg hover:-translate-y-1 hover:shadow-[4px_4px_0px_#000] transition-all">
-                    <span class="material-symbols-outlined text-[24px]">close</span>
+                <button type="button" onclick="closeDetail()" class="w-8 h-8 flex items-center justify-center rounded-full hover:bg-black/5 transition-colors">
+                    <span class="material-symbols-outlined text-[20px] text-on-surface-variant">close</span>
                 </button>
             </div>
 
             {{-- Modal Body --}}
-            <div class="p-6 overflow-y-auto space-y-6 flex-1 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4IiBoZWlnaHQ9IjgiPgo8cmVjdCB3aWR0aD0iOCIgaGVpZ2h0PSI4IiBmaWxsPSIjZmZmIj48L3JlY3Q+CjxjaXJjbGUgY3g9IjMiIGN5PSIzIiByPSIxIiBmaWxsPSIjZTBlMGUwIj48L2NpcmNsZT4KPC9zdmc+')]">
+            <div class="p-6 overflow-y-auto space-y-6 flex-1 bg-surface-container-low">
                 
-                <div class="bg-white border-2 border-black shadow-[4px_4px_0px_#000] rounded-xl p-5">
+                <div class="bg-white rounded-2xl shadow-sm border border-outline-variant/20 p-5">
                     <div class="flex justify-between items-start mb-2">
-                        <h4 class="text-xl font-black text-black" id="detailJudul">-</h4>
-                        <span class="status-badge status-dibaca">Dibaca</span>
+                        <h4 class="text-lg font-bold text-on-surface" id="detailJudul">-</h4>
+                        <span class="px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider rounded-lg bg-green-100 text-green-700">Dibaca</span>
                     </div>
-                    <div class="inline-block border-2 border-black rounded-lg px-2 py-1 bg-[#fef08a] mb-4">
-                        <p class="text-[10px] font-black text-black uppercase" id="detailPeriode">
-                            Periode: -
-                        </p>
-                    </div>
-                    <div class="border-t-2 border-black border-dashed pt-4">
-                        <p class="text-sm font-medium text-black leading-relaxed whitespace-pre-wrap" id="detailIsi">-</p>
+                    <p class="text-[10px] font-bold text-primary uppercase tracking-widest mb-4" id="detailPeriode">
+                        Periode: -
+                    </p>
+                    <div class="border-t border-outline-variant/30 pt-4">
+                        <p class="text-sm text-on-surface-variant leading-relaxed whitespace-pre-wrap" id="detailIsi">-</p>
                     </div>
                 </div>
 
@@ -205,8 +153,8 @@
                 const cardBadge = document.querySelector(`[onclick="openDetail(${id})"] .status-badge`);
                 if(cardBadge) {
                     cardBadge.textContent = 'dibaca';
-                    cardBadge.classList.remove('status-menunggu');
-                    cardBadge.classList.add('status-dibaca');
+                    cardBadge.classList.remove('bg-yellow-100', 'text-yellow-700');
+                    cardBadge.classList.add('bg-green-100', 'text-green-700');
                 }
             })
             .catch(err => {
