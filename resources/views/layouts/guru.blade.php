@@ -96,6 +96,7 @@
                 ['route'=>'guru.dashboard', 'icon'=>'dashboard',     'label'=>'Dashboard'],
                 ['route'=>'guru.nilai',     'icon'=>'grade',         'label'=>'Input Nilai'],
                 ['route'=>'guru.jadwal',    'icon'=>'calendar_month', 'label'=>'Jadwal Mengajar'],
+                ['route'=>'guru.laporan',   'icon'=>'description',    'label'=>'Laporan Mingguan'],
                 ['route'=>'guru.pengumuman','icon'=>'campaign',      'label'=>'Pengumuman'],
             ];
         @endphp
@@ -195,6 +196,7 @@
             ['route'=>'guru.dashboard','icon'=>'dashboard',    'label'=>'Beranda'],
             ['route'=>'guru.nilai',    'icon'=>'grade',        'label'=>'Nilai'],
             ['route'=>'guru.jadwal',   'icon'=>'calendar_month','label'=>'Jadwal'],
+            ['route'=>'guru.laporan',  'icon'=>'description',   'label'=>'Laporan'],
             ['route'=>'guru.pengumuman','icon'=>'campaign',    'label'=>'Info'],
         ];
     @endphp

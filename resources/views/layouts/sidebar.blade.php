@@ -28,6 +28,7 @@
                 ['route' => 'chat',           'icon' => 'chat',                 'label' => 'Pusat Pesan'],
                 ['route' => 'ppdb',           'icon' => 'person_add',           'label' => 'PPDB'],
                 ['route' => 'prestasi',       'icon' => 'military_tech',        'label' => 'Prestasi'],
+                ['route' => 'laporan-guru',   'icon' => 'assignment',           'label' => 'Laporan Guru'],
             ];
         @endphp
 

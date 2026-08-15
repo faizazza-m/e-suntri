@@ -180,6 +180,9 @@ Route::middleware(['auth', \App\Http\Middleware\PreventBackHistory::class])->gro
     Route::get('/prestasi', function () {
         return view('admin.prestasi');
     })->name('prestasi');
+
+    Route::get('/laporan-guru', [\App\Http\Controllers\Admin\LaporanGuruController::class, 'index'])->name('laporan-guru');
+    Route::get('/laporan-guru/{id}', [\App\Http\Controllers\Admin\LaporanGuruController::class, 'show'])->name('laporan-guru.show');
 });
 
 // =============================================
@@ -217,6 +220,9 @@ Route::middleware(['auth'])->prefix('guru')->name('guru.')->group(function () {
     Route::post('/nilai',     [\App\Http\Controllers\Guru\GuruController::class, 'storeNilai'])->name('nilai.store');
     Route::get('/jadwal',     [\App\Http\Controllers\Guru\GuruController::class, 'jadwal'])->name('jadwal');
     Route::get('/pengumuman', [\App\Http\Controllers\Guru\GuruController::class, 'pengumuman'])->name('pengumuman');
+    
+    Route::get('/laporan', [\App\Http\Controllers\Guru\LaporanController::class, 'index'])->name('laporan');
+    Route::post('/laporan', [\App\Http\Controllers\Guru\LaporanController::class, 'store'])->name('laporan.store');
 });
 
 // =============================================
