@@ -14,10 +14,11 @@ return new class extends Migration
         Schema::create('laporan_gurus', function (Blueprint $table) {
             $table->id();
             $table->foreignId('guru_id')->constrained('users')->onDelete('cascade');
-            $table->date('tanggal_awal');
-            $table->date('tanggal_akhir');
-            $table->string('judul');
-            $table->text('isi_laporan');
+            $table->date('tanggal');
+            $table->string('kelas');
+            $table->string('mata_pelajaran');
+            $table->string('materi');
+            $table->text('isi_laporan')->nullable();
             $table->enum('status', ['menunggu', 'dibaca'])->default('menunggu');
             $table->timestamps();
         });

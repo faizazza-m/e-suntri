@@ -1,5 +1,5 @@
 @extends('layouts.guru')
-@section('title', 'Laporan Mingguan')
+@section('title', 'Jurnal Mengajar')
 
 @section('content')
 <div class="space-y-6">
@@ -7,11 +7,11 @@
     {{-- Header & Add Button --}}
     <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 fade-up">
         <div>
-            <h2 class="text-2xl font-black text-on-surface tracking-tight">Laporan Mingguan</h2>
-            <p class="text-sm text-on-surface-variant mt-1">Sampaikan laporan progres mengajar Anda setiap pekannya.</p>
+            <h2 class="text-2xl font-black text-on-surface tracking-tight">Jurnal Mengajar</h2>
+            <p class="text-sm text-on-surface-variant mt-1">Catat aktivitas harian dan materi yang Anda sampaikan per pertemuan.</p>
         </div>
         <button onclick="document.getElementById('modalTambah').classList.remove('hidden')" class="w-full sm:w-auto px-5 py-2.5 bg-primary hover:bg-primary-container text-white font-bold rounded-xl shadow-md transition-all flex items-center justify-center gap-2">
-            <span class="material-symbols-outlined text-[20px]">add</span> Buat Laporan Baru
+            <span class="material-symbols-outlined text-[20px]">add</span> Tulis Jurnal
         </button>
     </div>
 
@@ -31,20 +31,22 @@
                 </span>
             </div>
 
-            <h3 class="font-bold text-on-surface text-lg leading-tight mb-2">{{ $laporan->judul }}</h3>
-            <p class="text-xs text-on-surface-variant font-medium mb-3">
-                Periode: {{ \Carbon\Carbon::parse($laporan->tanggal_awal)->format('d/m') }} - {{ \Carbon\Carbon::parse($laporan->tanggal_akhir)->format('d/m/Y') }}
+            <h3 class="font-bold text-on-surface text-lg leading-tight mb-1">{{ $laporan->materi }}</h3>
+            <p class="text-xs font-bold text-primary mb-3">
+                {{ $laporan->kelas }} &bull; {{ $laporan->mata_pelajaran }}
             </p>
             
+            @if($laporan->isi_laporan)
             <p class="text-sm text-on-surface-variant line-clamp-3 leading-relaxed">
                 {{ $laporan->isi_laporan }}
             </p>
+            @endif
         </div>
         @empty
         <div class="col-span-full py-12 flex flex-col items-center justify-center text-center glass-card rounded-3xl border-dashed">
             <span class="material-symbols-outlined text-5xl text-outline-variant mb-3" style="font-variation-settings:'FILL' 1;">description</span>
-            <h3 class="text-lg font-bold text-on-surface">Belum Ada Laporan</h3>
-            <p class="text-sm text-on-surface-variant mt-1">Anda belum membuat laporan mingguan apa pun.</p>
+            <h3 class="text-lg font-bold text-on-surface">Belum Ada Jurnal</h3>
+            <p class="text-sm text-on-surface-variant mt-1">Anda belum membuat catatan jurnal apa pun.</p>
         </div>
         @endforelse
     </div>
@@ -61,7 +63,7 @@
             {{-- Modal Header --}}
             <div class="p-5 border-b border-outline-variant/30 flex justify-between items-center bg-surface shrink-0">
                 <h3 class="text-lg font-bold text-on-surface flex items-center gap-2">
-                    <span class="material-symbols-outlined text-primary">add_circle</span> Buat Laporan Baru
+                    <span class="material-symbols-outlined text-primary">add_circle</span> Tulis Jurnal Mengajar
                 </h3>
                 <button type="button" onclick="document.getElementById('modalTambah').classList.add('hidden')" class="w-8 h-8 flex items-center justify-center rounded-full hover:bg-black/5 transition-colors">
                     <span class="material-symbols-outlined text-[20px]">close</span>
@@ -70,25 +72,30 @@
 
             {{-- Modal Body --}}
             <div class="p-5 overflow-y-auto space-y-4 flex-1">
+                <div>
+                    <label class="block text-xs font-bold text-on-surface-variant uppercase tracking-wider mb-1.5">Tanggal</label>
+                    <input type="date" name="tanggal" required value="{{ date('Y-m-d') }}" class="w-full rounded-xl border-outline-variant bg-surface focus:ring-primary focus:border-primary transition-colors text-sm">
+                </div>
+                
                 <div class="grid grid-cols-2 gap-4">
                     <div>
-                        <label class="block text-xs font-bold text-on-surface-variant uppercase tracking-wider mb-1.5">Tanggal Awal</label>
-                        <input type="date" name="tanggal_awal" required class="w-full rounded-xl border-outline-variant bg-surface focus:ring-primary focus:border-primary transition-colors text-sm">
+                        <label class="block text-xs font-bold text-on-surface-variant uppercase tracking-wider mb-1.5">Kelas</label>
+                        <input type="text" name="kelas" required placeholder="Contoh: Kelas 7A" class="w-full rounded-xl border-outline-variant bg-surface focus:ring-primary focus:border-primary transition-colors text-sm">
                     </div>
                     <div>
-                        <label class="block text-xs font-bold text-on-surface-variant uppercase tracking-wider mb-1.5">Tanggal Akhir</label>
-                        <input type="date" name="tanggal_akhir" required class="w-full rounded-xl border-outline-variant bg-surface focus:ring-primary focus:border-primary transition-colors text-sm">
+                        <label class="block text-xs font-bold text-on-surface-variant uppercase tracking-wider mb-1.5">Mata Pelajaran</label>
+                        <input type="text" name="mata_pelajaran" required placeholder="Contoh: Fiqih" class="w-full rounded-xl border-outline-variant bg-surface focus:ring-primary focus:border-primary transition-colors text-sm">
                     </div>
                 </div>
 
                 <div>
-                    <label class="block text-xs font-bold text-on-surface-variant uppercase tracking-wider mb-1.5">Judul Laporan</label>
-                    <input type="text" name="judul" required placeholder="Contoh: Laporan Mengajar Minggu ke-1" class="w-full rounded-xl border-outline-variant bg-surface focus:ring-primary focus:border-primary transition-colors text-sm">
+                    <label class="block text-xs font-bold text-on-surface-variant uppercase tracking-wider mb-1.5">Topik / Materi</label>
+                    <input type="text" name="materi" required placeholder="Contoh: Thaharah" class="w-full rounded-xl border-outline-variant bg-surface focus:ring-primary focus:border-primary transition-colors text-sm">
                 </div>
 
                 <div>
-                    <label class="block text-xs font-bold text-on-surface-variant uppercase tracking-wider mb-1.5">Isi Laporan</label>
-                    <textarea name="isi_laporan" required rows="5" placeholder="Tuliskan detail aktivitas, progres santri, dan kendala (jika ada)..." class="w-full rounded-xl border-outline-variant bg-surface focus:ring-primary focus:border-primary transition-colors text-sm resize-none"></textarea>
+                    <label class="block text-xs font-bold text-on-surface-variant uppercase tracking-wider mb-1.5">Catatan Tambahan (Opsional)</label>
+                    <textarea name="isi_laporan" rows="3" placeholder="Tuliskan jika ada kendala, penugasan, atau santri yang bermasalah..." class="w-full rounded-xl border-outline-variant bg-surface focus:ring-primary focus:border-primary transition-colors text-sm resize-none"></textarea>
                 </div>
             </div>
 
@@ -98,7 +105,7 @@
                     Batal
                 </button>
                 <button type="submit" class="px-6 py-2 rounded-xl font-bold bg-primary hover:bg-primary-container text-white shadow-md transition-colors text-sm flex items-center gap-2">
-                    <span class="material-symbols-outlined text-[18px]">send</span> Kirim Laporan
+                    <span class="material-symbols-outlined text-[18px]">send</span> Simpan Jurnal
                 </button>
             </div>
         </form>

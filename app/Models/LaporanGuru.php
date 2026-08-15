@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class LaporanGuru extends Model
 {
     protected $fillable = [
-        'guru_id', 'tanggal_awal', 'tanggal_akhir', 'judul', 'isi_laporan', 'status'
+        'guru_id', 'tanggal', 'kelas', 'mata_pelajaran', 'materi', 'isi_laporan', 'status'
     ];
 
     public function guru()

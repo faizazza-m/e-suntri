@@ -18,21 +18,23 @@ class LaporanController extends Controller
     public function store(\Illuminate\Http\Request $request)
     {
         $request->validate([
-            'tanggal_awal' => 'required|date',
-            'tanggal_akhir' => 'required|date|after_or_equal:tanggal_awal',
-            'judul' => 'required|string|max:255',
-            'isi_laporan' => 'required|string',
+            'tanggal' => 'required|date',
+            'kelas' => 'required|string|max:255',
+            'mata_pelajaran' => 'required|string|max:255',
+            'materi' => 'required|string|max:255',
+            'isi_laporan' => 'nullable|string',
         ]);
 
         \App\Models\LaporanGuru::create([
             'guru_id' => auth()->id(),
-            'tanggal_awal' => $request->tanggal_awal,
-            'tanggal_akhir' => $request->tanggal_akhir,
-            'judul' => $request->judul,
+            'tanggal' => $request->tanggal,
+            'kelas' => $request->kelas,
+            'mata_pelajaran' => $request->mata_pelajaran,
+            'materi' => $request->materi,
             'isi_laporan' => $request->isi_laporan,
             'status' => 'menunggu',
         ]);
 
-        return redirect()->route('guru.laporan')->with('success', 'Laporan Mingguan berhasil dikirim.');
+        return redirect()->route('guru.laporan')->with('success', 'Jurnal Mengajar berhasil disimpan.');
     }
 }

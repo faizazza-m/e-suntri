@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'Laporan Mingguan Guru')
+@section('title', 'Jurnal Harian Guru')
 
 @section('content')
 <div class="space-y-6">
@@ -11,8 +11,8 @@
                 <span class="material-symbols-outlined text-white text-3xl" style="font-variation-settings: 'FILL' 1;">assignment</span>
             </div>
             <div>
-                <h2 class="text-3xl font-bold text-primary">Laporan Mingguan Guru</h2>
-                <p class="text-sm text-on-surface-variant">Pantau progres dan aktivitas mengajar Ustadz/Guru setiap pekannya.</p>
+                <h2 class="text-3xl font-bold text-primary">Jurnal Harian Guru</h2>
+                <p class="text-sm text-on-surface-variant">Pantau progres dan aktivitas harian Ustadz/Guru per pertemuan.</p>
             </div>
         </div>
         
@@ -49,15 +49,22 @@
                 </span>
             </div>
 
-            <h3 class="text-lg font-bold text-on-surface leading-tight mb-2">{{ $laporan->judul }}</h3>
+            <h3 class="text-lg font-bold text-on-surface leading-tight mb-1">{{ $laporan->materi }}</h3>
+            <p class="text-xs font-bold text-primary mb-3">
+                {{ $laporan->kelas }} &bull; {{ $laporan->mata_pelajaran }}
+            </p>
             
             <p class="text-[10px] font-bold text-on-surface-variant uppercase tracking-widest mb-3">
-                Periode: {{ \Carbon\Carbon::parse($laporan->tanggal_awal)->format('d/m/Y') }} - {{ \Carbon\Carbon::parse($laporan->tanggal_akhir)->format('d/m/Y') }}
+                Tanggal: {{ \Carbon\Carbon::parse($laporan->tanggal)->format('d M Y') }}
             </p>
-
+            
+            @if($laporan->isi_laporan)
             <p class="text-sm text-on-surface-variant font-medium line-clamp-3 leading-relaxed mb-4 flex-1">
                 {{ $laporan->isi_laporan }}
             </p>
+            @else
+            <p class="text-sm text-on-surface-variant italic mb-4 flex-1">Tidak ada catatan tambahan.</p>
+            @endif
 
             <div class="mt-auto pt-4 border-t border-outline-variant/30 flex justify-between items-center text-[10px] font-bold text-on-surface-variant">
                 <span>Dikirim: {{ $laporan->created_at->diffForHumans() }}</span>
@@ -69,8 +76,8 @@
         @empty
         <div class="col-span-full py-16 glassmorphism rounded-3xl border border-dashed border-outline-variant/50 flex flex-col items-center justify-center text-center">
             <span class="material-symbols-outlined text-6xl text-outline-variant mb-4" style="font-variation-settings:'FILL' 1;">assignment</span>
-            <h3 class="text-xl font-bold text-on-surface">Belum Ada Laporan</h3>
-            <p class="text-sm text-on-surface-variant mt-1">Tidak ada laporan guru yang ditemukan saat ini.</p>
+            <h3 class="text-xl font-bold text-on-surface">Belum Ada Jurnal</h3>
+            <p class="text-sm text-on-surface-variant mt-1">Tidak ada jurnal harian guru yang ditemukan saat ini.</p>
         </div>
         @endforelse
     </div>
@@ -91,7 +98,7 @@
             {{-- Modal Header --}}
             <div class="p-6 border-b border-outline-variant/30 bg-white/60 shrink-0 flex justify-between items-start">
                 <div>
-                    <h3 class="text-xl font-bold text-on-surface mb-1">Detail Laporan</h3>
+                    <h3 class="text-xl font-bold text-on-surface mb-1">Detail Jurnal Mengajar</h3>
                     <div class="flex items-center gap-2">
                         <div class="w-6 h-6 rounded-full bg-primary-container flex items-center justify-center">
                             <span class="material-symbols-outlined text-[12px] text-primary">person</span>
@@ -108,13 +115,16 @@
             <div class="p-6 overflow-y-auto space-y-6 flex-1 bg-surface-container-low">
                 
                 <div class="bg-white rounded-2xl shadow-sm border border-outline-variant/20 p-5">
-                    <div class="flex justify-between items-start mb-2">
-                        <h4 class="text-lg font-bold text-on-surface" id="detailJudul">-</h4>
+                    <div class="flex justify-between items-start mb-1">
+                        <h4 class="text-lg font-bold text-on-surface" id="detailMateri">-</h4>
                         <span class="px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider rounded-lg bg-green-100 text-green-700">Dibaca</span>
                     </div>
-                    <p class="text-[10px] font-bold text-primary uppercase tracking-widest mb-4" id="detailPeriode">
-                        Periode: -
+                    <p class="text-sm font-bold text-primary mb-3" id="detailKelasMapel">-</p>
+
+                    <p class="text-[10px] font-bold text-on-surface-variant uppercase tracking-widest mb-4" id="detailTanggal">
+                        Tanggal: -
                     </p>
+                    
                     <div class="border-t border-outline-variant/30 pt-4">
                         <p class="text-sm text-on-surface-variant leading-relaxed whitespace-pre-wrap" id="detailIsi">-</p>
                     </div>
@@ -133,21 +143,21 @@
         document.getElementById('modalDetail').classList.remove('hidden');
         
         // Show loading state (optional)
-        document.getElementById('detailJudul').textContent = "Memuat...";
-        document.getElementById('detailIsi').textContent = "Sedang mengambil data laporan...";
+        document.getElementById('detailMateri').textContent = "Memuat...";
+        document.getElementById('detailIsi').textContent = "Sedang mengambil data jurnal...";
         
         fetch(`/admin/laporan-guru/${id}`)
             .then(res => res.json())
             .then(data => {
                 document.getElementById('detailGuruName').textContent = data.guru.name;
-                document.getElementById('detailJudul').textContent = data.judul;
+                document.getElementById('detailMateri').textContent = data.materi;
+                document.getElementById('detailKelasMapel').textContent = `${data.kelas} • ${data.mata_pelajaran}`;
                 
                 // Format dates safely
-                const tglAwal = new Date(data.tanggal_awal).toLocaleDateString('id-ID');
-                const tglAkhir = new Date(data.tanggal_akhir).toLocaleDateString('id-ID');
-                document.getElementById('detailPeriode').textContent = `Periode: ${tglAwal} - ${tglAkhir}`;
+                const tgl = new Date(data.tanggal).toLocaleDateString('id-ID', {day: 'numeric', month: 'long', year: 'numeric'});
+                document.getElementById('detailTanggal').textContent = `Tanggal: ${tgl}`;
                 
-                document.getElementById('detailIsi').textContent = data.isi_laporan;
+                document.getElementById('detailIsi').textContent = data.isi_laporan || 'Tidak ada catatan tambahan.';
 
                 // Mark the badge as read locally in the UI to sync
                 const cardBadge = document.querySelector(`[onclick="openDetail(${id})"] .status-badge`);
