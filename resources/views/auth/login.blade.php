@@ -94,7 +94,7 @@
             {{-- Brand --}}
             <div class="mb-12 fade-in-up">
                 <div class="flex items-center gap-4 mb-6">
-                    <div class="w-16 h-16 rounded-2xl flex items-center justify-center overflow-hidden shrink-0">
+                    <div class="w-16 h-16 rounded-full flex items-center justify-center overflow-hidden shrink-0">
                         <img src="{{ asset('logo.jpg') }}" alt="Logo" class="w-full h-full object-cover">
                     </div>
                     <div>
@@ -152,7 +152,7 @@
 
             {{-- Logo (Mobile only / Card header) --}}
             <div class="text-center mb-8">
-                <div class="w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-4 overflow-hidden shrink-0">
+                <div class="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 overflow-hidden shrink-0">
                     <img src="{{ asset('logo.jpg') }}" alt="Logo" class="w-full h-full object-cover">
                 </div>
                 <h2 class="text-2xl font-bold text-on-surface">Selamat Datang</h2>

@@ -68,7 +68,7 @@
 
     {{-- Logo --}}
     <div class="flex items-center gap-3 px-5 py-5 border-b border-white/10 shrink-0">
-        <div class="w-10 h-10 rounded-2xl flex items-center justify-center overflow-hidden shrink-0">
+        <div class="w-10 h-10 rounded-full flex items-center justify-center overflow-hidden shrink-0">
             <img src="{{ asset('logo.jpg') }}" alt="Logo" class="w-full h-full object-cover">
         </div>
         <div>
@@ -126,7 +126,7 @@
 {{-- ===================== TOP BAR (Mobile) ===================== --}}
 <header class="lg:hidden fixed top-0 inset-x-0 z-30 bg-primary shadow-lg flex items-center justify-between px-5 h-14">
     <div class="flex items-center gap-2">
-        <div class="w-6 h-6 rounded-md overflow-hidden shrink-0">
+        <div class="w-6 h-6 rounded-full overflow-hidden shrink-0">
             <img src="{{ asset('logo.jpg') }}" alt="Logo" class="w-full h-full object-cover">
         </div>
         <span class="text-white font-bold text-base tracking-tight">SUNTRI <span class="text-white/50 font-normal text-sm">Musyrif</span></span>
