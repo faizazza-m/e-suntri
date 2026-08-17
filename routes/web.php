@@ -194,9 +194,7 @@ Route::middleware(['auth'])->prefix('wali')->name('wali.')->group(function () {
 
     Route::get('/progres', [\App\Http\Controllers\Wali\WaliController::class, 'progres'])->name('progres');
 
-    Route::get('/keuangan', function () {
-        return view('wali.keuangan');
-    })->name('keuangan');
+    Route::get('/keuangan', [\App\Http\Controllers\Wali\WaliController::class, 'keuangan'])->name('keuangan');
 
         Route::get('/izin', [\App\Http\Controllers\Wali\WaliController::class, 'izin'])->name('izin');
         Route::post('/izin', [\App\Http\Controllers\Wali\WaliController::class, 'storeIzin'])->name('izin.store');

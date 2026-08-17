@@ -331,4 +331,35 @@ class WaliController extends Controller
         $contact = \App\Models\User::findOrFail($user_id);
         return view('wali.chat_room', compact('contact'));
     }
+
+    public function keuangan()
+    {
+        $wali = WaliSantri::where('user_id', Auth::id())->first();
+        if (!$wali) abort(403, 'Akses ditolak.');
+
+        // Get first santri for now
+        $activeSantri = Santri::where('id', $wali->santri_id)->first();
+        if (!$activeSantri) {
+            abort(404, 'Data Santri tidak ditemukan.');
+        }
+
+        // 1. Tagihan Belum Lunas
+        $tagihanBelumLunas = \App\Models\Tagihan::with('jenis')
+            ->where('santri_id', $activeSantri->id)
+            ->where('status', 'belum_lunas')
+            ->orderBy('jatuh_tempo', 'asc')
+            ->get();
+
+        // 2. Riwayat Tagihan Lunas (Terbaru)
+        $tagihanLunas = \App\Models\Tagihan::with('jenis')
+            ->where('santri_id', $activeSantri->id)
+            ->where('status', 'lunas')
+            ->orderBy('jatuh_tempo', 'desc')
+            ->take(10)
+            ->get();
+
+        $totalTunggakan = $tagihanBelumLunas->sum('nominal');
+
+        return view('wali.keuangan', compact('activeSantri', 'tagihanBelumLunas', 'tagihanLunas', 'totalTunggakan'));
+    }
 }
