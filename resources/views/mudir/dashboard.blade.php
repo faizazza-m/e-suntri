@@ -23,7 +23,7 @@
 </div>
 
 {{-- KPI Cards --}}
-<section class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 fade-in-up delay-1">
+<section class="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-6 gap-4 fade-in-up delay-1">
     @php
     $kpis = [
         ['icon'=>'group',            'label'=>'Total Santri',    'value'=> number_format($totalSantri),   'sub'=>$totalMusyrif.' Musyrif · '.$totalUstadz.' Ustadz', 'grad'=>'from-emerald-600 to-primary'],
@@ -39,9 +39,9 @@
         <div class="w-11 h-11 rounded-full flex items-center justify-center mb-3 bg-gradient-to-br {{ $k['grad'] }}">
             <span class="material-symbols-outlined text-white text-lg" style="font-variation-settings:'FILL' 1;">{{ $k['icon'] }}</span>
         </div>
-        <span class="text-[10px] text-on-surface-variant uppercase tracking-widest font-bold mb-1">{{ $k['label'] }}</span>
-        <span class="text-2xl font-bold text-on-surface">{{ $k['value'] }}</span>
-        <span class="text-[10px] text-on-surface-variant mt-1">{{ $k['sub'] }}</span>
+        <span class="text-[10px] text-on-surface-variant uppercase tracking-widest font-bold mb-1 line-clamp-1">{{ $k['label'] }}</span>
+        <span class="text-xl sm:text-2xl font-bold text-on-surface">{{ $k['value'] }}</span>
+        <span class="text-[9px] sm:text-[10px] text-on-surface-variant mt-1 line-clamp-1">{{ $k['sub'] }}</span>
     </div>
     @endforeach
 </section>
@@ -61,9 +61,9 @@
             @foreach($santriSakitAlert as $s)
             <div class="flex items-center gap-3 p-2 bg-white/60 rounded-xl border border-error/10">
                 <div class="w-8 h-8 rounded-full bg-error/10 flex items-center justify-center shrink-0 font-bold text-error text-sm">{{ substr($s->santri->nama ?? '?', 0, 1) }}</div>
-                <div>
-                    <p class="text-sm font-bold text-on-surface">{{ $s->santri->nama ?? '—' }}</p>
-                    <p class="text-[10px] text-on-surface-variant">{{ $s->santri->kelas->nama ?? 'Tanpa Kelas' }} · <span class="text-error">{{ Str::limit($s->keluhan, 30) }}</span></p>
+                <div class="flex-1 min-w-0">
+                    <p class="text-sm font-bold text-on-surface truncate">{{ $s->santri->nama ?? '—' }}</p>
+                    <p class="text-[10px] text-on-surface-variant truncate">{{ $s->santri->kelas->nama ?? 'Tanpa Kelas' }} · <span class="text-error">{{ $s->keluhan }}</span></p>
                 </div>
             </div>
             @endforeach
@@ -81,9 +81,9 @@
         <div class="space-y-2 max-h-40 overflow-y-auto custom-scrollbar">
             @foreach($santriRendahKehadiran as $item)
             <div class="flex items-center gap-3 p-2 bg-white/60 rounded-xl border border-amber-200">
-                <div class="flex-1">
-                    <p class="text-sm font-bold text-on-surface">{{ $item['santri']->nama }}</p>
-                    <p class="text-[10px] text-on-surface-variant">{{ $item['santri']->kelas->nama ?? 'Tanpa Kelas' }}</p>
+                <div class="flex-1 min-w-0">
+                    <p class="text-sm font-bold text-on-surface truncate">{{ $item['santri']->nama }}</p>
+                    <p class="text-[10px] text-on-surface-variant truncate">{{ $item['santri']->kelas->nama ?? 'Tanpa Kelas' }}</p>
                 </div>
                 <div class="text-right shrink-0">
                     <div class="text-sm font-bold text-amber-700">{{ $item['pct'] }}%</div>
@@ -102,10 +102,10 @@
 @endif
 
 {{-- Charts Row --}}
-<div class="grid grid-cols-1 lg:grid-cols-12 gap-6 fade-in-up delay-2">
+<div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-12 gap-6 fade-in-up delay-2">
 
     {{-- Chart Hafalan --}}
-    <div class="lg:col-span-5 glassmorphism p-6 rounded-2xl border border-white/20 shadow-sm">
+    <div class="lg:col-span-1 xl:col-span-5 glassmorphism p-4 sm:p-6 rounded-2xl border border-white/20 shadow-sm">
         <div class="flex justify-between items-center mb-5">
             <div>
                 <h3 class="text-base font-bold text-on-surface">Tren Hafalan</h3>
@@ -119,7 +119,7 @@
     </div>
 
     {{-- Chart Kehadiran --}}
-    <div class="lg:col-span-4 glassmorphism p-6 rounded-2xl border border-white/20 shadow-sm">
+    <div class="lg:col-span-1 xl:col-span-4 glassmorphism p-4 sm:p-6 rounded-2xl border border-white/20 shadow-sm">
         <div class="flex justify-between items-center mb-5">
             <div>
                 <h3 class="text-base font-bold text-on-surface">Tren Kehadiran</h3>
@@ -133,15 +133,15 @@
     </div>
 
     {{-- Pie Distribusi Kelas --}}
-    <div class="lg:col-span-3 glassmorphism p-6 rounded-2xl border border-white/20 shadow-sm">
-        <div class="mb-5">
+    <div class="lg:col-span-2 xl:col-span-3 glassmorphism p-4 sm:p-6 rounded-2xl border border-white/20 shadow-sm flex flex-col md:flex-row xl:flex-col items-center gap-6 xl:gap-0">
+        <div class="flex-1 xl:mb-5 w-full">
             <h3 class="text-base font-bold text-on-surface">Distribusi Santri</h3>
             <p class="text-xs text-on-surface-variant">Per kelas</p>
         </div>
-        <div class="relative h-36 flex items-center justify-center">
+        <div class="relative h-36 w-36 sm:h-44 sm:w-44 xl:h-36 xl:w-full flex-shrink-0 flex items-center justify-center">
             <canvas id="chartKelas"></canvas>
         </div>
-        <div class="mt-3 space-y-1">
+        <div class="xl:mt-3 space-y-1 w-full flex-1">
             @foreach($distribusiKelas->take(5) as $i => $dk)
             @php $colors = ['#004532','#4059aa','#f59e0b','#ba1a1a','#6b7280']; @endphp
             <div class="flex items-center justify-between text-xs">
@@ -157,10 +157,10 @@
 </div>
 
 {{-- Bottom Row: Leaderboard + Monitoring Musyrif + Keuangan + Agenda --}}
-<div class="grid grid-cols-1 lg:grid-cols-12 gap-6 fade-in-up delay-3">
+<div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-12 gap-6 fade-in-up delay-3">
 
     {{-- Leaderboard Hafalan --}}
-    <div class="lg:col-span-4 glassmorphism p-6 rounded-2xl border border-white/20 shadow-sm">
+    <div class="lg:col-span-1 xl:col-span-4 glassmorphism p-4 sm:p-6 rounded-2xl border border-white/20 shadow-sm">
         <div class="flex items-center gap-2 mb-5">
             <span class="material-symbols-outlined text-amber-500 text-2xl" style="font-variation-settings:'FILL' 1;">military_tech</span>
             <div>
@@ -200,7 +200,7 @@
     </div>
 
     {{-- Monitoring Musyrif --}}
-    <div class="lg:col-span-4 glassmorphism p-6 rounded-2xl border border-white/20 shadow-sm">
+    <div class="lg:col-span-1 xl:col-span-4 glassmorphism p-4 sm:p-6 rounded-2xl border border-white/20 shadow-sm">
         <div class="flex items-center gap-2 mb-5">
             <span class="material-symbols-outlined text-secondary text-2xl" style="font-variation-settings:'FILL' 1;">supervisor_account</span>
             <div>
@@ -208,25 +208,25 @@
                 <p class="text-xs text-on-surface-variant">Input data hari ini</p>
             </div>
         </div>
-        <div class="grid grid-cols-3 gap-2 mb-4 text-center text-[10px] font-bold text-on-surface-variant uppercase tracking-widest">
-            <span>Halaqoh</span><span>Absensi</span><span>Setoran</span>
+        <div class="grid grid-cols-[1fr_auto_auto] gap-2 md:gap-4 mb-4 text-center text-[10px] font-bold text-on-surface-variant uppercase tracking-widest">
+            <span class="text-left">Halaqoh</span><span class="w-10 sm:w-12">Absen</span><span class="w-10 sm:w-12">Setor</span>
         </div>
-        <div class="space-y-2 max-h-72 overflow-y-auto custom-scrollbar">
+        <div class="space-y-2 max-h-72 overflow-y-auto custom-scrollbar pr-1">
             @forelse($halaqohList as $h)
-            <div class="grid grid-cols-3 gap-2 items-center p-2.5 rounded-xl bg-surface-container-low border border-outline-variant/10">
-                <div>
+            <div class="grid grid-cols-[1fr_auto_auto] gap-2 md:gap-4 items-center p-2.5 rounded-xl bg-surface-container-low border border-outline-variant/10">
+                <div class="min-w-0">
                     <p class="text-xs font-bold text-on-surface truncate">{{ $h['nama'] }}</p>
-                    <p class="text-[10px] text-on-surface-variant">{{ $h['musyrif'] }}</p>
+                    <p class="text-[10px] text-on-surface-variant truncate">{{ $h['musyrif'] }}</p>
                     <p class="text-[10px] text-on-surface-variant">{{ $h['jumlah_santri'] }} santri</p>
                 </div>
-                <div class="flex justify-center">
+                <div class="w-10 sm:w-12 flex justify-center shrink-0">
                     @if($h['absensi'])
                         <span class="material-symbols-outlined text-emerald-600" style="font-variation-settings:'FILL' 1;">check_circle</span>
                     @else
                         <span class="material-symbols-outlined text-gray-300">cancel</span>
                     @endif
                 </div>
-                <div class="flex justify-center">
+                <div class="w-10 sm:w-12 flex justify-center shrink-0">
                     @if($h['setoran'])
                         <span class="material-symbols-outlined text-emerald-600" style="font-variation-settings:'FILL' 1;">check_circle</span>
                     @else
@@ -241,10 +241,10 @@
     </div>
 
     {{-- Keuangan + Agenda --}}
-    <div class="lg:col-span-4 flex flex-col gap-5">
+    <div class="lg:col-span-2 xl:col-span-4 flex flex-col md:flex-row xl:flex-col gap-5">
 
         {{-- Ringkasan Keuangan --}}
-        <div class="glassmorphism p-5 rounded-2xl border border-white/20 shadow-sm flex-1">
+        <div class="glassmorphism p-4 sm:p-5 rounded-2xl border border-white/20 shadow-sm flex-1">
             <div class="flex items-center gap-2 mb-4">
                 <span class="material-symbols-outlined text-purple-600 text-2xl" style="font-variation-settings:'FILL' 1;">payments</span>
                 <div>
@@ -293,7 +293,7 @@
         </div>
 
         {{-- Agenda --}}
-        <div class="glassmorphism p-5 rounded-2xl border border-white/20 shadow-sm">
+        <div class="glassmorphism p-4 sm:p-5 rounded-2xl border border-white/20 shadow-sm flex-1">
             <div class="flex items-center gap-2 mb-4">
                 <span class="material-symbols-outlined text-secondary" style="font-variation-settings:'FILL' 1;">event</span>
                 <h3 class="text-base font-bold text-on-surface">Agenda Pesantren</h3>
