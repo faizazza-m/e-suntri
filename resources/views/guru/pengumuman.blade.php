@@ -25,6 +25,7 @@
         $targetBadge = match($p->target) {
             'semua'   => 'bg-cyan-500/10 text-cyan-600 border-cyan-500/20',
             'musyrif' => 'bg-secondary/10 text-secondary border-secondary/20',
+            'guru'    => 'bg-emerald-500/10 text-emerald-500 border-emerald-500/20',
             default   => 'bg-surface-container text-on-surface-variant border-outline-variant/20',
         };
     @endphp
