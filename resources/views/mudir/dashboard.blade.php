@@ -46,9 +46,9 @@
     @endforeach
 </section>
 
-{{-- Alerts (Sakit & Kehadiran Rendah) --}}
-@if($santriSakitAlert->isNotEmpty() || $santriRendahKehadiran->isNotEmpty())
-<div class="grid grid-cols-1 lg:grid-cols-2 gap-4 fade-in-up delay-2">
+{{-- Alerts (Sakit, Belum Absen/Alpha & Kehadiran Rendah) --}}
+@if($santriSakitAlert->isNotEmpty() || $santriAlphaAlert->isNotEmpty() || $santriRendahKehadiran->isNotEmpty())
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-4 fade-in-up delay-2">
 
     {{-- Santri Sakit Hari Ini --}}
     @if($santriSakitAlert->isNotEmpty())
@@ -69,6 +69,31 @@
             @endforeach
         </div>
     </div>
+    @else
+    <div class="hidden lg:block"></div> {{-- Empty space filler if needed --}}
+    @endif
+
+    {{-- Santri Belum Absen / Alpha --}}
+    @if($santriAlphaAlert->isNotEmpty())
+    <div class="glassmorphism rounded-2xl p-5 border border-indigo-300/30 bg-indigo-50/50">
+        <div class="flex items-center gap-2 mb-4">
+            <span class="material-symbols-outlined text-indigo-600" style="font-variation-settings:'FILL' 1;">person_off</span>
+            <h3 class="font-bold text-indigo-700 text-sm uppercase tracking-wider">Belum Absen / Alpha ({{ $santriAlphaAlert->count() }})</h3>
+        </div>
+        <div class="space-y-2 max-h-40 overflow-y-auto custom-scrollbar">
+            @foreach($santriAlphaAlert as $s)
+            <div class="flex items-center gap-3 p-2 bg-white/60 rounded-xl border border-indigo-200">
+                <div class="w-8 h-8 rounded-full bg-indigo-100 flex items-center justify-center shrink-0 font-bold text-indigo-600 text-sm">{{ substr($s->nama, 0, 1) }}</div>
+                <div class="flex-1 min-w-0">
+                    <p class="text-sm font-bold text-on-surface truncate">{{ $s->nama }}</p>
+                    <p class="text-[10px] text-on-surface-variant truncate">{{ optional($s->kelas)->nama ?? 'Tanpa Kelas' }}</p>
+                </div>
+            </div>
+            @endforeach
+        </div>
+    </div>
+    @else
+    <div class="hidden lg:block"></div>
     @endif
 
     {{-- Santri Kehadiran Rendah --}}

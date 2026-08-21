@@ -107,6 +107,16 @@ class MudirController extends Controller
             ->whereDate('tanggal', $today)
             ->get();
 
+        // ── Alert: Santri Belum Absen / Alpha Hari Ini ─────────────────
+        $santriHadirIzinSakitIds = Kehadiran::whereDate('tanggal', $today)
+            ->whereIn('status', ['hadir', 'izin', 'sakit'])
+            ->pluck('santri_id');
+        
+        $santriAlphaAlert = Santri::with('kelas')
+            ->where('status', 'aktif')
+            ->whereNotIn('id', $santriHadirIzinSakitIds)
+            ->get();
+
         // ── Alert: Santri Kehadiran Rendah (< 75% sebulan ini) ─────────
         $santriRendahKehadiran = collect();
         try {
@@ -171,7 +181,7 @@ class MudirController extends Controller
             'totalTagihanBulanIni', 'totalLunasBulanIni', 'totalTunggakan', 'pctKeuangan',
             'hafalanBulanan', 'kehadiranBulanan', 'distribusiKelas',
             'leaderboard', 'halaqohList',
-            'santriSakitAlert', 'santriRendahKehadiran',
+            'santriSakitAlert', 'santriAlphaAlert', 'santriRendahKehadiran',
             'agendas', 'keuanganPerJenis', 'setoranHariIniList'
         ));
     }
