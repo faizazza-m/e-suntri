@@ -173,7 +173,7 @@
         
         @if($kehadiran->hasPages())
         <div class="px-6 py-4 border-t border-outline-variant/20 bg-surface/50">
-            {{ $kehadiran->links('vendor.pagination.tailwind') }}
+            {{ $kehadiran->links('pagination::tailwind') }}
         </div>
         @endif
     </div>
