@@ -120,7 +120,8 @@ class WaliController extends Controller
                     ];
                 });
 
-            $latestPengumumans = \App\Models\Pengumuman::orderBy('published_at', 'desc')
+            $latestPengumumans = \App\Models\Pengumuman::whereIn('target', ['semua', 'wali'])
+                ->orderBy('published_at', 'desc')
                 ->take(2)->get()->map(function($item) {
                     return [
                         'icon' => 'campaign',

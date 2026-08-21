@@ -42,7 +42,11 @@ class GuruController extends Controller
             ->count();
         
         // Pengumuman terbaru
-        $pengumuman = Pengumuman::orderByDesc('is_pinned')->orderByDesc('created_at')->take(5)->get();
+        $pengumuman = Pengumuman::whereIn('target', ['semua', 'guru'])
+            ->orderByDesc('is_pinned')
+            ->orderByDesc('created_at')
+            ->take(5)
+            ->get();
         
         $totalMapel  = $mapelSaya->count();
         $totalJadwal = JadwalPelajaran::whereHas('mapel', fn($q) => $q->where('guru_id', $userId))->count();
