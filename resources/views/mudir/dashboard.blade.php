@@ -13,7 +13,7 @@
         </div>
         <div>
             <h2 class="text-3xl font-bold text-primary">Dashboard Mudir</h2>
-            <p class="text-sm text-on-surface-variant">Assalamu'alaikum, {{ explode(' ', auth()->user()->name)[0] }}. Berikut ringkasan kondisi pesantren hari ini.</p>
+            <p class="text-sm text-on-surface-variant">Assalamu'alaikum, Dr. Ilham. Berikut ringkasan kondisi pesantren hari ini.</p>
         </div>
     </div>
     <div class="glassmorphism px-5 py-2.5 rounded-xl border border-outline-variant/30 text-right shadow-sm">
@@ -109,7 +109,7 @@
         <div class="flex justify-between items-center mb-5">
             <div>
                 <h3 class="text-base font-bold text-on-surface">Tren Hafalan</h3>
-                <p class="text-xs text-on-surface-variant">Setoran 12 bulan terakhir</p>
+                <p class="text-xs text-on-surface-variant">Setoran bulan ini</p>
             </div>
             <span class="material-symbols-outlined text-primary" style="font-variation-settings:'FILL' 1;">menu_book</span>
         </div>
@@ -123,7 +123,7 @@
         <div class="flex justify-between items-center mb-5">
             <div>
                 <h3 class="text-base font-bold text-on-surface">Tren Kehadiran</h3>
-                <p class="text-xs text-on-surface-variant">% rata-rata per bulan</p>
+                <p class="text-xs text-on-surface-variant">% rata-rata kehadiran bulan ini</p>
             </div>
             <span class="material-symbols-outlined text-blue-600" style="font-variation-settings:'FILL' 1;">how_to_reg</span>
         </div>
@@ -314,6 +314,63 @@
                 <p class="text-xs text-on-surface-variant text-center py-4">Tidak ada agenda mendatang.</p>
                 @endforelse
             </div>
+        </div>
+    </div>
+</div>
+
+{{-- Setoran Hari Ini Detail --}}
+<div class="fade-in-up delay-4 mb-6">
+    <div class="glassmorphism p-4 sm:p-6 rounded-2xl border border-white/20 shadow-sm">
+        <div class="flex items-center gap-2 mb-5">
+            <span class="material-symbols-outlined text-emerald-600 text-2xl" style="font-variation-settings:'FILL' 1;">record_voice_over</span>
+            <div>
+                <h3 class="text-base font-bold text-on-surface">Detail Setoran Hari Ini</h3>
+                <p class="text-xs text-on-surface-variant">Rincian hafalan yang disetorkan santri pada hari ini</p>
+            </div>
+        </div>
+        <div class="overflow-x-auto custom-scrollbar">
+            <table class="w-full text-left text-sm whitespace-nowrap">
+                <thead class="text-xs text-on-surface-variant bg-surface-container-low border-b border-outline-variant/30">
+                    <tr>
+                        <th class="px-4 py-3 font-bold rounded-tl-xl">Santri</th>
+                        <th class="px-4 py-3 font-bold">Jenis Setoran</th>
+                        <th class="px-4 py-3 font-bold">Surat & Ayat</th>
+                        <th class="px-4 py-3 font-bold text-center">Nilai</th>
+                        <th class="px-4 py-3 font-bold rounded-tr-xl">Musyrif</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-outline-variant/10">
+                    @forelse($setoranHariIniList as $setoran)
+                    <tr class="hover:bg-surface-container-low/50 transition-colors">
+                        <td class="px-4 py-3">
+                            <p class="font-bold text-on-surface">{{ $setoran->santri->nama ?? '—' }}</p>
+                            <p class="text-[10px] text-on-surface-variant">{{ optional($setoran->santri->kelas)->nama ?? '—' }}</p>
+                        </td>
+                        <td class="px-4 py-3">
+                            <span class="px-2 py-1 text-[10px] font-bold rounded-md {{ strtolower($setoran->jenis) == 'ziyadah' ? 'bg-emerald-100 text-emerald-700' : 'bg-blue-100 text-blue-700' }}">
+                                {{ ucfirst($setoran->jenis) }}
+                            </span>
+                        </td>
+                        <td class="px-4 py-3">
+                            <p class="font-medium text-on-surface">{{ $setoran->surat }}</p>
+                            <p class="text-[10px] text-on-surface-variant">Ayat: {{ $setoran->ayat }}</p>
+                        </td>
+                        <td class="px-4 py-3 text-center">
+                            <span class="font-bold {{ $setoran->nilai >= 80 ? 'text-emerald-600' : ($setoran->nilai >= 70 ? 'text-amber-500' : 'text-error') }}">
+                                {{ $setoran->nilai }}
+                            </span>
+                        </td>
+                        <td class="px-4 py-3 text-xs text-on-surface-variant">
+                            {{ $setoran->musyrif->name ?? '—' }}
+                        </td>
+                    </tr>
+                    @empty
+                    <tr>
+                        <td colspan="5" class="px-4 py-8 text-center text-on-surface-variant text-sm">Belum ada data setoran hari ini.</td>
+                    </tr>
+                    @endforelse
+                </tbody>
+            </table>
         </div>
     </div>
 </div>

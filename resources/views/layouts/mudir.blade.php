@@ -95,7 +95,7 @@
             </div>
             <div class="min-w-0">
                 <p class="text-[11px] font-medium text-on-surface-variant truncate">Assalamu'alaikum,</p>
-                <h1 class="text-sm font-bold text-primary truncate max-w-[120px]">{{ auth()->check() ? explode(' ', auth()->user()->name)[0] : 'Mudir' }}</h1>
+                <h1 class="text-sm font-bold text-primary truncate max-w-[120px]">Dr. Ilham</h1>
             </div>
         </div>
         <div class="flex items-center gap-2 shrink-0">

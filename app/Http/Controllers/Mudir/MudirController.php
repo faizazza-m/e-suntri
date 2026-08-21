@@ -50,22 +50,22 @@ class MudirController extends Controller
         $totalTunggakan       = Tagihan::where('status', 'belum')->sum('nominal');
         $pctKeuangan          = $totalTagihanBulanIni > 0 ? round(($totalLunasBulanIni / $totalTagihanBulanIni) * 100, 1) : 0;
 
-        // ── Chart Hafalan Bulanan (12 bulan) ───────────────────────────
+        // ── Chart Hafalan (Bulan Ini - per hari) ───────────────────────────
         $hafalanBulanan = [];
-        for ($m = 11; $m >= 0; $m--) {
-            $date  = now()->subMonths($m);
-            $count = Setoran::whereYear('tanggal', $date->year)->whereMonth('tanggal', $date->month)->count();
-            $hafalanBulanan[] = ['month' => $date->locale('id')->isoFormat('MMM YY'), 'val' => $count];
+        for ($d = 1; $d <= now()->day; $d++) {
+            $date  = Carbon::createFromDate($tahunIni, $bulanIni, $d);
+            $count = Setoran::whereDate('tanggal', $date->toDateString())->count();
+            $hafalanBulanan[] = ['month' => $d . ' ' . $date->locale('id')->isoFormat('MMM'), 'val' => $count];
         }
 
-        // ── Chart Kehadiran Bulanan (12 bulan) ────────────────────────
+        // ── Chart Kehadiran (Bulan Ini - per hari) ────────────────────────
         $kehadiranBulanan = [];
-        for ($m = 11; $m >= 0; $m--) {
-            $date  = now()->subMonths($m);
-            $hadir = Kehadiran::whereYear('tanggal', $date->year)->whereMonth('tanggal', $date->month)->where('status','hadir')->count();
+        for ($d = 1; $d <= now()->day; $d++) {
+            $date  = Carbon::createFromDate($tahunIni, $bulanIni, $d);
+            $hadir = Kehadiran::whereDate('tanggal', $date->toDateString())->where('status','hadir')->count();
             $total = Santri::where('status','aktif')->count();
             $kehadiranBulanan[] = [
-                'month' => $date->locale('id')->isoFormat('MMM YY'),
+                'month' => $d . ' ' . $date->locale('id')->isoFormat('MMM'),
                 'val'   => $total > 0 ? round(($hadir / $total) * 100, 1) : 0,
             ];
         }
@@ -158,6 +158,12 @@ class MudirController extends Controller
             ->groupBy('jenis_tagihan.nama')
             ->get();
 
+        // ── Setoran Hari Ini Detail ─────────────────────────────────────
+        $setoranHariIniList = Setoran::with(['santri.kelas', 'musyrif'])
+            ->whereDate('tanggal', $today)
+            ->orderBy('created_at', 'desc')
+            ->get();
+
         return view('mudir.dashboard', compact(
             'totalSantri', 'totalMusyrif', 'totalUstadz',
             'pctKehadiran', 'hadirCount',
@@ -166,7 +172,7 @@ class MudirController extends Controller
             'hafalanBulanan', 'kehadiranBulanan', 'distribusiKelas',
             'leaderboard', 'halaqohList',
             'santriSakitAlert', 'santriRendahKehadiran',
-            'agendas', 'keuanganPerJenis'
+            'agendas', 'keuanganPerJenis', 'setoranHariIniList'
         ));
     }
 
