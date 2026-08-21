@@ -235,7 +235,7 @@ return new class extends Migration
             $table->id();
             $table->string('judul', 200);
             $table->text('isi');
-            $table->enum('target', ['semua', 'wali', 'santri', 'musyrif'])->default('semua');
+            $table->enum('target', ['semua', 'wali', 'santri', 'musyrif', 'guru'])->default('semua');
             $table->foreignId('dibuat_oleh')->nullable()->constrained('users')->nullOnDelete();
             $table->tinyInteger('is_pinned')->default(0);
             $table->timestamp('published_at')->nullable();
