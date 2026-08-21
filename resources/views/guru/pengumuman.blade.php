@@ -29,7 +29,7 @@
             default   => 'bg-surface-container text-on-surface-variant border-outline-variant/20',
         };
     @endphp
-    <div class="glassmorphism rounded-2xl p-5 shadow-sm border {{ $p->is_pinned ? 'border-l-4 border-l-cyan-500 border-outline-variant/20' : 'border-outline-variant/20' }} relative">
+    <div x-data="{ expanded: false }" class="glassmorphism rounded-2xl p-5 shadow-sm border {{ $p->is_pinned ? 'border-l-4 border-l-cyan-500 border-outline-variant/20' : 'border-outline-variant/20' }} relative">
         @if($p->is_pinned)
         <span class="absolute top-3 right-3 text-[9px] font-bold text-cyan-500 bg-cyan-500/10 px-2 py-0.5 rounded-full border border-cyan-500/20">📌 DISEMATKAN</span>
         @endif
@@ -41,7 +41,17 @@
             <span class="material-symbols-outlined text-[13px]">schedule</span>
             {{ \Carbon\Carbon::parse($p->published_at)->translatedFormat('d F Y, H:i') }}
         </p>
-        <p class="text-sm text-on-surface leading-relaxed whitespace-pre-wrap border-t border-outline-variant/20 pt-3">{!! nl2br(e($p->isi)) !!}</p>
+        <div class="border-t border-outline-variant/20 pt-3">
+            <div :class="expanded ? '' : 'line-clamp-3 overflow-hidden'" class="text-sm text-on-surface leading-relaxed whitespace-pre-wrap transition-all duration-300 relative">
+                {!! nl2br(e($p->isi)) !!}
+            </div>
+            @if(strlen($p->isi) > 120)
+            <button @click="expanded = !expanded" class="mt-2 text-cyan-600 text-xs font-bold hover:text-cyan-700 flex items-center gap-1 transition-colors">
+                <span x-text="expanded ? 'Tampilkan Lebih Sedikit' : 'Baca Selengkapnya'"></span>
+                <span class="material-symbols-outlined text-[14px]" x-text="expanded ? 'expand_less' : 'expand_more'"></span>
+            </button>
+            @endif
+        </div>
     </div>
     @endforeach
 

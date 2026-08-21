@@ -36,7 +36,7 @@
 <div class="glassmorphism rounded-2xl p-6 border border-white/20 shadow-sm fade-in-up delay-2">
     <div class="space-y-4">
         @forelse($pengumumans as $p)
-        <div class="p-4 bg-white/60 rounded-xl border border-outline-variant/20 {{ $p->is_pinned ? 'border-l-4 border-l-amber-500' : '' }}">
+        <div x-data="{ expanded: false }" class="p-4 bg-white/60 rounded-xl border border-outline-variant/20 {{ $p->is_pinned ? 'border-l-4 border-l-amber-500' : '' }}">
             <div class="flex justify-between items-start mb-2">
                 <div>
                     <h3 class="text-lg font-bold text-on-surface flex items-center gap-2">
@@ -49,7 +49,17 @@
                 </div>
                 <span class="px-2 py-1 bg-surface-container-high text-[10px] font-bold uppercase rounded-lg border border-outline-variant/30">Target: {{ $p->target }}</span>
             </div>
-            <p class="text-sm text-on-surface mt-2 whitespace-pre-wrap">{{ $p->isi }}</p>
+            <div class="mt-2">
+                <div :class="expanded ? '' : 'line-clamp-3 overflow-hidden'" class="text-sm text-on-surface whitespace-pre-wrap transition-all duration-300 relative">
+                    {!! nl2br(e($p->isi)) !!}
+                </div>
+                @if(strlen($p->isi) > 120)
+                <button @click="expanded = !expanded" class="mt-2 text-primary text-xs font-bold hover:opacity-80 flex items-center gap-1 transition-opacity">
+                    <span x-text="expanded ? 'Tampilkan Lebih Sedikit' : 'Baca Selengkapnya'"></span>
+                    <span class="material-symbols-outlined text-[14px]" x-text="expanded ? 'expand_less' : 'expand_more'"></span>
+                </button>
+                @endif
+            </div>
         </div>
         @empty
         <p class="text-sm text-on-surface-variant py-8 text-center">Belum ada pengumuman yang diterbitkan.</p>
