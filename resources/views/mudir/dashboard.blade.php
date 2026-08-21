@@ -347,16 +347,24 @@
                             <p class="text-[10px] text-on-surface-variant">{{ optional($setoran->santri->kelas)->nama ?? '—' }}</p>
                         </td>
                         <td class="px-4 py-3">
-                            <span class="px-2 py-1 text-[10px] font-bold rounded-md {{ strtolower($setoran->jenis) == 'ziyadah' ? 'bg-emerald-100 text-emerald-700' : 'bg-blue-100 text-blue-700' }}">
-                                {{ ucfirst($setoran->jenis) }}
+                            <span class="px-2 py-1 text-[10px] font-bold rounded-md {{ strtolower($setoran->jenis) == 'ziyadah' || strtolower($setoran->jenis) == 'hafalan_baru' ? 'bg-emerald-100 text-emerald-700' : 'bg-blue-100 text-blue-700' }}">
+                                {{ str_replace('_', ' ', ucfirst($setoran->jenis)) }}
                             </span>
                         </td>
                         <td class="px-4 py-3">
-                            <p class="font-medium text-on-surface">{{ $setoran->surat }}</p>
-                            <p class="text-[10px] text-on-surface-variant">Ayat: {{ $setoran->ayat }}</p>
+                            <p class="font-medium text-on-surface">{{ $setoran->surah }}</p>
+                            <p class="text-[10px] text-on-surface-variant">Ayat: {{ $setoran->ayat_dari }} - {{ $setoran->ayat_sampai }}</p>
                         </td>
                         <td class="px-4 py-3 text-center">
-                            <span class="font-bold {{ $setoran->nilai >= 80 ? 'text-emerald-600' : ($setoran->nilai >= 70 ? 'text-amber-500' : 'text-error') }}">
+                            @php
+                                $nilaiLower = strtolower($setoran->nilai);
+                                $color = 'text-on-surface';
+                                if (str_contains($nilaiLower, 'mumtaz') || str_contains($nilaiLower, 'jiddan')) $color = 'text-emerald-600';
+                                elseif (str_contains($nilaiLower, 'jayyid')) $color = 'text-blue-600';
+                                elseif (str_contains($nilaiLower, 'maqbul')) $color = 'text-amber-500';
+                                elseif (str_contains($nilaiLower, 'rasib')) $color = 'text-error';
+                            @endphp
+                            <span class="font-bold {{ $color }}">
                                 {{ $setoran->nilai }}
                             </span>
                         </td>
