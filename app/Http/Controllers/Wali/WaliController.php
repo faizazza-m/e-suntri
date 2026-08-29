@@ -98,9 +98,9 @@ class WaliController extends Controller
                         'iconClass' => 'text-primary bg-primary-container',
                         'title' => 'Setoran Disetujui',
                         'desc' => "Telah menyetorkan Surat {$item->surah} (Nilai: {$item->nilai}).",
-                        'time' => $item->created_at->diffForHumans(),
+                        'time' => optional($item->created_at)->diffForHumans() ?? 'Baru saja',
                         'read' => false,
-                        'timestamp' => $item->created_at->timestamp
+                        'timestamp' => optional($item->created_at)->timestamp ?? 0
                     ];
                 });
 
@@ -114,9 +114,9 @@ class WaliController extends Controller
                         'iconClass' => 'text-error bg-error-container',
                         'title' => 'Tagihan Belum Lunas',
                         'desc' => "Tagihan {$item->jenisTagihan->nama} sebesar Rp " . number_format($item->nominal, 0, ',', '.') . ".",
-                        'time' => $item->created_at->diffForHumans(),
+                        'time' => optional($item->created_at)->diffForHumans() ?? '-',
                         'read' => true,
-                        'timestamp' => $item->created_at->timestamp
+                        'timestamp' => optional($item->created_at)->timestamp ?? 0
                     ];
                 });
 
@@ -128,9 +128,9 @@ class WaliController extends Controller
                         'iconClass' => 'text-secondary bg-secondary-container',
                         'title' => $item->judul,
                         'desc' => \Illuminate\Support\Str::limit($item->isi, 60),
-                        'time' => \Carbon\Carbon::parse($item->published_at)->diffForHumans(),
+                        'time' => $item->published_at ? \Carbon\Carbon::parse($item->published_at)->diffForHumans() : '-',
                         'read' => true,
-                        'timestamp' => \Carbon\Carbon::parse($item->published_at)->timestamp
+                        'timestamp' => $item->published_at ? \Carbon\Carbon::parse($item->published_at)->timestamp : 0
                     ];
                 });
 
@@ -146,9 +146,9 @@ class WaliController extends Controller
                         'iconClass' => $iconClass,
                         'title' => 'Izin ' . $statusText,
                         'desc' => 'Pengajuan izin ' . str_replace('_', ' ', $item->jenis) . ' telah ' . strtolower($statusText) . ' oleh admin.',
-                        'time' => $item->updated_at->diffForHumans(),
+                        'time' => optional($item->updated_at)->diffForHumans() ?? '-',
                         'read' => false,
-                        'timestamp' => $item->updated_at->timestamp
+                        'timestamp' => optional($item->updated_at)->timestamp ?? 0
                     ];
                 });
 
