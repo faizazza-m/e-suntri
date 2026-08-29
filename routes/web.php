@@ -253,3 +253,39 @@ Route::middleware(['auth'])->prefix('mudir')->name('mudir.')->group(function () 
     Route::get('/santri', [\App\Http\Controllers\Mudir\MudirController::class, 'santri'])->name('santri');
     Route::get('/pengumuman', [\App\Http\Controllers\Mudir\MudirController::class, 'pengumuman'])->name('pengumuman');
 });
+
+// =============================================
+// Mobile API Routes (e-suntri Flutter integration)
+// =============================================
+Route::prefix('api/mobile')->group(function () {
+    Route::post('/login', [\App\Http\Controllers\ApiController::class, 'login']);
+    Route::get('/sync', [\App\Http\Controllers\ApiController::class, 'syncData']);
+    
+    // Student Mutations
+    Route::post('/student', [\App\Http\Controllers\ApiController::class, 'addStudent']);
+    
+    // Tahfizh Setoran Mutations
+    Route::post('/setoran', [\App\Http\Controllers\ApiController::class, 'addSetoran']);
+    Route::delete('/setoran/{id}', [\App\Http\Controllers\ApiController::class, 'deleteSetoran']);
+    
+    // Perizinan (Leave) Mutations
+    Route::post('/permission', [\App\Http\Controllers\ApiController::class, 'addPermission']);
+    Route::post('/permission/{id}/approve', [\App\Http\Controllers\ApiController::class, 'approvePermission']);
+    Route::post('/permission/{id}/reject', [\App\Http\Controllers\ApiController::class, 'rejectPermission']);
+    
+    // UKS (Kesehatan) Mutations
+    Route::post('/medical-record', [\App\Http\Controllers\ApiController::class, 'addMedicalRecord']);
+    
+    // Halaqoh Mutations
+    Route::post('/halaqoh', [\App\Http\Controllers\ApiController::class, 'addHalaqoh']);
+    Route::post('/halaqoh/{id}', [\App\Http\Controllers\ApiController::class, 'updateHalaqoh']);
+    Route::delete('/halaqoh/{id}', [\App\Http\Controllers\ApiController::class, 'deleteHalaqoh']);
+    
+    // Finance (Billing) Mutations
+    Route::post('/generate-bill', [\App\Http\Controllers\ApiController::class, 'generateBill']);
+    Route::post('/pay-bill', [\App\Http\Controllers\ApiController::class, 'payBill']);
+    
+    // Academic Grade Mutations
+    Route::post('/grade', [\App\Http\Controllers\ApiController::class, 'saveGrade']);
+});
+

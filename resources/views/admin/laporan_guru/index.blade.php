@@ -67,7 +67,7 @@
             @endif
 
             <div class="mt-auto pt-4 border-t border-outline-variant/30 flex justify-between items-center text-[10px] font-bold text-on-surface-variant">
-                <span>Dikirim: {{ $laporan->created_at->diffForHumans() }}</span>
+                <span>Dikirim: {{ optional($laporan->created_at)->diffForHumans() ?? '-' }}</span>
                 <span class="flex items-center gap-1 group-hover:text-primary transition-colors">
                     Baca Detail <span class="material-symbols-outlined text-[14px]">arrow_forward</span>
                 </span>

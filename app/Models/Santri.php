@@ -55,4 +55,9 @@ class Santri extends Model
     {
         return $this->hasOne(PenghuniKamar::class);
     }
+
+    public function kehadirans()
+    {
+        return $this->hasMany(Kehadiran::class);
+    }
 }
