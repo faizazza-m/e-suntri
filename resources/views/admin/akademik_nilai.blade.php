@@ -12,7 +12,7 @@
             </div>
             <div>
                 <h2 class="text-3xl font-bold text-secondary">Data Nilai Santri</h2>
-                <p class="text-sm text-on-surface-variant">Kelola nilai Harian, UTS, dan UAS santri secara terpadu.</p>
+                <p class="text-sm text-on-surface-variant">Kelola nilai Harian dan UAS santri secara terpadu.</p>
             </div>
         </div>
         <button onclick="document.getElementById('modal-tambah-nilai').classList.remove('hidden')" class="flex items-center gap-2 px-4 py-2.5 bg-secondary text-white text-sm font-bold rounded-xl shadow-lg hover:shadow-xl hover:opacity-90 transition-all">
@@ -38,7 +38,6 @@
                         <th class="px-5 py-3 font-bold">Mata Pelajaran</th>
                         <th class="px-5 py-3 font-bold">SMT / TA</th>
                         <th class="px-5 py-3 font-bold text-center">Harian</th>
-                        <th class="px-5 py-3 font-bold text-center">UTS</th>
                         <th class="px-5 py-3 font-bold text-center">UAS</th>
                         <th class="px-5 py-3 font-bold text-center">Akhir</th>
                         <th class="px-5 py-3 font-bold text-center">Predikat</th>
@@ -55,7 +54,6 @@
                         <td class="px-5 py-3 text-sm font-medium">{{ $nilai->mapel->nama }}</td>
                         <td class="px-5 py-3 text-sm font-medium">Smt {{ $nilai->semester }} / {{ $nilai->tahun_ajaran }}</td>
                         <td class="px-5 py-3 text-center text-sm font-bold">{{ $nilai->nilai_harian ?? '-' }}</td>
-                        <td class="px-5 py-3 text-center text-sm font-bold text-secondary">{{ $nilai->nilai_uts ?? '-' }}</td>
                         <td class="px-5 py-3 text-center text-sm font-bold text-primary">{{ $nilai->nilai_uas ?? '-' }}</td>
                         <td class="px-5 py-3 text-center text-sm font-bold bg-surface-container/50">{{ $nilai->nilai_akhir ?? '-' }}</td>
                         <td class="px-5 py-3 text-center">
@@ -139,14 +137,10 @@
                 <label class="block text-xs font-bold text-on-surface-variant uppercase tracking-widest mb-1">Tahun Ajaran</label>
                 <input type="text" name="tahun_ajaran" value="{{ date('Y').'/'.(date('Y')+1) }}" required class="w-full h-12 px-4 bg-surface-container border border-outline-variant rounded-xl text-sm focus:ring-2 focus:ring-secondary outline-none">
             </div>
-            <div class="grid grid-cols-3 gap-4">
+            <div class="grid grid-cols-2 gap-4">
                 <div>
                     <label class="block text-xs font-bold text-on-surface-variant uppercase tracking-widest mb-1">Harian</label>
                     <input type="number" step="0.01" name="nilai_harian" max="100" class="w-full h-12 px-4 bg-surface-container border border-outline-variant rounded-xl text-sm focus:ring-2 focus:ring-secondary outline-none" placeholder="0-100">
-                </div>
-                <div>
-                    <label class="block text-xs font-bold text-on-surface-variant uppercase tracking-widest mb-1">UTS</label>
-                    <input type="number" step="0.01" name="nilai_uts" max="100" class="w-full h-12 px-4 bg-surface-container border border-outline-variant rounded-xl text-sm focus:ring-2 focus:ring-secondary outline-none" placeholder="0-100">
                 </div>
                 <div>
                     <label class="block text-xs font-bold text-on-surface-variant uppercase tracking-widest mb-1">UAS</label>

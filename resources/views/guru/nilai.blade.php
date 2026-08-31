@@ -83,9 +83,8 @@
             <p class="text-sm font-bold text-on-surface">{{ $santriList->count() }} Santri Ditemukan</p>
         </div>
         <div class="flex flex-wrap gap-3 text-[10px] font-bold text-on-surface-variant">
-            <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-yellow-400 inline-block"></span> Harian 30%</span>
-            <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-orange-500 inline-block"></span> UTS 30%</span>
-            <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-red-500 inline-block"></span> UAS 40%</span>
+            <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-yellow-400 inline-block"></span> Harian 20%</span>
+            <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-red-500 inline-block"></span> UAS 80%</span>
         </div>
     </div>
 
@@ -96,7 +95,6 @@
                 <tr class="bg-surface-container/30 text-on-surface-variant text-[10px] uppercase tracking-wider">
                     <th class="px-5 py-3 text-left font-bold">Santri</th>
                     <th class="px-4 py-3 text-center font-bold">Harian</th>
-                    <th class="px-4 py-3 text-center font-bold">UTS</th>
                     <th class="px-4 py-3 text-center font-bold">UAS</th>
                     <th class="px-4 py-3 text-center font-bold">Nilai Akhir</th>
                     <th class="px-4 py-3 text-center font-bold">Predikat</th>
@@ -124,7 +122,7 @@
                             </div>
                         </div>
                     </td>
-                    @foreach([['name'=>'nilai_harian','val'=>$nilai?->nilai_harian,'color'=>'yellow'],['name'=>'nilai_uts','val'=>$nilai?->nilai_uts,'color'=>'orange'],['name'=>'nilai_uas','val'=>$nilai?->nilai_uas,'color'=>'red']] as $f)
+                    @foreach([['name'=>'nilai_harian','val'=>$nilai?->nilai_harian,'color'=>'yellow'],['name'=>'nilai_uas','val'=>$nilai?->nilai_uas,'color'=>'red']] as $f)
                     <td class="px-4 py-3.5 text-center">
                         <input type="number" name="{{ $f['name'] }}" value="{{ $f['val'] }}"
                             min="0" max="100" step="0.01"
@@ -199,8 +197,8 @@
                 @endif
             </div>
 
-            <div class="grid grid-cols-3 gap-2 mb-3">
-                @foreach([['label'=>'Harian','name'=>'nilai_harian','val'=>$nilai?->nilai_harian],['label'=>'UTS','name'=>'nilai_uts','val'=>$nilai?->nilai_uts],['label'=>'UAS','name'=>'nilai_uas','val'=>$nilai?->nilai_uas]] as $f)
+            <div class="grid grid-cols-2 gap-2 mb-3">
+                @foreach([['label'=>'Harian','name'=>'nilai_harian','val'=>$nilai?->nilai_harian],['label'=>'UAS','name'=>'nilai_uas','val'=>$nilai?->nilai_uas]] as $f)
                 <div>
                     <label class="text-[9px] text-on-surface-variant font-bold uppercase block mb-1">{{ $f['label'] }}</label>
                     <input type="number" name="{{ $f['name'] }}" value="{{ $f['val'] }}" min="0" max="100" step="0.01" placeholder="0"

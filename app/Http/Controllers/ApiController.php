@@ -233,8 +233,6 @@ class ApiController extends Controller
                 'class' => $g->santri->kelas->nama ?? 'Umum',
                 'subject' => $g->mapel->nama ?? 'Mapel',
                 'tugas' => (double)($g->nilai_harian ?? 0),
-                'uh' => (double)($g->nilai_harian ?? 0),
-                'uts' => (double)($g->nilai_uts ?? 0),
                 'uas' => (double)($g->nilai_uas ?? 0),
                 'finalScore' => (double)($g->nilai_akhir ?? 0),
             ];
@@ -751,7 +749,6 @@ class ApiController extends Controller
             ],
             [
                 'nilai_harian' => $request->input('tugas'), // Use tugas as harian representation
-                'nilai_uts' => $request->input('uts'),
                 'nilai_uas' => $request->input('uas'),
                 'nilai_akhir' => $finalScore,
                 'predikat' => $predikat,

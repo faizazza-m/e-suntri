@@ -99,14 +99,12 @@ class GuruController extends Controller
             'semester'     => 'required|in:1,2',
             'tahun_ajaran' => 'required|string|max:10',
             'nilai_harian' => 'nullable|numeric|min:0|max:100',
-            'nilai_uts'    => 'nullable|numeric|min:0|max:100',
             'nilai_uas'    => 'nullable|numeric|min:0|max:100',
         ]);
         
         $harian  = $request->nilai_harian ?? 0;
-        $uts     = $request->nilai_uts ?? 0;
         $uas     = $request->nilai_uas ?? 0;
-        $akhir   = round(($harian * 0.3) + ($uts * 0.3) + ($uas * 0.4), 2);
+        $akhir   = round(($harian * 0.2) + ($uas * 0.8), 2);
         $predikat = match(true) {
             $akhir >= 90 => 'A',
             $akhir >= 75 => 'B',
@@ -124,7 +122,6 @@ class GuruController extends Controller
             ],
             [
                 'nilai_harian' => $request->nilai_harian,
-                'nilai_uts'    => $request->nilai_uts,
                 'nilai_uas'    => $request->nilai_uas,
                 'nilai_akhir'  => $akhir,
                 'predikat'     => $predikat,

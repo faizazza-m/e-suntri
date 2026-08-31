@@ -229,9 +229,9 @@ class AkademikController extends Controller
         return view('admin.akademik_nilai', compact('nilais', 'santris', 'mapels'));
     }
 
-    private function calculateNilai($harian, $uts, $uas)
+    private function calculateNilai($harian, $uas)
     {
-        $akhir = ($harian * 0.4) + ($uts * 0.3) + ($uas * 0.3);
+        $akhir = ($harian * 0.2) + ($uas * 0.8);
         $predikat = 'E';
         if ($akhir >= 90) $predikat = 'A';
         elseif ($akhir >= 80) $predikat = 'B';
@@ -249,13 +249,11 @@ class AkademikController extends Controller
             'semester'     => 'required|integer|min:1|max:2',
             'tahun_ajaran' => 'required|string',
             'nilai_harian' => 'nullable|numeric|min:0|max:100',
-            'nilai_uts'    => 'nullable|numeric|min:0|max:100',
             'nilai_uas'    => 'nullable|numeric|min:0|max:100',
         ]);
 
         $calc = $this->calculateNilai(
             $request->nilai_harian ?? 0, 
-            $request->nilai_uts ?? 0, 
             $request->nilai_uas ?? 0
         );
 
@@ -275,13 +273,11 @@ class AkademikController extends Controller
             'semester'     => 'required|integer|min:1|max:2',
             'tahun_ajaran' => 'required|string',
             'nilai_harian' => 'nullable|numeric|min:0|max:100',
-            'nilai_uts'    => 'nullable|numeric|min:0|max:100',
             'nilai_uas'    => 'nullable|numeric|min:0|max:100',
         ]);
 
         $calc = $this->calculateNilai(
             $request->nilai_harian ?? 0, 
-            $request->nilai_uts ?? 0, 
             $request->nilai_uas ?? 0
         );
 
