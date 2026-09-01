@@ -25,8 +25,8 @@ Route::post('/login', function (\Illuminate\Http\Request $request) {
     // Default assume it's email
     $credentials = ['email' => $identifier, 'password' => $password];
 
-    // If it looks like a NISN (mostly numbers)
-    if (preg_match('/^[0-9]+$/', $identifier) || str_starts_with($identifier, 'TBD-')) {
+    // If it's not an email, try checking if it's a Santri NIS
+    if (!filter_var($identifier, FILTER_VALIDATE_EMAIL)) {
         $santri = \App\Models\Santri::where('nis', $identifier)->first();
         if ($santri) {
             $wali = \App\Models\WaliSantri::where('santri_id', $santri->id)->first();
@@ -289,3 +289,13 @@ Route::prefix('api/mobile')->group(function () {
     Route::post('/grade', [\App\Http\Controllers\ApiController::class, 'saveGrade']);
 });
 
+// App Version Check (Public — no auth required)
+Route::get('/api/mobile/app-version', function () {
+    return response()->json([
+        'version'      => '1.0.0',          // ← Ganti ini setiap ada update
+        'build'        => 1,                 // ← Increment setiap build baru
+        'download_url' => '',                // ← Isi URL APK terbaru saat ada update
+        'notes'        => 'Versi awal aplikasi e-Suntri.',
+        'force'        => false,             // ← true = paksa update wajib
+    ]);
+});

@@ -36,8 +36,8 @@ class ApiController extends Controller
 
         $credentials = ['email' => $identifier, 'password' => $password];
 
-        // Check if it's a NISN / Santri NIS
-        if (preg_match('/^[0-9]+$/', $identifier) || str_starts_with($identifier, 'TBD-')) {
+        // Check if it's a NISN / Santri NIS (Identifier might not be an email)
+        if (!filter_var($identifier, FILTER_VALIDATE_EMAIL)) {
             $santri = Santri::where('nis', $identifier)->first();
             if ($santri) {
                 $wali = \App\Models\WaliSantri::where('santri_id', $santri->id)->first();
