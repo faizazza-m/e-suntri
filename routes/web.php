@@ -84,6 +84,7 @@ Route::middleware(['auth', \App\Http\Middleware\PreventBackHistory::class])->gro
     Route::prefix('admin')->name('')->group(function () {
 
     Route::get('/dashboard', [\App\Http\Controllers\Admin\DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/dashboard/export-pdf', [\App\Http\Controllers\Admin\DashboardController::class, 'exportPdf'])->name('dashboard.export-pdf');
     Route::get('/kehadiran', [\App\Http\Controllers\Admin\KehadiranController::class, 'index'])->name('kehadiran');
     Route::get('/aktivitas', [\App\Http\Controllers\Admin\AktivitasController::class, 'index'])->name('aktivitas');
     

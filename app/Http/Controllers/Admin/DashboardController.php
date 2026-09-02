@@ -62,6 +62,16 @@ class DashboardController extends Controller
         }
         $maxPekanan = max(array_column($hafalanPekanan, 'val')) ?: 1;
 
+        // ── Chart Hafalan Harian (7 hari terakhir) ─────────────────
+        $hafalanHarian = [];
+        for ($d = 6; $d >= 0; $d--) {
+            $date = now()->subDays($d);
+            $count = Setoran::whereDate('tanggal', $date->toDateString())->count();
+            // Use short day name e.g., Sen, Sel, Rab
+            $hafalanHarian[] = ['day' => $date->locale('id')->isoFormat('ddd'), 'val' => $count];
+        }
+        $maxHarian = max(array_column($hafalanHarian, 'val')) ?: 1;
+
         // ── Aktivitas Terbaru (semua dari DB, label bersih) ────────────
         $activities = collect();
 
@@ -181,8 +191,59 @@ class DashboardController extends Controller
             'santriIzin', 'santriSakit', 'tagihanPending',
             'hafalanBulanan', 'maxHafalan',
             'hafalanPekanan', 'maxPekanan',
+            'hafalanHarian', 'maxHarian',
             'activities', 'agendas', 'santriSakitGlobal',
             'hadirList', 'sakitList', 'izinList', 'alphaList'
         ));
+    }
+
+    public function exportPdf()
+    {
+        $startOfMonth = now()->startOfMonth()->toDateString();
+        $endOfMonth = now()->endOfMonth()->toDateString();
+        
+        // Data Kehadiran
+        $kehadiran = \App\Models\Kehadiran::whereBetween('tanggal', [$startOfMonth, $endOfMonth])
+            ->selectRaw('status, count(*) as total')
+            ->groupBy('status')
+            ->pluck('total', 'status')
+            ->toArray();
+            
+        // Data Setoran Hafalan Baru & Muraja'ah
+        $hafalanBaru = \App\Models\Setoran::whereBetween('tanggal', [$startOfMonth, $endOfMonth])
+            ->where('jenis', 'hafalan_baru')
+            ->get();
+            
+        $murojaah = \App\Models\Setoran::whereBetween('tanggal', [$startOfMonth, $endOfMonth])
+            ->where('jenis', 'murajaah')
+            ->get();
+            
+        // Hitung halaman (Estimasi 1 halaman = 15 ayat)
+        $hitungHalaman = function ($setorans) {
+            $totalAyat = 0;
+            foreach ($setorans as $s) {
+                if ($s->ayat_dari && $s->ayat_sampai) {
+                    $totalAyat += max(0, $s->ayat_sampai - $s->ayat_dari + 1);
+                } else {
+                    $totalAyat += 15; // Asumsi 1 setoran penuh = 1 halaman (15 ayat) jika tak ada rincian
+                }
+            }
+            return ceil($totalAyat / 15);
+        };
+        
+        $halamanHafalanBaru = $hitungHalaman($hafalanBaru);
+        $halamanMurojaah = $hitungHalaman($murojaah);
+        
+        $data = [
+            'bulan' => now()->locale('id')->isoFormat('MMMM YYYY'),
+            'kehadiran' => $kehadiran,
+            'halamanHafalanBaru' => $halamanHafalanBaru,
+            'totalSetoranBaru' => $hafalanBaru->count(),
+            'halamanMurojaah' => $halamanMurojaah,
+            'totalSetoranMurojaah' => $murojaah->count(),
+        ];
+        
+        $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadView('admin.exports.dashboard_pdf', $data);
+        return $pdf->download('Laporan_Bulanan_Pesantren_' . now()->format('M_Y') . '.pdf');
     }
 }

@@ -66,18 +66,26 @@
 {{-- Chart & Activity Layout --}}
 <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 fade-in-up delay-2">
 
-    {{-- Hafalan Chart --}}
-    <div class="lg:col-span-8 glassmorphism p-8 rounded-2xl border border-white/20 shadow-sm">
-        <div class="flex justify-between items-center mb-8">
+    {{-- Left Column for Charts --}}
+    <div class="lg:col-span-8 flex flex-col gap-6">
+
+        {{-- Hafalan Chart --}}
+        <div class="glassmorphism p-8 rounded-2xl border border-white/20 shadow-sm">
+            <div class="flex justify-between items-center mb-8">
             <div>
                 <h3 class="text-xl font-bold text-on-surface">Perkembangan Hafalan</h3>
                 <p class="text-sm text-on-surface-variant">Statistik setoran Juz dari database</p>
             </div>
-            <div class="flex items-center gap-1 bg-surface-container-low p-1 rounded-lg">
-                <button id="btnBulanan"
-                    class="px-4 py-1.5 bg-white shadow-sm rounded-md text-xs font-bold text-primary transition-all">BULANAN</button>
-                <button id="btnPekanan"
-                    class="px-4 py-1.5 text-xs font-bold text-on-surface-variant hover:text-primary transition-colors">PEKANAN</button>
+            <div class="flex items-center gap-3">
+                <div class="flex items-center gap-1 bg-surface-container-low p-1 rounded-lg">
+                    <button id="btnBulanan"
+                        class="px-4 py-1.5 text-xs font-bold text-on-surface-variant hover:text-primary transition-colors">BULANAN</button>
+                    <button id="btnPekanan"
+                        class="px-4 py-1.5 bg-white shadow-sm rounded-md text-xs font-bold text-primary transition-all">PEKANAN</button>
+                </div>
+                <a href="{{ route('dashboard.export-pdf') }}" target="_blank" class="flex items-center gap-2 px-4 py-1.5 bg-primary/10 text-primary hover:bg-primary hover:text-white transition-colors shadow-sm rounded-md text-xs font-bold">
+                    <span class="material-symbols-outlined text-[16px]">picture_as_pdf</span> EXPORT PDF
+                </a>
             </div>
         </div>
 
@@ -85,6 +93,26 @@
         <div class="relative h-64 w-full">
             <canvas id="hafalanChart"></canvas>
         </div>
+        </div>
+
+        {{-- Hafalan Harian Chart --}}
+        <div class="glassmorphism p-8 rounded-2xl border border-white/20 shadow-sm">
+            <div class="flex justify-between items-center mb-8">
+                <div>
+                    <h3 class="text-xl font-bold text-on-surface">Setoran Harian</h3>
+                    <p class="text-sm text-on-surface-variant">Statistik harian selama satu minggu terakhir</p>
+                </div>
+                <a href="{{ route('dashboard.export-pdf') }}" target="_blank" class="flex items-center gap-2 px-4 py-1.5 bg-primary/10 text-primary hover:bg-primary hover:text-white transition-colors shadow-sm rounded-md text-xs font-bold">
+                    <span class="material-symbols-outlined text-[16px]">picture_as_pdf</span> EXPORT PDF
+                </a>
+            </div>
+
+            {{-- Canvas Chart Harian --}}
+            <div class="relative h-64 w-full">
+                <canvas id="harianChart"></canvas>
+            </div>
+        </div>
+
     </div>
 
     {{-- Right Column --}}
@@ -445,17 +473,52 @@
     const bulananData   = @json(array_column($hafalanBulanan, 'val'));
     const pekananLabels = @json(array_column($hafalanPekanan, 'month'));
     const pekananData   = @json(array_column($hafalanPekanan, 'val'));
+    const harianLabels  = @json(array_column($hafalanHarian, 'day'));
+    const harianData    = @json(array_column($hafalanHarian, 'val'));
 
     const ctx = document.getElementById('hafalanChart').getContext('2d');
     const chart = new Chart(ctx, {
         type: 'bar',
         data: {
-            labels: bulananLabels,
+            labels: pekananLabels,
             datasets: [{
                 label: 'Jumlah Setoran',
-                data: bulananData,
+                data: pekananData,
                 backgroundColor: 'rgba(0,69,50,0.25)',
                 borderColor: 'rgba(0,69,50,0.8)',
+                borderWidth: 2,
+                borderRadius: 8,
+                borderSkipped: false,
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false },
+                tooltip: {
+                    callbacks: {
+                        label: ctx => ctx.parsed.y + ' Setoran'
+                    }
+                }
+            },
+            scales: {
+                x: { grid: { display: false }, ticks: { font: { size: 11, weight: 'bold' } } },
+                y: { grid: { color: 'rgba(0,0,0,0.05)' }, beginAtZero: true, ticks: { stepSize: 1 } }
+            }
+        }
+    });
+
+    const ctxHarian = document.getElementById('harianChart').getContext('2d');
+    const harianChart = new Chart(ctxHarian, {
+        type: 'bar',
+        data: {
+            labels: harianLabels,
+            datasets: [{
+                label: 'Jumlah Setoran',
+                data: harianData,
+                backgroundColor: 'rgba(59,130,246,0.25)',
+                borderColor: 'rgba(59,130,246,0.8)',
                 borderWidth: 2,
                 borderRadius: 8,
                 borderSkipped: false,
