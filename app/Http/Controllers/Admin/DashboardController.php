@@ -86,7 +86,7 @@ class DashboardController extends Controller
                     'dot'       => 'bg-primary',
                     'html'      => '<strong>' . e($s->santri->nama) . '</strong> menyelesaikan setoran <strong>' . $jenisLabel . '</strong>' . $surahText,
                     'timestamp' => Carbon::parse($s->created_at),
-                    'time'      => Carbon::parse($s->created_at)->diffForHumans(),
+                    'time'      => Carbon::parse($s->created_at)->locale('id')->diffForHumans(),
                     'tag'       => 'Tahfizh',
                 ]);
             });
@@ -100,7 +100,7 @@ class DashboardController extends Controller
                     'dot'       => 'bg-orange-500',
                     'html'      => '<strong>' . e($p->santri->nama) . '</strong> mengajukan izin ' . $jenisLabel . '.',
                     'timestamp' => Carbon::parse($p->created_at),
-                    'time'      => Carbon::parse($p->created_at)->diffForHumans(),
+                    'time'      => Carbon::parse($p->created_at)->locale('id')->diffForHumans(),
                     'tag'       => 'Perizinan',
                 ]);
             });
@@ -114,7 +114,7 @@ class DashboardController extends Controller
                     'dot'       => 'bg-green-500',
                     'html'      => 'Pembayaran <strong>' . e($namaTagihan) . '</strong> atas nama <strong>' . e($t->santri->nama) . '</strong> berhasil dikonfirmasi.',
                     'timestamp' => Carbon::parse($t->created_at),
-                    'time'      => Carbon::parse($t->created_at)->diffForHumans(),
+                    'time'      => Carbon::parse($t->created_at)->locale('id')->diffForHumans(),
                     'tag'       => 'Keuangan',
                 ]);
             });
@@ -127,7 +127,7 @@ class DashboardController extends Controller
                     'dot'       => 'bg-rose-500',
                     'html'      => '<strong>' . e($k->santri->nama) . '</strong> berkunjung ke UKS dengan keluhan: ' . e($k->keluhan),
                     'timestamp' => Carbon::parse($k->created_at),
-                    'time'      => Carbon::parse($k->created_at)->diffForHumans(),
+                    'time'      => Carbon::parse($k->created_at)->locale('id')->diffForHumans(),
                     'tag'       => 'Kesehatan',
                 ]);
             });
@@ -139,7 +139,7 @@ class DashboardController extends Controller
                     'dot'       => 'bg-cyan-500',
                     'html'      => 'Pengumuman baru: <strong>' . e($p->judul) . '</strong>',
                     'timestamp' => Carbon::parse($p->created_at),
-                    'time'      => Carbon::parse($p->created_at)->diffForHumans(),
+                    'time'      => Carbon::parse($p->created_at)->locale('id')->diffForHumans(),
                     'tag'       => 'Pengumuman',
                 ]);
             });
