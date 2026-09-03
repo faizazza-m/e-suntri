@@ -375,15 +375,15 @@
                             <tbody>
                                 <tr>
                                     <td style="width: 70%;">Izin</td>
-                                    <td style="text-align: center; width: 30%;">2</td>
+                                    <td style="text-align: center; width: 30%;">{{ $kehadiran['izin'] > 0 ? $kehadiran['izin'] : '-' }}</td>
                                 </tr>
                                 <tr>
                                     <td>Sakit</td>
-                                    <td style="text-align: center;">4</td>
+                                    <td style="text-align: center;">{{ $kehadiran['sakit'] > 0 ? $kehadiran['sakit'] : '-' }}</td>
                                 </tr>
                                 <tr>
                                     <td>Alpha</td>
-                                    <td style="text-align: center;">-</td>
+                                    <td style="text-align: center;">{{ $kehadiran['alpha'] > 0 ? $kehadiran['alpha'] : '-' }}</td>
                                 </tr>
                             </tbody>
                         </table>

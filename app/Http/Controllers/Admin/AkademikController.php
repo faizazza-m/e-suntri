@@ -336,6 +336,7 @@ class AkademikController extends Controller
         $santris = Santri::all();
         $selectedSantri = null;
         $nilais = collect();
+        $kehadiran = ['izin' => 0, 'sakit' => 0, 'alpha' => 0];
 
         if ($request->has('santri_id')) {
             $selectedSantri = Santri::with('kelas')->findOrFail($request->santri_id);
@@ -343,8 +344,12 @@ class AkademikController extends Controller
                 ->where('santri_id', $selectedSantri->id)
                 ->where('semester', $request->get('semester', 1))
                 ->get();
+                
+            $kehadiran['izin'] = \App\Models\Kehadiran::where('santri_id', $selectedSantri->id)->where('status', 'izin')->count();
+            $kehadiran['sakit'] = \App\Models\Kehadiran::where('santri_id', $selectedSantri->id)->where('status', 'sakit')->count();
+            $kehadiran['alpha'] = \App\Models\Kehadiran::where('santri_id', $selectedSantri->id)->where('status', 'alpha')->count();
         }
 
-        return view('admin.akademik_raport', compact('santris', 'selectedSantri', 'nilais'));
+        return view('admin.akademik_raport', compact('santris', 'selectedSantri', 'nilais', 'kehadiran'));
     }
 }
