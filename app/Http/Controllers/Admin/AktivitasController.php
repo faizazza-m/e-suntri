@@ -36,7 +36,7 @@ class AktivitasController extends Controller
         $limit = 100;
 
         // Setoran
-        Setoran::with('santri')->orderByDesc('created_at')->take($limit)->get()
+        Setoran::with('santri')->where('created_at', '>=', now()->subDay())->orderByDesc('created_at')->take($limit)->get()
             ->each(function ($s) use (&$activities) {
                 if (!$s->santri) return;
                 $jenisLabel = $this->jenisSetoran[$s->jenis] ?? ucfirst($s->jenis);
@@ -45,14 +45,14 @@ class AktivitasController extends Controller
                     'dot'       => 'bg-primary',
                     'icon'      => 'menu_book',
                     'html'      => '<strong>' . e($s->santri->nama) . '</strong> menyelesaikan setoran <strong>' . $jenisLabel . '</strong>' . $surahText,
-                    'timestamp' => Carbon::parse($s->created_at),
+                    'timestamp' => $s->created_at ? $s->created_at->locale('id') : Carbon::now()->locale('id'),
                     'tag'       => 'Tahfizh',
                     'tagColor'  => 'bg-primary/10 text-primary border-primary/20',
                 ]);
             });
 
         // Perizinan
-        Perizinan::with('santri')->orderByDesc('created_at')->take($limit)->get()
+        Perizinan::with('santri')->where('created_at', '>=', now()->subDay())->orderByDesc('created_at')->take($limit)->get()
             ->each(function ($p) use (&$activities) {
                 if (!$p->santri) return;
                 $jenisLabel = $this->jenisPerizinan[$p->jenis] ?? ucfirst($p->jenis);
@@ -60,14 +60,14 @@ class AktivitasController extends Controller
                     'dot'       => 'bg-orange-500',
                     'icon'      => 'directions_run',
                     'html'      => '<strong>' . e($p->santri->nama) . '</strong> mengajukan izin ' . $jenisLabel . '.',
-                    'timestamp' => Carbon::parse($p->created_at),
+                    'timestamp' => $p->created_at ? $p->created_at->locale('id') : Carbon::now()->locale('id'),
                     'tag'       => 'Perizinan',
                     'tagColor'  => 'bg-orange-500/10 text-orange-500 border-orange-500/20',
                 ]);
             });
 
         // Keuangan (Tagihan Lunas)
-        Tagihan::with(['santri','jenis'])->where('status', 'lunas')->orderByDesc('created_at')->take($limit)->get()
+        Tagihan::with(['santri','jenis'])->where('status', 'lunas')->where('created_at', '>=', now()->subDay())->orderByDesc('created_at')->take($limit)->get()
             ->each(function ($t) use (&$activities) {
                 if (!$t->santri) return;
                 $namaTagihan = $t->jenis->nama ?? 'Tagihan';
@@ -75,34 +75,34 @@ class AktivitasController extends Controller
                     'dot'       => 'bg-green-500',
                     'icon'      => 'payments',
                     'html'      => 'Pembayaran <strong>' . e($namaTagihan) . '</strong> atas nama <strong>' . e($t->santri->nama) . '</strong> berhasil dikonfirmasi.',
-                    'timestamp' => Carbon::parse($t->created_at),
+                    'timestamp' => $t->created_at ? $t->created_at->locale('id') : Carbon::now()->locale('id'),
                     'tag'       => 'Keuangan',
                     'tagColor'  => 'bg-green-500/10 text-green-500 border-green-500/20',
                 ]);
             });
 
         // Kesehatan
-        RekamKesehatan::with('santri')->orderByDesc('created_at')->take($limit)->get()
+        RekamKesehatan::with('santri')->where('created_at', '>=', now()->subDay())->orderByDesc('created_at')->take($limit)->get()
             ->each(function ($k) use (&$activities) {
                 if (!$k->santri) return;
                 $activities->push([
                     'dot'       => 'bg-rose-500',
                     'icon'      => 'medical_services',
                     'html'      => '<strong>' . e($k->santri->nama) . '</strong> berkunjung ke UKS dengan keluhan: ' . e($k->keluhan),
-                    'timestamp' => Carbon::parse($k->created_at),
+                    'timestamp' => $k->created_at ? $k->created_at->locale('id') : Carbon::now()->locale('id'),
                     'tag'       => 'Kesehatan',
                     'tagColor'  => 'bg-rose-500/10 text-rose-500 border-rose-500/20',
                 ]);
             });
 
         // Pengumuman
-        Pengumuman::with('pembuat')->orderByDesc('created_at')->take($limit)->get()
+        Pengumuman::with('pembuat')->where('created_at', '>=', now()->subDay())->orderByDesc('created_at')->take($limit)->get()
             ->each(function ($p) use (&$activities) {
                 $activities->push([
                     'dot'       => 'bg-cyan-500',
                     'icon'      => 'campaign',
                     'html'      => 'Pengumuman baru: <strong>' . e($p->judul) . '</strong> ditambahkan oleh ' . ($p->pembuat->name ?? 'Admin'),
-                    'timestamp' => Carbon::parse($p->created_at),
+                    'timestamp' => $p->created_at ? $p->created_at->locale('id') : Carbon::now()->locale('id'),
                     'tag'       => 'Pengumuman',
                     'tagColor'  => 'bg-cyan-500/10 text-cyan-500 border-cyan-500/20',
                 ]);

@@ -26,14 +26,17 @@
 {{-- Stats Bar --}}
 <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 fade-in-up delay-1 mt-6">
     @foreach($summary as $stat)
-    <div class="glass-card p-5 rounded-2xl {{ isset($stat['border']) ? $stat['border'] : 'border-primary' }} border-l-4">
-        <p class="text-on-surface-variant text-sm font-medium">{{ $stat['title'] }}</p>
-        <div class="flex items-end justify-between mt-1.5">
-            <h3 class="text-3xl font-bold text-on-surface">{{ $stat['value'] }}</h3>
+    <div class="glassmorphism p-5 rounded-xl border border-white/20 shadow-sm flex flex-col items-center text-center group hover:scale-105 transition-all duration-300">
+        <div class="w-11 h-11 rounded-full flex items-center justify-center mb-3 transition-colors duration-300 bg-primary/10 text-primary group-hover:bg-primary group-hover:text-white">
+            @if(isset($stat['icon']))
+                <span class="material-symbols-outlined text-lg" style="font-variation-settings: 'FILL' 1;">{{ $stat['icon'] }}</span>
+            @endif
+        </div>
+        <span class="text-[10px] text-on-surface-variant uppercase tracking-widest font-bold mb-1">{{ $stat['title'] }}</span>
+        <div class="flex items-center justify-center gap-2">
+            <span class="text-2xl font-bold text-on-surface">{{ $stat['value'] }}</span>
             @if(isset($stat['trend']))
-                <span class="{{ $stat['color'] }} text-white px-2 py-1 rounded text-[10px] font-bold">{{ $stat['trend'] }}</span>
-            @elseif(isset($stat['icon']))
-                <span class="material-symbols-outlined {{ $stat['iconClass'] ?? '' }}" style="font-variation-settings: 'FILL' 1;">{{ $stat['icon'] }}</span>
+                <span class="{{ $stat['color'] }} text-white px-2 py-0.5 rounded text-[10px] font-bold">{{ $stat['trend'] }}</span>
             @endif
         </div>
     </div>
@@ -47,7 +50,7 @@
     <div class="lg:col-span-3 space-y-8">
 
         {{-- Top Performers --}}
-        <section class="glass-card p-6 rounded-3xl overflow-hidden relative">
+        <section class="glassmorphism p-6 rounded-3xl border border-white/20 shadow-sm overflow-hidden relative">
             <div class="absolute top-0 right-0 opacity-5 pointer-events-none transform translate-x-1/4 -translate-y-1/4">
                 <span class="material-symbols-outlined text-[120px]">stars</span>
             </div>
@@ -97,7 +100,7 @@
         </section>
 
         {{-- Tab & Table Section --}}
-        <section class="glass-card rounded-3xl overflow-hidden mt-8">
+        <section class="glassmorphism rounded-3xl border border-white/20 shadow-sm overflow-hidden mt-8">
             <div class="border-b border-outline-variant/10">
                 <div class="flex gap-4 px-6 pt-4">
                     <button class="tab-btn active pb-4 text-primary font-bold border-b-2 border-primary" data-target="#tab-santri">
@@ -229,7 +232,7 @@
         </section>
 
     {{-- Grafik Perkembangan --}}
-    <section class="glass-card p-6 rounded-3xl mt-8">
+    <section class="glassmorphism p-6 rounded-3xl border border-white/20 shadow-sm mt-8">
         <div class="flex justify-between items-center mb-6">
             <h4 class="text-xl font-bold text-on-surface">Aktivitas Setoran (7 Hari Terakhir)</h4>
         </div>
@@ -256,7 +259,7 @@
     {{-- Right Sidebar (25%) --}}
     <aside class="space-y-6">
         {{-- Setoran Hari Ini --}}
-        <div class="glass-card rounded-3xl flex flex-col" style="max-height: 600px;">
+        <div class="glassmorphism rounded-3xl border border-white/20 shadow-sm flex flex-col" style="max-height: 600px;">
             <div class="p-6 border-b border-outline-variant/10">
                 <h4 class="text-lg font-bold text-on-surface flex items-center gap-2">
                     <span class="material-symbols-outlined text-primary">schedule</span>

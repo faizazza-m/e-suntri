@@ -76,7 +76,7 @@ class DashboardController extends Controller
         $activities = collect();
 
         // Setoran terbaru
-        Setoran::with('santri')->orderByDesc('created_at')->take(4)->get()
+        Setoran::with('santri')->where('created_at', '>=', now()->subDay())->orderByDesc('created_at')->take(4)->get()
             ->each(function ($s) use (&$activities) {
                 if (!$s->santri) return;
                 $jenisMap = ['hafalan_baru' => 'Ziyadah', 'murajaah' => 'Muraja\'ah', 'tasmi' => 'Tasmi\''];
@@ -85,61 +85,61 @@ class DashboardController extends Controller
                 $activities->push([
                     'dot'       => 'bg-primary',
                     'html'      => '<strong>' . e($s->santri->nama) . '</strong> menyelesaikan setoran <strong>' . $jenisLabel . '</strong>' . $surahText,
-                    'timestamp' => Carbon::parse($s->created_at),
-                    'time'      => Carbon::parse($s->created_at)->locale('id')->diffForHumans(),
+                    'timestamp' => $s->created_at,
+                    'time'      => $s->created_at ? $s->created_at->format('H:i') . ' WIB' : Carbon::now()->format('H:i') . ' WIB',
                     'tag'       => 'Tahfizh',
                 ]);
             });
 
         // Perizinan terbaru
-        Perizinan::with('santri')->orderByDesc('created_at')->take(2)->get()
+        Perizinan::with('santri')->where('created_at', '>=', now()->subDay())->orderByDesc('created_at')->take(2)->get()
             ->each(function ($p) use (&$activities) {
                 if (!$p->santri) return;
                 $jenisLabel = $this->jenisPerizinan[$p->jenis] ?? ucfirst($p->jenis);
                 $activities->push([
                     'dot'       => 'bg-orange-500',
                     'html'      => '<strong>' . e($p->santri->nama) . '</strong> mengajukan izin ' . $jenisLabel . '.',
-                    'timestamp' => Carbon::parse($p->created_at),
-                    'time'      => Carbon::parse($p->created_at)->locale('id')->diffForHumans(),
+                    'timestamp' => $p->created_at,
+                    'time'      => $p->created_at ? $p->created_at->format('H:i') . ' WIB' : Carbon::now()->format('H:i') . ' WIB',
                     'tag'       => 'Perizinan',
                 ]);
             });
 
         // Tagihan lunas terbaru
-        Tagihan::with(['santri','jenis'])->where('status', 'lunas')->orderByDesc('created_at')->take(2)->get()
+        Tagihan::with(['santri','jenis'])->where('status', 'lunas')->where('created_at', '>=', now()->subDay())->orderByDesc('created_at')->take(2)->get()
             ->each(function ($t) use (&$activities) {
                 if (!$t->santri) return;
                 $namaTagihan = $t->jenis->nama ?? 'Tagihan';
                 $activities->push([
                     'dot'       => 'bg-green-500',
                     'html'      => 'Pembayaran <strong>' . e($namaTagihan) . '</strong> atas nama <strong>' . e($t->santri->nama) . '</strong> berhasil dikonfirmasi.',
-                    'timestamp' => Carbon::parse($t->created_at),
-                    'time'      => Carbon::parse($t->created_at)->locale('id')->diffForHumans(),
+                    'timestamp' => $t->created_at,
+                    'time'      => $t->created_at ? $t->created_at->format('H:i') . ' WIB' : Carbon::now()->format('H:i') . ' WIB',
                     'tag'       => 'Keuangan',
                 ]);
             });
 
         // Kesehatan terbaru
-        RekamKesehatan::with('santri')->orderByDesc('created_at')->take(2)->get()
+        RekamKesehatan::with('santri')->where('created_at', '>=', now()->subDay())->orderByDesc('created_at')->take(2)->get()
             ->each(function ($k) use (&$activities) {
                 if (!$k->santri) return;
                 $activities->push([
                     'dot'       => 'bg-rose-500',
                     'html'      => '<strong>' . e($k->santri->nama) . '</strong> berkunjung ke UKS dengan keluhan: ' . e($k->keluhan),
-                    'timestamp' => Carbon::parse($k->created_at),
-                    'time'      => Carbon::parse($k->created_at)->locale('id')->diffForHumans(),
+                    'timestamp' => $k->created_at,
+                    'time'      => $k->created_at ? $k->created_at->format('H:i') . ' WIB' : Carbon::now()->format('H:i') . ' WIB',
                     'tag'       => 'Kesehatan',
                 ]);
             });
 
         // Pengumuman terbaru
-        Pengumuman::orderByDesc('created_at')->take(2)->get()
+        Pengumuman::where('created_at', '>=', now()->subDay())->orderByDesc('created_at')->take(2)->get()
             ->each(function ($p) use (&$activities) {
                 $activities->push([
                     'dot'       => 'bg-cyan-500',
                     'html'      => 'Pengumuman baru: <strong>' . e($p->judul) . '</strong>',
-                    'timestamp' => Carbon::parse($p->created_at),
-                    'time'      => Carbon::parse($p->created_at)->locale('id')->diffForHumans(),
+                    'timestamp' => $p->created_at,
+                    'time'      => $p->created_at ? $p->created_at->format('H:i') . ' WIB' : Carbon::now()->format('H:i') . ' WIB',
                     'tag'       => 'Pengumuman',
                 ]);
             });

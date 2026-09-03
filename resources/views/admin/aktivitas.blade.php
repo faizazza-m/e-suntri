@@ -54,7 +54,7 @@
                             </span>
                             <span class="text-[11px] text-on-surface-variant flex items-center gap-1 font-medium" title="{{ $act['timestamp']->format('d M Y H:i') }}">
                                 <span class="material-symbols-outlined text-[14px]">schedule</span>
-                                {{ $act['timestamp']->diffForHumans() }}
+                                {{ $act['timestamp']->diffForHumans() }} ({{ $act['timestamp']->format('H:i') }} WIB)
                             </span>
                         </div>
                         <p class="text-sm text-on-surface leading-relaxed">{!! $act['html'] !!}</p>
