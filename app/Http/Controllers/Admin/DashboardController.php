@@ -86,7 +86,7 @@ class DashboardController extends Controller
                     'dot'       => 'bg-primary',
                     'html'      => '<strong>' . e($s->santri->nama) . '</strong> menyelesaikan setoran <strong>' . $jenisLabel . '</strong>' . $surahText,
                     'timestamp' => $s->created_at,
-                    'time'      => $s->created_at ? $s->created_at->format('H:i') . ' WIB' : Carbon::now()->format('H:i') . ' WIB',
+                    'time'      => $s->created_at ? $s->created_at->setTimezone('Asia/Jakarta')->format('H:i') . ' WIB' : Carbon::now()->setTimezone('Asia/Jakarta')->format('H:i') . ' WIB',
                     'tag'       => 'Tahfizh',
                 ]);
             });
@@ -100,7 +100,7 @@ class DashboardController extends Controller
                     'dot'       => 'bg-orange-500',
                     'html'      => '<strong>' . e($p->santri->nama) . '</strong> mengajukan izin ' . $jenisLabel . '.',
                     'timestamp' => $p->created_at,
-                    'time'      => $p->created_at ? $p->created_at->format('H:i') . ' WIB' : Carbon::now()->format('H:i') . ' WIB',
+                    'time'      => $p->created_at ? $p->created_at->setTimezone('Asia/Jakarta')->format('H:i') . ' WIB' : Carbon::now()->setTimezone('Asia/Jakarta')->format('H:i') . ' WIB',
                     'tag'       => 'Perizinan',
                 ]);
             });
@@ -114,7 +114,7 @@ class DashboardController extends Controller
                     'dot'       => 'bg-green-500',
                     'html'      => 'Pembayaran <strong>' . e($namaTagihan) . '</strong> atas nama <strong>' . e($t->santri->nama) . '</strong> berhasil dikonfirmasi.',
                     'timestamp' => $t->created_at,
-                    'time'      => $t->created_at ? $t->created_at->format('H:i') . ' WIB' : Carbon::now()->format('H:i') . ' WIB',
+                    'time'      => $t->created_at ? $t->created_at->setTimezone('Asia/Jakarta')->format('H:i') . ' WIB' : Carbon::now()->setTimezone('Asia/Jakarta')->format('H:i') . ' WIB',
                     'tag'       => 'Keuangan',
                 ]);
             });
@@ -127,7 +127,7 @@ class DashboardController extends Controller
                     'dot'       => 'bg-rose-500',
                     'html'      => '<strong>' . e($k->santri->nama) . '</strong> berkunjung ke UKS dengan keluhan: ' . e($k->keluhan),
                     'timestamp' => $k->created_at,
-                    'time'      => $k->created_at ? $k->created_at->format('H:i') . ' WIB' : Carbon::now()->format('H:i') . ' WIB',
+                    'time'      => $k->created_at ? $k->created_at->setTimezone('Asia/Jakarta')->format('H:i') . ' WIB' : Carbon::now()->setTimezone('Asia/Jakarta')->format('H:i') . ' WIB',
                     'tag'       => 'Kesehatan',
                 ]);
             });
@@ -139,7 +139,7 @@ class DashboardController extends Controller
                     'dot'       => 'bg-cyan-500',
                     'html'      => 'Pengumuman baru: <strong>' . e($p->judul) . '</strong>',
                     'timestamp' => $p->created_at,
-                    'time'      => $p->created_at ? $p->created_at->format('H:i') . ' WIB' : Carbon::now()->format('H:i') . ' WIB',
+                    'time'      => $p->created_at ? $p->created_at->setTimezone('Asia/Jakarta')->format('H:i') . ' WIB' : Carbon::now()->setTimezone('Asia/Jakarta')->format('H:i') . ' WIB',
                     'tag'       => 'Pengumuman',
                 ]);
             });

@@ -52,9 +52,9 @@
                             <span class="px-2 py-0.5 text-[10px] font-bold uppercase rounded border {{ $act['tagColor'] ?? 'bg-surface-container text-on-surface' }}">
                                 {{ $act['tag'] }}
                             </span>
-                            <span class="text-[11px] text-on-surface-variant flex items-center gap-1 font-medium" title="{{ $act['timestamp']->format('d M Y H:i') }}">
+                            <span class="text-[11px] text-on-surface-variant flex items-center gap-1 font-medium" title="{{ $act['timestamp']->copy()->setTimezone('Asia/Jakarta')->format('d M Y H:i') }}">
                                 <span class="material-symbols-outlined text-[14px]">schedule</span>
-                                {{ $act['timestamp']->diffForHumans() }} ({{ $act['timestamp']->format('H:i') }} WIB)
+                                {{ $act['timestamp']->diffForHumans() }} ({{ $act['timestamp']->copy()->setTimezone('Asia/Jakarta')->format('H:i') }} WIB)
                             </span>
                         </div>
                         <p class="text-sm text-on-surface leading-relaxed">{!! $act['html'] !!}</p>
