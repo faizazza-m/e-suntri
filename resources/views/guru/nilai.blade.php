@@ -104,12 +104,6 @@
             <tbody class="divide-y divide-outline-variant/10">
                 @foreach($santriList as $idx => $santri)
                 @php $nilai = $santri->nilaiAkademik->first(); @endphp
-                <form method="POST" action="{{ route('guru.nilai.store') }}">
-                @csrf
-                <input type="hidden" name="santri_id"    value="{{ $santri->id }}">
-                <input type="hidden" name="mapel_id"     value="{{ $mapelId }}">
-                <input type="hidden" name="semester"     value="{{ $semester }}">
-                <input type="hidden" name="tahun_ajaran" value="{{ $tahunAjaran }}">
                 <tr class="{{ $idx % 2 == 0 ? 'bg-white' : 'bg-surface-container-low/50' }} hover:bg-indigo-50/50 transition-colors group">
                     <td class="px-5 py-3.5">
                         <div class="flex items-center gap-3">
@@ -124,7 +118,7 @@
                     </td>
                     @foreach([['name'=>'nilai_harian','val'=>$nilai?->nilai_harian,'color'=>'yellow'],['name'=>'nilai_uas','val'=>$nilai?->nilai_uas,'color'=>'red']] as $f)
                     <td class="px-4 py-3.5 text-center">
-                        <input type="number" name="{{ $f['name'] }}" value="{{ $f['val'] }}"
+                        <input type="number" form="form-{{ $santri->id }}" name="{{ $f['name'] }}" value="{{ $f['val'] }}"
                             min="0" max="100" step="0.01"
                             class="w-16 h-9 text-center text-sm font-semibold border border-outline-variant/40 rounded-xl
                                    focus:ring-2 focus:ring-{{ $f['color'] }}-400 focus:border-{{ $f['color'] }}-400
@@ -152,17 +146,28 @@
                         @endif
                     </td>
                     <td class="px-4 py-3.5 text-center">
-                        <button type="submit"
+                        <button type="submit" form="form-{{ $santri->id }}"
                             class="inline-flex items-center gap-1 px-3 py-1.5 bg-indigo-600 text-white text-xs font-bold rounded-xl hover:opacity-90 transition-opacity shadow-sm">
                             <span class="material-symbols-outlined text-sm">save</span>
                             Simpan
                         </button>
                     </td>
                 </tr>
-                </form>
                 @endforeach
             </tbody>
         </table>
+        
+        {{-- Hidden forms for desktop table --}}
+        @foreach($santriList as $santri)
+        <form id="form-{{ $santri->id }}" method="POST" action="{{ route('guru.nilai.store') }}" class="hidden">
+            @csrf
+            <input type="hidden" name="santri_id"    value="{{ $santri->id }}">
+            <input type="hidden" name="mapel_id"     value="{{ $mapelId }}">
+            <input type="hidden" name="semester"     value="{{ $semester }}">
+            <input type="hidden" name="tahun_ajaran" value="{{ $tahunAjaran }}">
+        </form>
+        @endforeach
+
     </div>
 
     {{-- Mobile Card List --}}

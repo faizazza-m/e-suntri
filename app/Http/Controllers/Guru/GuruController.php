@@ -107,9 +107,9 @@ class GuruController extends Controller
         $akhir   = round(($harian * 0.2) + ($uas * 0.8), 2);
         $predikat = match(true) {
             $akhir >= 90 => 'A',
-            $akhir >= 75 => 'B',
-            $akhir >= 60 => 'C',
-            $akhir >= 40 => 'D',
+            $akhir >= 80 => 'B',
+            $akhir >= 70 => 'C',
+            $akhir >= 60 => 'D',
             default      => 'E',
         };
         
