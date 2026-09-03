@@ -293,10 +293,10 @@ Route::prefix('api/mobile')->group(function () {
 // App Version Check (Public — no auth required)
 Route::get('/api/mobile/app-version', function () {
     return response()->json([
-        'version'      => '1.0.0',          // ← Ganti ini setiap ada update
-        'build'        => 1,                 // ← Increment setiap build baru
-        'download_url' => '',                // ← Isi URL APK terbaru saat ada update
-        'notes'        => 'Versi awal aplikasi e-Suntri.',
-        'force'        => false,             // ← true = paksa update wajib
+        'version'      => '1.0.1',
+        'build'        => 2,
+        'download_url' => 'https://github.com/faizazza-m/suntri.app/releases/latest/download/app-release.apk',
+        'notes'        => 'Pembaruan sistem keamanan dan perpindahan sistem update ke GitHub. Update ini bersifat wajib.',
+        'force'        => true,
     ]);
 });
