@@ -47,43 +47,48 @@
     }
 
     .raport-header {
-        border-bottom: 2px solid black;
-        padding-bottom: 10px;
-        margin-bottom: 20px;
-        display: flex;
-        align-items: center;
+        border-bottom: 3px solid black;
+        padding-bottom: 12px;
+        margin-bottom: 25px;
         position: relative;
+        text-align: center;
     }
     .raport-header::after {
         content: "";
         position: absolute;
-        bottom: -4px;
+        bottom: -6px;
         left: 0;
         right: 0;
         border-bottom: 1px solid black;
     }
     .header-logo {
-        width: 80px;
+        position: absolute;
+        left: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 85px;
         height: auto;
-        margin-right: 20px;
     }
     .header-text {
-        text-align: center;
-        flex-grow: 1;
+        padding: 0 100px;
     }
     .header-text h2 {
         margin: 0;
-        font-size: 16px;
+        font-size: 15px;
         font-weight: bold;
+        letter-spacing: 0.5px;
+        text-transform: uppercase;
     }
     .header-text h1 {
-        margin: 0;
-        font-size: 18px;
+        margin: 4px 0;
+        font-size: 22px;
         font-weight: bold;
+        letter-spacing: 1px;
+        text-transform: uppercase;
     }
     .header-text p {
-        margin: 5px 0 0;
-        font-size: 11px;
+        margin: 0;
+        font-size: 12px;
         font-style: italic;
     }
 
@@ -260,37 +265,35 @@
                 </div>
 
                 {{-- Biodata --}}
-                <div class="biodata-container">
-                    <div class="biodata-left">
-                        <div class="biodata-row">
-                            <div class="biodata-label">Nama</div>
-                            <div class="biodata-separator">:</div>
-                            <div class="biodata-value uppercase">{{ $selectedSantri->nama }}</div>
-                        </div>
-                        <div class="biodata-row">
-                            <div class="biodata-label">Nomor Induk Siswa</div>
-                            <div class="biodata-separator">:</div>
-                            <div class="biodata-value">{{ $selectedSantri->nis ?? '-' }}</div>
-                        </div>
-                        <div class="biodata-row">
-                            <div class="biodata-label">Kelas</div>
-                            <div class="biodata-separator">:</div>
-                            <div class="biodata-value uppercase">{{ $selectedSantri->kelas->nama ?? '-' }}</div>
-                        </div>
-                    </div>
-                    <div class="biodata-right">
-                        <div class="biodata-row">
-                            <div class="biodata-label">Semester</div>
-                            <div class="biodata-separator">:</div>
-                            <div class="biodata-value">{{ request('semester', 1) == 1 ? '1 (Ganjil)' : '2 (Genap)' }}</div>
-                        </div>
-                        <div class="biodata-row">
-                            <div class="biodata-label">Tahun ajaran</div>
-                            <div class="biodata-separator">:</div>
-                            <div class="biodata-value">2025/2026</div>
-                        </div>
-                    </div>
-                </div>
+                <table style="width: 100%; margin-bottom: 15px; font-size: 12px; border: none; border-collapse: collapse;">
+                    <tr>
+                        <td style="width: 15%; padding: 4px 0; border: none; vertical-align: top;">Nama</td>
+                        <td style="width: 2%; padding: 4px 0; border: none; vertical-align: top;">:</td>
+                        <td style="width: 45%; padding: 4px 0; border: none; font-weight: bold; vertical-align: top;" class="uppercase">{{ $selectedSantri->nama }}</td>
+                        
+                        <td style="width: 15%; padding: 4px 0; border: none; vertical-align: top;">Semester</td>
+                        <td style="width: 2%; padding: 4px 0; border: none; vertical-align: top;">:</td>
+                        <td style="width: 21%; padding: 4px 0; border: none; font-weight: bold; vertical-align: top;">{{ request('semester', 1) == 1 ? '1 (Ganjil)' : '2 (Genap)' }}</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 4px 0; border: none; vertical-align: top;">Nomor Induk Siswa</td>
+                        <td style="padding: 4px 0; border: none; vertical-align: top;">:</td>
+                        <td style="padding: 4px 0; border: none; font-weight: bold; vertical-align: top;">{{ $selectedSantri->nis ?? '-' }}</td>
+                        
+                        <td style="padding: 4px 0; border: none; vertical-align: top;">Tahun ajaran</td>
+                        <td style="padding: 4px 0; border: none; vertical-align: top;">:</td>
+                        <td style="padding: 4px 0; border: none; font-weight: bold; vertical-align: top;">2025/2026</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 4px 0; border: none; vertical-align: top;">Kelas</td>
+                        <td style="padding: 4px 0; border: none; vertical-align: top;">:</td>
+                        <td style="padding: 4px 0; border: none; font-weight: bold; vertical-align: top;" class="uppercase">{{ $selectedSantri->kelas->nama ?? '-' }}</td>
+                        
+                        <td style="padding: 4px 0; border: none; vertical-align: top;"></td>
+                        <td style="padding: 4px 0; border: none; vertical-align: top;"></td>
+                        <td style="padding: 4px 0; border: none; vertical-align: top;"></td>
+                    </tr>
+                </table>
 
                 {{-- Tabel Nilai Utama --}}
                 <table class="raport-table">
