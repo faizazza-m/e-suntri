@@ -48,47 +48,43 @@
 
     .raport-header {
         border-bottom: 3px solid black;
-        padding-bottom: 12px;
-        margin-bottom: 25px;
+        padding-bottom: 10px;
+        margin-bottom: 20px;
+        display: flex;
+        align-items: center;
         position: relative;
-        text-align: center;
     }
     .raport-header::after {
         content: "";
         position: absolute;
-        bottom: -6px;
+        bottom: -5px;
         left: 0;
         right: 0;
         border-bottom: 1px solid black;
     }
     .header-logo {
-        position: absolute;
-        left: 10px;
-        top: 50%;
-        transform: translateY(-50%);
-        width: 85px;
+        width: 90px;
         height: auto;
+        margin-right: 20px;
+        flex-shrink: 0;
     }
     .header-text {
-        padding: 0 100px;
+        text-align: center;
+        flex-grow: 1;
     }
     .header-text h2 {
         margin: 0;
-        font-size: 15px;
+        font-size: 18px;
         font-weight: bold;
-        letter-spacing: 0.5px;
-        text-transform: uppercase;
     }
     .header-text h1 {
         margin: 4px 0;
-        font-size: 22px;
+        font-size: 18px;
         font-weight: bold;
-        letter-spacing: 1px;
-        text-transform: uppercase;
     }
     .header-text p {
         margin: 0;
-        font-size: 12px;
+        font-size: 13px;
         font-style: italic;
     }
 
