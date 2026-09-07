@@ -159,7 +159,7 @@
         
         {{-- Hidden forms for desktop table --}}
         @foreach($santriList as $santri)
-        <form id="form-{{ $santri->id }}" method="POST" action="{{ route('guru.nilai.store') }}" class="hidden">
+        <form id="form-{{ $santri->id }}" method="POST" action="{{ route('guru.nilai.store') }}">
             @csrf
             <input type="hidden" name="santri_id"    value="{{ $santri->id }}">
             <input type="hidden" name="mapel_id"     value="{{ $mapelId }}">

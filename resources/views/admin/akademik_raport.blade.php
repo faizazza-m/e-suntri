@@ -130,7 +130,7 @@
     @media print {
         @page {
             size: A4 portrait;
-            margin: 1cm;
+            margin: 0;
         }
         body * {
             visibility: hidden;
@@ -143,7 +143,8 @@
             left: 0;
             top: 0;
             width: 100%;
-            padding: 0;
+            padding: 1cm;
+            box-sizing: border-box;
             margin: 0;
             background-color: transparent !important;
             box-shadow: none;

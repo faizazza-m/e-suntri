@@ -231,6 +231,8 @@ class AkademikController extends Controller
 
     private function calculateNilai($harian, $uas)
     {
+        $harian = (float) ($harian ?: 0);
+        $uas = (float) ($uas ?: 0);
         $akhir = ($harian * 0.2) + ($uas * 0.8);
         $predikat = 'E';
         if ($akhir >= 90) $predikat = 'A';

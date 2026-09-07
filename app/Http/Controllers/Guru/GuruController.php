@@ -102,8 +102,8 @@ class GuruController extends Controller
             'nilai_uas'    => 'nullable|numeric|min:0|max:100',
         ]);
         
-        $harian  = $request->nilai_harian ?? 0;
-        $uas     = $request->nilai_uas ?? 0;
+        $harian  = (float) ($request->nilai_harian ?: 0);
+        $uas     = (float) ($request->nilai_uas ?: 0);
         $akhir   = round(($harian * 0.2) + ($uas * 0.8), 2);
         $predikat = match(true) {
             $akhir >= 90 => 'A',
