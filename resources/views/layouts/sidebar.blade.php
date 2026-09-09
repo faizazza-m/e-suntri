@@ -26,7 +26,7 @@
                 ['route' => 'kesehatan',      'icon' => 'medical_services',     'label' => 'Kesehatan'],
                 ['route' => 'pengumuman',     'icon' => 'campaign',             'label' => 'Pengumuman'],
                 ['route' => 'chat',           'icon' => 'chat',                 'label' => 'Pusat Pesan'],
-                ['route' => 'ppdb',           'icon' => 'person_add',           'label' => 'PPDB'],
+                ['route' => 'admin.ppdb.index', 'icon' => 'person_add', 'label' => 'PPDB'],
                 ['route' => 'prestasi',       'icon' => 'military_tech',        'label' => 'Prestasi'],
                 ['route' => 'laporan-guru',   'icon' => 'assignment',           'label' => 'Jurnal Guru'],
             ];

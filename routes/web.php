@@ -174,9 +174,11 @@ Route::middleware(['auth', \App\Http\Middleware\PreventBackHistory::class])->gro
         return view('admin.perpustakaan');
     })->name('perpustakaan');
 
-    Route::get('/ppdb', function () {
-        return view('admin.ppdb');
-    })->name('ppdb');
+    Route::get('/ppdb', [\App\Http\Controllers\Admin\PpdbAdminController::class, 'index'])->name('admin.ppdb.index');
+    Route::post('/ppdb/batch', [\App\Http\Controllers\Admin\PpdbAdminController::class, 'storeBatch'])->name('admin.ppdb.batch.store');
+    Route::get('/ppdb/students', [\App\Http\Controllers\Admin\PpdbAdminController::class, 'students'])->name('admin.ppdb.students');
+    Route::get('/ppdb/students/{id}', [\App\Http\Controllers\Admin\PpdbAdminController::class, 'showStudent'])->name('admin.ppdb.students.show');
+    Route::post('/ppdb/students/{id}/status', [\App\Http\Controllers\Admin\PpdbAdminController::class, 'updateStudentStatus'])->name('admin.ppdb.students.status');
 
     Route::get('/prestasi', function () {
         return view('admin.prestasi');
