@@ -11,6 +11,7 @@ class PpdbBatch extends Model
         'start_date',
         'end_date',
         'quota',
+        'registration_link',
         'status',
     ];
 

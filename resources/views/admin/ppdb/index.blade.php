@@ -59,6 +59,12 @@
                     <span class="material-symbols-outlined text-[16px]">groups</span>
                     <span>Kuota: {{ $batch->quota }} Santri</span>
                 </div>
+                @if($batch->registration_link)
+                <div class="flex items-center gap-2 text-sm text-primary font-bold mt-2 pt-2 border-t border-outline-variant/20">
+                    <span class="material-symbols-outlined text-[16px]">link</span>
+                    <a href="{{ $batch->registration_link }}" target="_blank" class="hover:underline truncate">{{ $batch->registration_link }}</a>
+                </div>
+                @endif
             </div>
 
             <div class="mt-auto pt-4 border-t border-outline-variant/30 flex justify-between items-center">
@@ -112,6 +118,11 @@
                     <div>
                         <label class="block text-sm font-bold text-on-surface mb-1">Kuota Santri</label>
                         <input type="number" name="quota" required min="1" class="w-full px-4 py-2.5 rounded-xl border border-outline-variant bg-white focus:ring-2 focus:ring-primary focus:border-primary transition-all" placeholder="Contoh: 150">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-bold text-on-surface mb-1">Link Pendaftaran (Opsional)</label>
+                        <input type="url" name="registration_link" class="w-full px-4 py-2.5 rounded-xl border border-outline-variant bg-white focus:ring-2 focus:ring-primary focus:border-primary transition-all" placeholder="Contoh: https://forms.gle/xyz atau link eksternal lain">
+                        <p class="text-[10px] text-on-surface-variant mt-1">Kosongkan jika tidak menggunakan form eksternal (Google Form, Typeform, dll).</p>
                     </div>
                     <div>
                         <label class="block text-sm font-bold text-on-surface mb-1">Status</label>

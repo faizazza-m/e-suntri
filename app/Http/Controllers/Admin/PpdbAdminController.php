@@ -22,6 +22,7 @@ class PpdbAdminController extends Controller
             'start_date' => 'required|date',
             'end_date' => 'required|date|after_or_equal:start_date',
             'quota' => 'required|integer|min:1',
+            'registration_link' => 'nullable|url|max:255',
             'status' => 'boolean',
         ]);
 

@@ -3,6 +3,11 @@
 use Illuminate\Support\Facades\Route;
 
 // =============================================
+// Public Routes
+// =============================================
+Route::get('/info-ppdb', [\App\Http\Controllers\Public\PpdbPublicController::class, 'index'])->name('public.ppdb.index');
+
+// =============================================
 // Auth Routes
 // =============================================
 Route::get('/', function () {
