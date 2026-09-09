@@ -18,6 +18,12 @@
         
         {{-- Filter Form --}}
         <form action="{{ route('laporan-guru') }}" method="GET" class="flex gap-2 w-full md:w-auto">
+            <select name="waktu" class="px-4 py-2 text-sm rounded-xl border border-outline-variant/30 bg-white/60 backdrop-blur-md shadow-sm focus:ring-primary focus:border-primary transition-colors" onchange="this.form.submit()">
+                <option value="">-- Semua Waktu --</option>
+                <option value="minggu" {{ request('waktu') == 'minggu' ? 'selected' : '' }}>Minggu Ini</option>
+                <option value="bulan" {{ request('waktu') == 'bulan' ? 'selected' : '' }}>Bulan Ini</option>
+                <option value="semester" {{ request('waktu') == 'semester' ? 'selected' : '' }}>Semester Ini</option>
+            </select>
             <select name="guru_id" class="px-4 py-2 text-sm rounded-xl border border-outline-variant/30 bg-white/60 backdrop-blur-md shadow-sm focus:ring-primary focus:border-primary transition-colors" onchange="this.form.submit()">
                 <option value="">-- Semua Guru --</option>
                 @foreach($gurus as $guru)
