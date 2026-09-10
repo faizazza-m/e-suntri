@@ -6,6 +6,8 @@ use Illuminate\Support\Facades\Route;
 // Public Routes
 // =============================================
 Route::get('/info-ppdb', [\App\Http\Controllers\Public\PpdbPublicController::class, 'index'])->name('public.ppdb.index');
+Route::get('/daftar-ppdb/{batch_id}', [\App\Http\Controllers\Public\PpdbPublicController::class, 'create'])->name('public.ppdb.register');
+Route::post('/daftar-ppdb/{batch_id}', [\App\Http\Controllers\Public\PpdbPublicController::class, 'store'])->name('public.ppdb.store');
 
 // =============================================
 // Auth Routes

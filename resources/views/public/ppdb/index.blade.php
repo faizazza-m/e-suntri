@@ -161,11 +161,27 @@
 
             {{-- Batches List --}}
             <div class="space-y-4">
+                
+                @if(session('success'))
+                <div class="bg-green-50 border border-green-200 text-green-800 rounded-2xl p-4 flex gap-3 fade-in-up">
+                    <span class="material-symbols-outlined text-green-600">check_circle</span>
+                    <div>
+                        <h4 class="font-bold">Pendaftaran Sukses!</h4>
+                        <p class="text-sm mt-1">{{ session('success') }}</p>
+                    </div>
+                </div>
+                @endif
+
                 @forelse($activeBatches as $batch)
                 <div class="bg-white border border-outline-variant/30 rounded-2xl p-5 shadow-sm hover:shadow-md transition-shadow relative overflow-hidden group">
                     <div class="absolute top-0 left-0 w-1 h-full emerald-gradient"></div>
                     <div class="flex justify-between items-start mb-2">
-                        <h3 class="text-lg font-bold text-on-surface">{{ $batch->name }}</h3>
+                        <div>
+                            <span class="px-2 py-1 text-[10px] font-bold uppercase tracking-wider rounded-lg bg-blue-100 text-blue-700 mb-1 inline-block">
+                                {{ $batch->unit }}
+                            </span>
+                            <h3 class="text-lg font-bold text-on-surface">{{ $batch->name }}</h3>
+                        </div>
                         <span class="px-2 py-1 text-[10px] font-bold uppercase tracking-wider rounded-lg bg-green-100 text-green-700">Buka</span>
                     </div>
                     
@@ -178,13 +194,15 @@
                     @if($batch->registration_link)
                     <a href="{{ $batch->registration_link }}" target="_blank"
                         class="w-full h-11 emerald-gradient text-white font-bold text-sm rounded-xl shadow flex items-center justify-center gap-2 active:scale-[0.98] transition-all">
-                        <span>Daftar Sekarang</span>
+                        <span>Daftar Sekarang (Form Eksternal)</span>
                         <span class="material-symbols-outlined text-[18px]">open_in_new</span>
                     </a>
                     @else
-                    <button disabled class="w-full h-11 bg-surface-container-highest text-on-surface-variant font-bold text-sm rounded-xl flex items-center justify-center gap-2 cursor-not-allowed">
-                        <span>Form Belum Tersedia</span>
-                    </button>
+                    <a href="{{ route('public.ppdb.register', $batch->id) }}"
+                        class="w-full h-11 emerald-gradient text-white font-bold text-sm rounded-xl shadow flex items-center justify-center gap-2 active:scale-[0.98] transition-all">
+                        <span>Daftar Sekarang</span>
+                        <span class="material-symbols-outlined text-[18px]">app_registration</span>
+                    </a>
                     @endif
                 </div>
                 @empty

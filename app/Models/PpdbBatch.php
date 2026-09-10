@@ -8,6 +8,7 @@ class PpdbBatch extends Model
 {
     protected $fillable = [
         'name',
+        'unit',
         'start_date',
         'end_date',
         'quota',
