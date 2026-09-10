@@ -114,11 +114,11 @@
                         </td>
                         <td class="py-4 px-6 text-center">
                             <span class="font-bold text-lg text-primary">{{ $hadirBulanIni }}</span>
-                            <span class="text-xs text-on-surface-variant ml-1">hari</span>
+                            <span class="text-xs text-on-surface-variant ml-1">pertemuan</span>
                         </td>
                         <td class="py-4 px-6 text-center">
                             <span class="font-bold text-lg text-secondary">{{ $hadirSemesterIni }}</span>
-                            <span class="text-xs text-on-surface-variant ml-1">hari</span>
+                            <span class="text-xs text-on-surface-variant ml-1">pertemuan</span>
                         </td>
                         <td class="py-4 px-6">
                             @if($laporanHariIni)
