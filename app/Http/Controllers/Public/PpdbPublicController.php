@@ -31,7 +31,7 @@ class PpdbPublicController extends Controller
             'gender' => 'required|in:L,P',
             'birth_place' => 'required|string|max:255',
             'birth_date' => 'required|date',
-            'previous_school' => ($batch->unit == 'MTRQ' ? 'required' : 'nullable') . '|string|max:255',
+            'previous_school' => (\Illuminate\Support\Str::startsWith($batch->unit, 'MTRQ') ? 'required' : 'nullable') . '|string|max:255',
             'father_name' => 'required|string|max:255',
             'mother_name' => 'required|string|max:255',
             'parent_phone' => 'required|string|max:20',

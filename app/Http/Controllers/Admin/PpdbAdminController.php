@@ -19,7 +19,7 @@ class PpdbAdminController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255',
-            'unit' => 'required|in:MTRQ,TK,SD',
+            'unit' => 'required|string|max:50',
             'start_date' => 'required|date',
             'end_date' => 'required|date|after_or_equal:start_date',
             'quota' => 'required|integer|min:1',

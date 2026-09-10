@@ -113,9 +113,9 @@
                         <div>
                             <label class="block text-sm font-bold text-on-surface mb-1">
                                 Asal Sekolah 
-                                @if($batch->unit == 'MTRQ') <span class="text-error">*</span> @else (Opsional) @endif
+                                @if(Str::startsWith($batch->unit, 'MTRQ')) <span class="text-error">*</span> @else (Opsional) @endif
                             </label>
-                            <input type="text" name="previous_school" value="{{ old('previous_school') }}" {{ $batch->unit == 'MTRQ' ? 'required' : '' }} class="w-full px-4 py-2.5 rounded-xl border border-outline-variant focus:ring-2 focus:ring-primary focus:border-primary">
+                            <input type="text" name="previous_school" value="{{ old('previous_school') }}" {{ Str::startsWith($batch->unit, 'MTRQ') ? 'required' : '' }} class="w-full px-4 py-2.5 rounded-xl border border-outline-variant focus:ring-2 focus:ring-primary focus:border-primary">
                         </div>
                     </div>
                 </div>

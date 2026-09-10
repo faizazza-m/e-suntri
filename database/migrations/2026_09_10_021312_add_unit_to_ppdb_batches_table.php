@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('ppdb_batches', function (Blueprint $table) {
-            $table->enum('unit', ['MTRQ', 'TK', 'SD'])->default('MTRQ')->after('name');
+            $table->string('unit')->default('MTRQ 1')->after('name');
         });
     }
 

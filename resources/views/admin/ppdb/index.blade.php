@@ -111,7 +111,8 @@
                         <select name="unit" required class="w-full px-4 py-2.5 rounded-xl border border-outline-variant bg-white focus:ring-2 focus:ring-primary focus:border-primary transition-all">
                             <option value="TK">TK Islam ERQIU</option>
                             <option value="SD">SD Islam ERQIU</option>
-                            <option value="MTRQ" selected>MTRQ 1/2</option>
+                            <option value="MTRQ 1" selected>MTRQ 1 (Bogor)</option>
+                            <option value="MTRQ 2">MTRQ 2 (Pamijahan)</option>
                         </select>
                     </div>
                     <div>
