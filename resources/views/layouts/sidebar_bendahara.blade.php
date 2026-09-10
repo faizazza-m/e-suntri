@@ -18,6 +18,7 @@
             $navItems = [
                 ['route' => 'bendahara.dashboard',      'icon' => 'dashboard',            'label' => 'Dashboard Bendahara'],
                 ['route' => 'bendahara.keuangan',       'icon' => 'payments',             'label' => 'Manajemen Keuangan'],
+                ['route' => 'bendahara.guru-monitoring','icon' => 'group',                'label' => 'Monitoring Kehadiran Guru'],
             ];
         @endphp
 

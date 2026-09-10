@@ -272,6 +272,7 @@ Route::middleware(['auth'])->prefix('mudir')->name('mudir.')->group(function () 
 // =============================================
 Route::middleware(['auth'])->prefix('bendahara')->name('bendahara.')->group(function () {
     Route::get('/dashboard', [\App\Http\Controllers\Bendahara\DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/guru-monitoring', [\App\Http\Controllers\Bendahara\GuruMonitoringController::class, 'index'])->name('guru-monitoring');
     Route::get('/keuangan', [\App\Http\Controllers\Bendahara\KeuanganController::class, 'index'])->name('keuangan');
     Route::post('/keuangan/jenis-tagihan', [\App\Http\Controllers\Bendahara\KeuanganController::class, 'storeJenisTagihan'])->name('keuangan.jenis-tagihan.store');
     Route::post('/keuangan/tagihan', [\App\Http\Controllers\Bendahara\KeuanganController::class, 'storeTagihan'])->name('keuangan.tagihan.store');
