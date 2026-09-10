@@ -35,8 +35,8 @@
             <span class="material-symbols-outlined text-3xl">assignment_turned_in</span>
         </div>
         <div>
-            <p class="text-xs font-bold text-on-surface-variant uppercase mb-1">Sudah Mengisi Jurnal</p>
-            <h3 class="text-2xl font-bold text-on-surface">{{ $laporans->count() }}</h3>
+            <p class="text-xs font-bold text-on-surface-variant uppercase mb-1">Sudah Mengisi (Hari Ini)</p>
+            <h3 class="text-2xl font-bold text-on-surface">{{ $laporansHariIni->count() }}</h3>
         </div>
     </div>
 
@@ -45,32 +45,62 @@
             <span class="material-symbols-outlined text-3xl">pending_actions</span>
         </div>
         <div>
-            <p class="text-xs font-bold text-on-surface-variant uppercase mb-1">Belum Mengisi</p>
-            <h3 class="text-2xl font-bold text-on-surface">{{ $gurus->count() - $laporans->count() }}</h3>
+            <p class="text-xs font-bold text-on-surface-variant uppercase mb-1">Belum Mengisi (Hari Ini)</p>
+            <h3 class="text-2xl font-bold text-on-surface">{{ $gurus->count() - $laporansHariIni->count() }}</h3>
         </div>
     </div>
 </div>
 
 {{-- Table Data --}}
 <div class="bg-surface-bright rounded-3xl border border-outline-variant/30 shadow-sm overflow-hidden fade-in-up" style="animation-delay: 0.3s;">
-    <div class="p-6 border-b border-outline-variant/30 flex justify-between items-center">
-        <h2 class="text-lg font-bold text-on-surface">Daftar Status Guru Hari Ini</h2>
+    
+    <div class="p-6 border-b border-outline-variant/30 flex flex-col md:flex-row justify-between items-center gap-4">
+        <h2 class="text-lg font-bold text-on-surface">Rekap Kehadiran Guru</h2>
+        
+        <form action="{{ route('bendahara.guru-monitoring') }}" method="GET" class="flex items-center gap-2">
+            <select name="bulan" class="bg-surface-container border border-outline-variant/50 text-on-surface text-sm rounded-lg focus:ring-primary focus:border-primary p-2 w-32">
+                @php
+                    $months = [
+                        1 => 'Januari', 2 => 'Februari', 3 => 'Maret', 4 => 'April',
+                        5 => 'Mei', 6 => 'Juni', 7 => 'Juli', 8 => 'Agustus',
+                        9 => 'September', 10 => 'Oktober', 11 => 'November', 12 => 'Desember'
+                    ];
+                @endphp
+                @foreach($months as $key => $name)
+                    <option value="{{ $key }}" {{ $filterBulan == $key ? 'selected' : '' }}>{{ $name }}</option>
+                @endforeach
+            </select>
+            
+            <select name="tahun" class="bg-surface-container border border-outline-variant/50 text-on-surface text-sm rounded-lg focus:ring-primary focus:border-primary p-2 w-24">
+                @for($y = date('Y') - 2; $y <= date('Y'); $y++)
+                    <option value="{{ $y }}" {{ $filterTahun == $y ? 'selected' : '' }}>{{ $y }}</option>
+                @endfor
+            </select>
+
+            <button type="submit" class="bg-primary hover:bg-primary/90 text-on-primary p-2 rounded-lg text-sm font-bold shadow-sm transition">
+                Filter
+            </button>
+        </form>
     </div>
+
     <div class="overflow-x-auto">
         <table class="w-full text-left border-collapse">
             <thead>
                 <tr class="border-b border-outline-variant/30 bg-surface-container-lowest text-sm text-on-surface-variant">
                     <th class="py-4 px-6 font-bold w-12 text-center">No</th>
                     <th class="py-4 px-6 font-bold">Nama Guru / Ustadz</th>
-                    <th class="py-4 px-6 font-bold">Status Kehadiran</th>
+                    <th class="py-4 px-6 font-bold">Kehadiran (Bulan Ini)</th>
+                    <th class="py-4 px-6 font-bold">Kehadiran (Semester {{ $semesterName }})</th>
+                    <th class="py-4 px-6 font-bold">Status Hari Ini</th>
                     <th class="py-4 px-6 font-bold">Waktu Submit Jurnal</th>
-                    <th class="py-4 px-6 font-bold">Materi/Catatan Jurnal</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach($gurus as $index => $guru)
                     @php
-                        $laporan = $laporans->get($guru->id);
+                        $laporanHariIni = $laporansHariIni->get($guru->id);
+                        $hadirBulanIni = $rekapBulan[$guru->id] ?? 0;
+                        $hadirSemesterIni = $rekapSemester[$guru->id] ?? 0;
                     @endphp
                     <tr class="border-b border-outline-variant/10 hover:bg-surface-container-lowest transition-colors">
                         <td class="py-4 px-6 text-center text-sm text-on-surface-variant">{{ $index + 1 }}</td>
@@ -82,8 +112,16 @@
                                 <span class="font-bold text-sm text-on-surface">{{ $guru->name }}</span>
                             </div>
                         </td>
+                        <td class="py-4 px-6 text-center">
+                            <span class="font-bold text-lg text-primary">{{ $hadirBulanIni }}</span>
+                            <span class="text-xs text-on-surface-variant ml-1">hari</span>
+                        </td>
+                        <td class="py-4 px-6 text-center">
+                            <span class="font-bold text-lg text-secondary">{{ $hadirSemesterIni }}</span>
+                            <span class="text-xs text-on-surface-variant ml-1">hari</span>
+                        </td>
                         <td class="py-4 px-6">
-                            @if($laporan)
+                            @if($laporanHariIni)
                                 <span class="px-3 py-1 bg-green-100 text-green-700 text-xs font-bold rounded-full flex items-center gap-1 w-max">
                                     <span class="material-symbols-outlined text-[14px]">check_circle</span> Hadir
                                 </span>
@@ -94,17 +132,10 @@
                             @endif
                         </td>
                         <td class="py-4 px-6 text-sm">
-                            @if($laporan)
-                                <span class="font-mono bg-surface-container px-2 py-1 rounded text-on-surface">{{ \Carbon\Carbon::parse($laporan->created_at)->format('H:i') }} WIB</span>
+                            @if($laporanHariIni)
+                                <span class="font-mono bg-surface-container px-2 py-1 rounded text-on-surface">{{ \Carbon\Carbon::parse($laporanHariIni->created_at)->format('H:i') }} WIB</span>
                             @else
                                 <span class="text-on-surface-variant">-</span>
-                            @endif
-                        </td>
-                        <td class="py-4 px-6 text-sm text-on-surface-variant max-w-xs truncate">
-                            @if($laporan)
-                                <strong>{{ $laporan->mata_pelajaran }}:</strong> {{ $laporan->materi }}
-                            @else
-                                -
                             @endif
                         </td>
                     </tr>
