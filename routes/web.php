@@ -47,7 +47,7 @@ Route::post('/login', function (\Illuminate\Http\Request $request) {
         $request->session()->regenerate();
         
         $role = \Illuminate\Support\Facades\Auth::user()->role_id;
-        // 1: admin, 2: musyrif, 3: wali, 4: santri, 5: ustadz/guru
+        // 1: admin, 2: musyrif, 3: wali, 4: santri, 5: ustadz/guru, 6: mudir, 7: bendahara
         if ($role == 2) {
             return redirect()->route('musyrif.dashboard');
         }
@@ -59,6 +59,9 @@ Route::post('/login', function (\Illuminate\Http\Request $request) {
         }
         if ($role == 6) {
             return redirect()->route('mudir.dashboard');
+        }
+        if ($role == 7) {
+            return redirect()->route('bendahara.dashboard');
         }
         
         return redirect()->route('dashboard');
@@ -262,6 +265,18 @@ Route::middleware(['auth'])->prefix('mudir')->name('mudir.')->group(function () 
     Route::get('/keuangan', [\App\Http\Controllers\Mudir\MudirController::class, 'keuangan'])->name('keuangan');
     Route::get('/santri', [\App\Http\Controllers\Mudir\MudirController::class, 'santri'])->name('santri');
     Route::get('/pengumuman', [\App\Http\Controllers\Mudir\MudirController::class, 'pengumuman'])->name('pengumuman');
+});
+
+// =============================================
+// ROLE: BENDAHARA (ID 7)
+// =============================================
+Route::middleware(['auth'])->prefix('bendahara')->name('bendahara.')->group(function () {
+    Route::get('/dashboard', [\App\Http\Controllers\Bendahara\DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/keuangan', [\App\Http\Controllers\Bendahara\KeuanganController::class, 'index'])->name('keuangan');
+    Route::post('/keuangan/jenis-tagihan', [\App\Http\Controllers\Bendahara\KeuanganController::class, 'storeJenisTagihan'])->name('keuangan.jenis-tagihan.store');
+    Route::post('/keuangan/tagihan', [\App\Http\Controllers\Bendahara\KeuanganController::class, 'storeTagihan'])->name('keuangan.tagihan.store');
+    Route::put('/keuangan/tagihan/{id}', [\App\Http\Controllers\Bendahara\KeuanganController::class, 'updateTagihan'])->name('keuangan.tagihan.update');
+    Route::post('/keuangan/pembayaran', [\App\Http\Controllers\Bendahara\KeuanganController::class, 'bayarTagihan'])->name('keuangan.pembayaran.store');
 });
 
 // =============================================

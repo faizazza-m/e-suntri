@@ -151,9 +151,13 @@
 <body class="islamic-pattern min-h-screen bg-surface text-on-surface">
 
     {{-- Sidebar --}}
-    @include('layouts.sidebar')
+    @if(auth()->check() && auth()->user()->role_id == 7)
+        @include('layouts.sidebar_bendahara')
+    @else
+        @include('layouts.sidebar')
+    @endif
 
-    {{-- Top Header --}}
+    {{-- Main Content --}}
     <header class="flex justify-between items-center w-full px-8 h-20 ml-64 max-w-[calc(100%-16rem)] sticky top-0 bg-surface/80 backdrop-blur-md border-b border-outline-variant/30 z-40">
 
         {{-- Search --}}
