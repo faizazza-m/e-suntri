@@ -162,6 +162,7 @@
 
         {{-- Search --}}
         <div class="flex items-center gap-6">
+            @if(in_array(auth()->user()->role_id ?? 0, [1, 6]))
             <div class="relative">
                 <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant">search</span>
                 <input
@@ -196,6 +197,7 @@
                     </div>
                 </div>
             </div>
+            @endif
         </div>
 
         {{-- Right Icons --}}
@@ -250,6 +252,7 @@
             </div>
 
             {{-- ⚙️ Settings --}}
+            @if(in_array(auth()->user()->role_id ?? 0, [1, 6]))
             <div class="relative">
                 <button id="btnSettings" onclick="toggleDropdown('dropdownSettings')"
                     class="p-2 hover:bg-surface-container-high rounded-full transition-colors">
@@ -277,6 +280,7 @@
                     </div>
                 </div>
             </div>
+            @endif
 
             {{-- ❓ Help --}}
             <div class="relative">
