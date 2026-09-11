@@ -99,9 +99,9 @@
                     <tr class="border-b border-outline-variant/10 hover:bg-surface-container-lowest transition-colors">
                         <td class="py-4 px-4 text-sm">{{ \Carbon\Carbon::parse($p->tanggal_bayar)->format('d M Y') }}</td>
                         <td class="py-4 px-4">
-                            <div class="font-bold text-sm text-on-surface">{{ $p->santri->nama_lengkap }}</div>
+                            <div class="font-bold text-sm text-on-surface">{{ $p->santri->nama }}</div>
                         </td>
-                        <td class="py-4 px-4 text-sm">{{ $p->tagihan->jenis->nama_tagihan }}</td>
+                        <td class="py-4 px-4 text-sm">{{ $p->tagihan->jenis->nama }}</td>
                         <td class="py-4 px-4 font-bold text-green-600">Rp {{ number_format($p->nominal_bayar, 0, ',', '.') }}</td>
                         <td class="py-4 px-4 text-sm capitalize">
                             <span class="px-2 py-1 rounded bg-blue-50 text-blue-700 text-xs font-bold">{{ $p->metode }}</span>
