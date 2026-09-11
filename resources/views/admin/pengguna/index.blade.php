@@ -105,8 +105,9 @@
                                     2 => 'bg-secondary-container text-on-secondary-container',
                                     5 => 'bg-primary-container text-on-primary-container',
                                     6 => 'bg-tertiary-container text-on-tertiary-container',
+                                    7 => 'bg-amber-100 text-amber-700',
                                 ];
-                                $roleNames = [1 => 'Admin', 2 => 'Musyrif', 5 => 'Ustadz', 6 => 'Mudir'];
+                                $roleNames = [1 => 'Admin', 2 => 'Musyrif', 5 => 'Ustadz', 6 => 'Mudir', 7 => 'Bendahara'];
                                 $color = $roleColors[$user->role_id] ?? 'bg-surface-variant text-on-surface-variant';
                                 $name = $roleNames[$user->role_id] ?? 'Lainnya';
                             @endphp
@@ -290,6 +291,7 @@
                         <option value="2">Musyrif</option>
                         <option value="5">Ustadz</option>
                         <option value="6">Mudir</option>
+                        <option value="7">Bendahara</option>
                     </select>
                 </div>
                 <div>
@@ -342,6 +344,7 @@
                         <option value="2">Musyrif</option>
                         <option value="5">Ustadz</option>
                         <option value="6">Mudir</option>
+                        <option value="7">Bendahara</option>
                     </select>
                 </div>
                 <div>

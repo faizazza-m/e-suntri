@@ -17,6 +17,9 @@
         </div>
     </div>
     <div class="flex gap-2">
+        <button onclick="document.getElementById('modal-tambah-jenis').classList.remove('hidden')" class="px-4 py-2 rounded-lg bg-surface-container-high text-on-surface text-sm font-bold flex items-center gap-2 hover:bg-surface-container-highest shadow-sm transition-colors border border-outline-variant/30">
+            <span class="material-symbols-outlined text-sm">category</span> Buat Jenis Tagihan
+        </button>
         <button onclick="document.getElementById('modal-tambah-tagihan').classList.remove('hidden')" class="px-4 py-2 rounded-lg bg-secondary text-white text-sm font-bold flex items-center gap-2 hover:opacity-90 shadow-md transition-opacity">
             <span class="material-symbols-outlined text-sm">add_box</span> Buat Tagihan Baru
         </button>
@@ -245,6 +248,47 @@
         @endforelse
     </div>
 </section>
+
+{{-- MODAL TAMBAH JENIS TAGIHAN --}}
+<div id="modal-tambah-jenis" class="fixed inset-0 z-50 hidden flex items-center justify-center fade-in-up">
+    <div class="absolute inset-0 bg-on-surface/40 backdrop-blur-sm" onclick="this.parentElement.classList.add('hidden')"></div>
+    <div class="bg-surface rounded-3xl shadow-2xl w-full max-w-lg relative z-10 overflow-hidden border border-white/20">
+        <div class="bg-primary/10 px-8 py-5 border-b border-primary/20 flex justify-between items-center">
+            <h3 class="text-lg font-bold text-primary flex items-center gap-2">
+                <span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1;">category</span> Buat Jenis Tagihan Baru
+            </h3>
+            <button type="button" onclick="document.getElementById('modal-tambah-jenis').classList.add('hidden')" class="text-primary hover:bg-primary/20 p-1 rounded-full transition-colors">
+                <span class="material-symbols-outlined">close</span>
+            </button>
+        </div>
+        <form method="POST" action="{{ route('bendahara.keuangan.jenis-tagihan.store') }}" class="p-8 space-y-4">
+            @csrf
+            <div>
+                <label class="block text-xs font-bold text-on-surface-variant uppercase tracking-widest mb-1">Nama Tagihan (Bebas)</label>
+                <input type="text" name="nama" placeholder="Contoh: SPP Ekstrakurikuler, Seragam, dll." required class="w-full h-12 px-4 bg-surface-container border border-outline-variant rounded-xl text-sm focus:ring-2 focus:ring-primary outline-none">
+            </div>
+            <div>
+                <label class="block text-xs font-bold text-on-surface-variant uppercase tracking-widest mb-1">Nominal Default (Rp)</label>
+                <input type="number" name="nominal" required class="w-full h-12 px-4 bg-surface-container border border-outline-variant rounded-xl text-sm focus:ring-2 focus:ring-primary outline-none">
+            </div>
+            <div>
+                <label class="block text-xs font-bold text-on-surface-variant uppercase tracking-widest mb-1">Periode</label>
+                <select name="periode" required class="w-full h-12 px-4 bg-surface-container border border-outline-variant rounded-xl text-sm focus:ring-2 focus:ring-primary outline-none">
+                    <option value="bulanan">Bulanan</option>
+                    <option value="tahunan">Tahunan</option>
+                    <option value="sekali">Sekali Bayar</option>
+                </select>
+            </div>
+            <div>
+                <label class="block text-xs font-bold text-on-surface-variant uppercase tracking-widest mb-1">Keterangan (Opsional)</label>
+                <textarea name="keterangan" rows="2" class="w-full px-4 py-3 bg-surface-container border border-outline-variant rounded-xl text-sm focus:ring-2 focus:ring-primary outline-none"></textarea>
+            </div>
+            <div class="flex gap-3 pt-4">
+                <button type="submit" class="w-full py-3 bg-primary text-white font-bold rounded-xl hover:opacity-90 transition-opacity">Simpan Jenis Tagihan</button>
+            </div>
+        </form>
+    </div>
+</div>
 
 {{-- MODAL TAMBAH TAGIHAN --}}
 <div id="modal-tambah-tagihan" class="fixed inset-0 z-50 hidden flex items-center justify-center fade-in-up">

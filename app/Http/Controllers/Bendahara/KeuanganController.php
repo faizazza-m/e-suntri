@@ -162,4 +162,22 @@ class KeuanganController extends Controller
 
         return back()->with('success', 'Nominal tagihan berhasil diperbarui.');
     }
+
+    public function storeJenisTagihan(Request $request)
+    {
+        $request->validate([
+            'nama' => 'required|string|max:100',
+            'nominal' => 'required|numeric|min:0',
+            'periode' => 'required|in:bulanan,tahunan,sekali'
+        ]);
+
+        JenisTagihan::create([
+            'nama' => $request->nama,
+            'nominal' => $request->nominal,
+            'periode' => $request->periode,
+            'keterangan' => $request->keterangan
+        ]);
+
+        return back()->with('success', 'Jenis tagihan baru berhasil ditambahkan.');
+    }
 }
