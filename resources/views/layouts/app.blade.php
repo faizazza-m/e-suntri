@@ -327,15 +327,23 @@
                             {{ auth()->user()->role_id == 1 ? 'Administrator' : (auth()->user()->role_id == 2 ? 'Musyrif' : 'User') }}
                         </p>
                     </div>
-                    <div class="w-9 h-9 rounded-full bg-primary-container flex items-center justify-center">
-                        <span class="material-symbols-outlined text-white text-base" style="font-variation-settings: 'FILL' 1;">person</span>
+                    <div class="w-9 h-9 rounded-full bg-primary-container flex items-center justify-center overflow-hidden">
+                        @if(auth()->user()->foto)
+                            <img src="{{ asset(auth()->user()->foto) }}" alt="Profile" class="w-full h-full object-cover">
+                        @else
+                            <span class="material-symbols-outlined text-white text-base" style="font-variation-settings: 'FILL' 1;">person</span>
+                        @endif
                     </div>
                 </button>
                 <div id="dropdownProfile" class="hidden dropdown-enter absolute right-0 mt-2 w-60 bg-white rounded-2xl shadow-2xl border border-outline-variant/20 overflow-hidden z-50">
                     <div class="bg-gradient-to-br from-primary to-emerald-700 px-4 py-4">
                         <div class="flex items-center gap-3">
-                            <div class="w-11 h-11 rounded-full bg-white/20 flex items-center justify-center">
-                                <span class="material-symbols-outlined text-white text-xl" style="font-variation-settings:'FILL' 1;">person</span>
+                            <div class="w-11 h-11 rounded-full bg-white/20 flex items-center justify-center overflow-hidden">
+                                @if(auth()->user()->foto)
+                                    <img src="{{ asset(auth()->user()->foto) }}" alt="Profile" class="w-full h-full object-cover">
+                                @else
+                                    <span class="material-symbols-outlined text-white text-xl" style="font-variation-settings:'FILL' 1;">person</span>
+                                @endif
                             </div>
                             <div>
                                 <p class="text-sm font-bold text-white">{{ auth()->user()->name }}</p>

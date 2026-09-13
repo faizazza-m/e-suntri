@@ -44,8 +44,12 @@
     <div class="mt-auto px-4 pt-4 border-t border-white/10">
         <div class="p-4 bg-white/5 rounded-xl border border-white/10">
             <div class="flex items-center gap-3 mb-3">
-                <div class="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center">
-                    <span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">person</span>
+                <div class="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center overflow-hidden">
+                    @if(auth()->check() && auth()->user()->foto)
+                        <img src="{{ asset(auth()->user()->foto) }}" alt="Profile" class="w-full h-full object-cover">
+                    @else
+                        <span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">person</span>
+                    @endif
                 </div>
                 <div>
                     <p class="text-xs font-bold text-white">{{ auth()->check() ? auth()->user()->name : 'User' }}</p>
