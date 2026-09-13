@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        DB::table('users')->where('name', 'Miss Evi')->update(['foto' => 'images/profiles/missevi.jpg']);
+        DB::table('users')->where('name', 'LIKE', 'Miss Evi%')->update(['foto' => 'images/profiles/missevi.jpg']);
     }
 
     /**

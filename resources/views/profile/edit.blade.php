@@ -51,8 +51,12 @@
         {{-- Cover & Avatar --}}
         <div class="h-28 bg-gradient-to-br from-primary to-emerald-700 relative">
             <div class="absolute -bottom-10 left-8">
-                <div class="w-20 h-20 rounded-2xl bg-white border-4 border-white shadow-lg flex items-center justify-center">
-                    <span class="material-symbols-outlined text-4xl text-primary" style="font-variation-settings:'FILL' 1;">person</span>
+                <div class="w-20 h-20 rounded-2xl bg-white border-4 border-white shadow-lg flex items-center justify-center overflow-hidden">
+                    @if($user->foto)
+                        <img src="{{ asset($user->foto) }}" alt="Profile" class="w-full h-full object-cover">
+                    @else
+                        <span class="material-symbols-outlined text-4xl text-primary" style="font-variation-settings:'FILL' 1;">person</span>
+                    @endif
                 </div>
             </div>
         </div>
