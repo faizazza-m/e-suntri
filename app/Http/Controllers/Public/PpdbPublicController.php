@@ -68,7 +68,7 @@ class PpdbPublicController extends Controller
 
         foreach ($documents as $type => $input_name) {
             if ($request->hasFile($input_name)) {
-                $path = $request->file($input_name)->store('ppdb_documents', 'public');
+                $path = $request->file($input_name)->store('ppdb_documents', 'supabase');
                 \App\Models\PpdbDocument::create([
                     'student_id' => $student->id,
                     'document_type' => $type,

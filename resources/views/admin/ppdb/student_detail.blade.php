@@ -112,7 +112,7 @@
                             <p class="text-sm font-bold text-on-surface uppercase">{{ $doc->document_type }}</p>
                             <p class="text-[10px] text-on-surface-variant">{{ $doc->status }}</p>
                         </div>
-                        <a href="{{ asset('storage/' . $doc->file_path) }}" target="_blank" class="w-8 h-8 flex items-center justify-center rounded-lg bg-primary/10 text-primary hover:bg-primary hover:text-white transition-colors">
+                        <a href="{{ Storage::disk('supabase')->url($doc->file_path) }}" target="_blank" class="w-8 h-8 flex items-center justify-center rounded-lg bg-primary/10 text-primary hover:bg-primary hover:text-white transition-colors">
                             <span class="material-symbols-outlined text-[16px]">download</span>
                         </a>
                     </div>
