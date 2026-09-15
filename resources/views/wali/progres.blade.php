@@ -167,32 +167,6 @@
         </div>
     </div>
 
-    {{-- Akhlak Radar --}}
-    <div class="clean-card bg-white p-5 flex flex-col items-center">
-        <h3 class="text-[11px] font-bold text-gray-500 uppercase tracking-widest mb-4 self-start">Penilaian Akhlak</h3>
-        <div class="w-full h-48 relative flex items-center justify-center">
-            <svg class="w-40 h-40" viewBox="0 0 100 100">
-                {{-- Web background --}}
-                <polygon fill="none" points="50,10 90,50 50,90 10,50" stroke="#e5e7eb" stroke-width="1"/>
-                <polygon fill="none" points="50,25 75,50 50,75 25,50" stroke="#e5e7eb" stroke-width="1"/>
-                <line x1="50" y1="10" x2="50" y2="90" stroke="#e5e7eb" stroke-width="1"/>
-                <line x1="10" y1="50" x2="90" y2="50" stroke="#e5e7eb" stroke-width="1"/>
-                {{-- Data polygon --}}
-                <polygon fill="rgba(0, 69, 50, 0.15)" stroke="#004532" stroke-width="2"
-                    points="50,14 83,50 50,86 20,50"/>
-                {{-- Data points --}}
-                <circle cx="50" cy="14" r="3" fill="#004532"/>
-                <circle cx="83" cy="50" r="3" fill="#004532"/>
-                <circle cx="50" cy="86" r="3" fill="#004532"/>
-                <circle cx="20" cy="50" r="3" fill="#004532"/>
-            </svg>
-            <span class="absolute top-0 text-[11px] font-bold text-on-surface">Sidiq</span>
-            <span class="absolute right-0 text-[11px] font-bold text-on-surface">Amanah</span>
-            <span class="absolute bottom-0 text-[11px] font-bold text-on-surface">Tabligh</span>
-            <span class="absolute left-0 text-[11px] font-bold text-on-surface">Fathonah</span>
-        </div>
-        <p class="mt-4 text-[12px] text-center font-medium italic text-gray-500 leading-relaxed bg-gray-50 p-3 rounded-xl border border-gray-100">"Ananda menunjukkan kejujuran yang sangat baik dalam keseharian."</p>
-    </div>
 </section>
 
 @endsection
