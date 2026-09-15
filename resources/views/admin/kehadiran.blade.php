@@ -40,7 +40,7 @@
                         <option value="hadir" {{ request('status') == 'hadir' ? 'selected' : '' }}>Hadir</option>
                         <option value="izin" {{ request('status') == 'izin' ? 'selected' : '' }}>Izin</option>
                         <option value="sakit" {{ request('status') == 'sakit' ? 'selected' : '' }}>Sakit</option>
-                        <option value="alpa" {{ request('status') == 'alpa' ? 'selected' : '' }}>Alpa</option>
+                        <option value="alpha" {{ request('status') == 'alpha' ? 'selected' : '' }}>Alpa</option>
                     </select>
                 </div>
             </div>
@@ -93,7 +93,7 @@
             </div>
             <div>
                 <p class="text-[10px] font-bold text-on-surface-variant uppercase tracking-wider">Alpa</p>
-                <p class="text-xl font-bold text-red-700">{{ $stats['alpa'] }}</p>
+                <p class="text-xl font-bold text-red-700">{{ $stats['alpha'] }}</p>
             </div>
         </div>
     </div>
@@ -141,10 +141,10 @@
                                 <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-orange-100 text-orange-700 text-xs font-bold border border-orange-200">
                                     <span class="w-1.5 h-1.5 rounded-full bg-orange-500"></span> Sakit
                                 </span>
-                            @elseif($item->status == 'alpa')
-                                <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-red-100 text-red-700 text-xs font-bold border border-red-200">
+                            @elseif($item->status == 'alpha')
+                                <div class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-red-50 text-red-700 text-xs font-bold border border-red-200">
                                     <span class="w-1.5 h-1.5 rounded-full bg-red-500"></span> Alpa
-                                </span>
+                                </div>
                             @else
                                 <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-gray-100 text-gray-700 text-xs font-bold border border-gray-200">
                                     <span class="w-1.5 h-1.5 rounded-full bg-gray-500"></span> {{ ucfirst($item->status) }}

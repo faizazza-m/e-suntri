@@ -39,15 +39,9 @@
                     <h3 class="text-emerald-800 font-black text-sm lg:text-base">Terima Kasih, Absensi Selesai!</h3>
                     <div class="flex gap-3 mt-1.5">
                         <span class="bg-emerald-100 text-emerald-700 text-[10px] px-2 py-0.5 rounded-md font-bold">{{ $rekapAbsensi->get('hadir', 0) }} Hadir</span>
-                        @if($rekapAbsensi->get('sakit', 0) > 0)
-                            <span class="bg-error/10 text-error text-[10px] px-2 py-0.5 rounded-md font-bold">{{ $rekapAbsensi->get('sakit', 0) }} Sakit</span>
-                        @endif
-                        @if($rekapAbsensi->get('izin', 0) > 0)
-                            <span class="bg-amber-100 text-amber-700 text-[10px] px-2 py-0.5 rounded-md font-bold">{{ $rekapAbsensi->get('izin', 0) }} Izin</span>
-                        @endif
-                        @if($rekapAbsensi->get('alpha', 0) > 0)
-                            <span class="bg-secondary/10 text-secondary text-[10px] px-2 py-0.5 rounded-md font-bold">{{ $rekapAbsensi->get('alpha', 0) }} Alpha</span>
-                        @endif
+                        <span class="bg-error/10 text-error text-[10px] px-2 py-0.5 rounded-md font-bold">{{ $rekapAbsensi->get('sakit', 0) }} Sakit</span>
+                        <span class="bg-amber-100 text-amber-700 text-[10px] px-2 py-0.5 rounded-md font-bold">{{ $rekapAbsensi->get('izin', 0) }} Izin</span>
+                        <span class="bg-secondary/10 text-secondary text-[10px] px-2 py-0.5 rounded-md font-bold">{{ $rekapAbsensi->get('alpha', 0) }} Alpha</span>
                     </div>
                 </div>
             </div>

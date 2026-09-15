@@ -39,7 +39,7 @@ class KehadiranController extends Controller
             'hadir' => (clone $statsQuery)->where('status', 'hadir')->count(),
             'izin' => (clone $statsQuery)->where('status', 'izin')->count(),
             'sakit' => (clone $statsQuery)->where('status', 'sakit')->count(),
-            'alpa' => (clone $statsQuery)->where('status', 'alpa')->count(),
+            'alpha' => (clone $statsQuery)->where('status', 'alpha')->count(),
             'total' => $statsQuery->count(),
         ];
 
