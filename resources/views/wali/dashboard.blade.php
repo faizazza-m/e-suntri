@@ -61,6 +61,20 @@
     @endforeach
 </section>
 
+{{-- PPDB Shortcut --}}
+<section class="mt-2">
+    <a href="{{ route('public.ppdb.index') }}" target="_blank" class="clean-card bg-primary-container p-4 flex items-center justify-between hover:bg-primary-container/80 transition-colors cursor-pointer overflow-hidden relative">
+        <div class="relative z-10">
+            <h3 class="text-sm font-bold text-primary">Pendaftaran PPDB</h3>
+            <p class="text-[11px] text-primary/80 mt-1 max-w-[200px]">Daftarkan putra/putri Anda ke Yayasan Rijaalul Qur'an (TK, SD, SMP, SMA)</p>
+        </div>
+        <div class="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-white shrink-0 relative z-10">
+            <span class="material-symbols-outlined text-[20px]">arrow_forward</span>
+        </div>
+        <span class="material-symbols-outlined text-[100px] text-primary/5 absolute -right-4 -bottom-6 pointer-events-none">school</span>
+    </a>
+</section>
+
 {{-- Quick Actions Grid --}}
 <section>
     <div class="grid grid-cols-4 gap-3">

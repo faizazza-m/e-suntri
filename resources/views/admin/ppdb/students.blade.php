@@ -52,6 +52,7 @@
                         <th class="p-4 text-xs font-bold text-on-surface-variant uppercase tracking-wider">No. Registrasi</th>
                         <th class="p-4 text-xs font-bold text-on-surface-variant uppercase tracking-wider">Nama Lengkap</th>
                         <th class="p-4 text-xs font-bold text-on-surface-variant uppercase tracking-wider">L/P</th>
+                        <th class="p-4 text-xs font-bold text-on-surface-variant uppercase tracking-wider">Program</th>
                         <th class="p-4 text-xs font-bold text-on-surface-variant uppercase tracking-wider">Asal Sekolah</th>
                         <th class="p-4 text-xs font-bold text-on-surface-variant uppercase tracking-wider">Status</th>
                         <th class="p-4 text-xs font-bold text-on-surface-variant uppercase tracking-wider text-right">Aksi</th>
@@ -66,6 +67,11 @@
                             <p class="text-[10px] text-on-surface-variant">{{ $student->batch->name }}</p>
                         </td>
                         <td class="p-4 text-sm text-on-surface-variant">{{ $student->gender }}</td>
+                        <td class="p-4">
+                            <span class="px-2 py-0.5 text-[10px] font-bold rounded {{ $student->program_type == 'mondok' ? 'bg-primary/10 text-primary' : 'bg-secondary/10 text-secondary' }}">
+                                {{ $student->program_type == 'mondok' ? 'Mondok' : 'PP' }}
+                            </span>
+                        </td>
                         <td class="p-4 text-sm text-on-surface-variant">{{ $student->previous_school ?: '-' }}</td>
                         <td class="p-4">
                             @php
@@ -96,7 +102,7 @@
                     </tr>
                     @empty
                     <tr>
-                        <td colspan="6" class="p-10 text-center text-on-surface-variant text-sm">
+                        <td colspan="7" class="p-10 text-center text-on-surface-variant text-sm">
                             Belum ada data pendaftar yang sesuai.
                         </td>
                     </tr>

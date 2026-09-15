@@ -47,8 +47,23 @@
             </div>
         </header>
 
-        {{-- Form Container --}}
         <div class="max-w-3xl mx-auto px-4 -mt-8 relative z-20">
+            <div class="bg-white border border-primary/20 rounded-2xl p-5 shadow-sm text-center mb-6">
+                <h2 class="text-lg font-bold text-primary mb-2 flex items-center justify-center gap-2">
+                    <span class="material-symbols-outlined">school</span> Unit Dakwah Yayasan Rijaalul Qur'an
+                </h2>
+                <p class="text-sm text-on-surface-variant mb-4">Membuka pendaftaran santri baru untuk jenjang (Mondok & Pulang Pergi):</p>
+                <div class="flex flex-wrap justify-center gap-2">
+                    <span class="bg-primary/5 px-3 py-1.5 rounded-lg text-primary font-bold shadow-sm border border-primary/10 text-xs">TK Islam Erqiu</span>
+                    <span class="bg-primary/5 px-3 py-1.5 rounded-lg text-primary font-bold shadow-sm border border-primary/10 text-xs">SD</span>
+                    <span class="bg-primary/5 px-3 py-1.5 rounded-lg text-primary font-bold shadow-sm border border-primary/10 text-xs">SMP</span>
+                    <span class="bg-primary/5 px-3 py-1.5 rounded-lg text-primary font-bold shadow-sm border border-primary/10 text-xs">SMA</span>
+                </div>
+            </div>
+        </div>
+
+        {{-- Form Container --}}
+        <div class="max-w-3xl mx-auto px-4 relative z-20">
             
             @if ($errors->any())
                 <div class="bg-red-50 border-l-4 border-red-500 p-4 mb-6 rounded-xl shadow-sm">
@@ -107,6 +122,14 @@
                                 <option value="">Pilih Jenis Kelamin</option>
                                 <option value="L" {{ old('gender') == 'L' ? 'selected' : '' }}>Laki-laki</option>
                                 <option value="P" {{ old('gender') == 'P' ? 'selected' : '' }}>Perempuan</option>
+                            </select>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-bold text-on-surface mb-1">Program Pilihan <span class="text-error">*</span></label>
+                            <select name="program_type" required class="w-full px-4 py-2.5 rounded-xl border border-outline-variant focus:ring-2 focus:ring-primary focus:border-primary">
+                                <option value="mondok" {{ old('program_type') == 'mondok' ? 'selected' : '' }}>Mondok (Asrama)</option>
+                                <option value="pulang_pergi" {{ old('program_type') == 'pulang_pergi' ? 'selected' : '' }}>Pulang Pergi (PP)</option>
                             </select>
                         </div>
                         

@@ -363,4 +363,46 @@ class WaliController extends Controller
 
         return view('wali.keuangan', compact('activeSantri', 'tagihanBelumLunas', 'tagihanLunas', 'totalTunggakan'));
     }
+
+    public function storePembayaran(Request $request)
+    {
+        $request->validate([
+            'tagihan_id' => 'required|exists:tagihan,id',
+            'nominal' => 'required|numeric|min:1',
+            'metode' => 'required|in:tunai,transfer,qris',
+            'bukti_foto' => 'required|file|mimes:jpg,jpeg,png,pdf|max:2048',
+            'catatan' => 'nullable|string|max:500',
+        ]);
+
+        $wali = WaliSantri::where('user_id', Auth::id())->first();
+        if (!$wali) abort(403, 'Akses ditolak.');
+
+        $tagihan = \App\Models\Tagihan::where('id', $request->tagihan_id)
+            ->where('santri_id', $wali->santri_id)
+            ->firstOrFail();
+
+        $buktiPath = null;
+        if ($request->hasFile('bukti_foto')) {
+            $file = $request->file('bukti_foto');
+            $filename = time() . '_' . \Illuminate\Support\Str::random(10) . '.' . $file->getClientOriginalExtension();
+            $buktiPath = $file->storeAs('bukti_pembayaran', $filename, 'public');
+        }
+
+        \Illuminate\Support\Facades\DB::table('pembayaran')->insert([
+            'tagihan_id' => $tagihan->id,
+            'santri_id' => $tagihan->santri_id,
+            'tanggal_bayar' => now(),
+            'nominal_bayar' => $request->nominal,
+            'metode' => $request->metode,
+            'bukti_foto' => $buktiPath,
+            'no_invoice' => 'INV-' . time() . '-' . rand(100, 999),
+            'catatan' => $request->catatan,
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+
+        // Note: Status tagihan will remain "belum_lunas" until Bendahara verifies the payment.
+        
+        return redirect()->back()->with('success', 'Bukti pembayaran berhasil dikirim dan sedang menunggu verifikasi Bendahara.');
+    }
 }

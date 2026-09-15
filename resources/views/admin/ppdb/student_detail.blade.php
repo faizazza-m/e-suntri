@@ -56,6 +56,10 @@
                         <p class="text-sm font-bold text-on-surface">{{ $student->gender == 'L' ? 'Laki-laki' : 'Perempuan' }}</p>
                     </div>
                     <div>
+                        <p class="text-xs text-on-surface-variant font-medium">Program</p>
+                        <p class="text-sm font-bold text-on-surface">{{ $student->program_type == 'mondok' ? 'Mondok (Asrama)' : 'Pulang Pergi (PP)' }}</p>
+                    </div>
+                    <div>
                         <p class="text-xs text-on-surface-variant font-medium">Tempat, Tanggal Lahir</p>
                         <p class="text-sm font-bold text-on-surface">{{ $student->birth_place }}, {{ optional($student->birth_date)->format('d M Y') ?: '-' }}</p>
                     </div>
