@@ -69,9 +69,13 @@ class MusyrifController extends Controller
             ->get()
             ->keyBy('santri_id');
 
+        $isAbsensiLengkap = $santris->count() > 0 && count($kehadiranHariIni) >= $santris->count();
+        $rekapAbsensi = $isAbsensiLengkap ? $kehadiranHariIni->countBy('status') : collect();
+
         return view('musyrif.dashboard', compact(
             'halaqohs', 'totalSantri', 'totalHafiz', 'rataJuz', 'setoranHariIni', 
-            'recentSetoran', 'santris', 'santriSakitHariIni', 'chartLabels', 'chartData', 'kehadiranHariIni'
+            'recentSetoran', 'santris', 'santriSakitHariIni', 'chartLabels', 'chartData', 'kehadiranHariIni',
+            'isAbsensiLengkap', 'rekapAbsensi'
         ));
     }
 

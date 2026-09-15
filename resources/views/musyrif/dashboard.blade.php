@@ -9,6 +9,58 @@
     <p class="text-sm text-on-surface-variant mt-1">Pantau perkembangan tahfizh santri di halaqoh Anda hari ini.</p>
 </div>
 
+{{-- Attendance Reminder Banner --}}
+<div class="mb-5 fade-in-up">
+    @if(!$isAbsensiLengkap)
+        <div class="bg-error/10 border border-error/30 rounded-2xl p-4 flex items-center justify-between shadow-sm relative overflow-hidden">
+            <div class="flex items-center gap-4 relative z-10">
+                <div class="w-12 h-12 rounded-full bg-error/20 flex items-center justify-center shrink-0">
+                    <span class="material-symbols-outlined text-error text-2xl" style="font-variation-settings: 'FILL' 1;">warning</span>
+                </div>
+                <div>
+                    <h3 class="text-error font-black text-sm lg:text-base">Anda Belum Mengisi Absensi Hari Ini!</h3>
+                    <p class="text-error/80 text-xs mt-0.5">Harap segera mengisi absensi kehadiran santri halaqoh Anda sebelum kegiatan berakhir.</p>
+                </div>
+            </div>
+            <button onclick="document.getElementById('modal-absen-halaqoh').classList.remove('hidden')" class="hidden md:flex bg-error text-white text-xs font-bold px-4 py-2 rounded-xl hover:opacity-90 transition-opacity whitespace-nowrap relative z-10">
+                Isi Absensi Sekarang
+            </button>
+            <div class="absolute -right-4 -top-6 opacity-5 pointer-events-none">
+                <span class="material-symbols-outlined text-[100px]" style="font-variation-settings: 'FILL' 1;">assignment_late</span>
+            </div>
+        </div>
+    @else
+        <div class="bg-emerald-50 border border-emerald-200 rounded-2xl p-4 flex items-center justify-between shadow-sm relative overflow-hidden">
+            <div class="flex items-center gap-4 relative z-10">
+                <div class="w-12 h-12 rounded-full bg-emerald-100 flex items-center justify-center shrink-0">
+                    <span class="material-symbols-outlined text-emerald-600 text-2xl" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+                </div>
+                <div>
+                    <h3 class="text-emerald-800 font-black text-sm lg:text-base">Terima Kasih, Absensi Selesai!</h3>
+                    <div class="flex gap-3 mt-1.5">
+                        <span class="bg-emerald-100 text-emerald-700 text-[10px] px-2 py-0.5 rounded-md font-bold">{{ $rekapAbsensi->get('hadir', 0) }} Hadir</span>
+                        @if($rekapAbsensi->get('sakit', 0) > 0)
+                            <span class="bg-error/10 text-error text-[10px] px-2 py-0.5 rounded-md font-bold">{{ $rekapAbsensi->get('sakit', 0) }} Sakit</span>
+                        @endif
+                        @if($rekapAbsensi->get('izin', 0) > 0)
+                            <span class="bg-amber-100 text-amber-700 text-[10px] px-2 py-0.5 rounded-md font-bold">{{ $rekapAbsensi->get('izin', 0) }} Izin</span>
+                        @endif
+                        @if($rekapAbsensi->get('alpha', 0) > 0)
+                            <span class="bg-secondary/10 text-secondary text-[10px] px-2 py-0.5 rounded-md font-bold">{{ $rekapAbsensi->get('alpha', 0) }} Alpha</span>
+                        @endif
+                    </div>
+                </div>
+            </div>
+            <button onclick="document.getElementById('modal-absen-halaqoh').classList.remove('hidden')" class="hidden md:flex bg-emerald-100 text-emerald-700 text-xs font-bold px-4 py-2 rounded-xl hover:bg-emerald-200 transition-colors whitespace-nowrap relative z-10">
+                Edit Absensi
+            </button>
+            <div class="absolute -right-4 -top-6 opacity-5 pointer-events-none">
+                <span class="material-symbols-outlined text-[100px]" style="font-variation-settings: 'FILL' 1;">assignment_turned_in</span>
+            </div>
+        </div>
+    @endif
+</div>
+
 {{-- Summary Cards --}}
 <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 lg:gap-5 mb-6 fade-in-up fade-up-1">
     {{-- Card 1 --}}
