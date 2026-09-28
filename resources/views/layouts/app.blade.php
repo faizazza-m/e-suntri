@@ -204,6 +204,7 @@
         <div class="flex items-center gap-2">
 
             {{-- 🔔 Notifications --}}
+            @if(in_array(auth()->user()->role_id ?? 0, [1, 6]))
             <div class="relative">
                 <button id="btnNotif" onclick="toggleDropdown('dropdownNotif')"
                     class="p-2 hover:bg-surface-container-high rounded-full transition-colors relative">
@@ -250,6 +251,7 @@
                     </div>
                 </div>
             </div>
+            @endif
 
             {{-- ⚙️ Settings --}}
             @if(in_array(auth()->user()->role_id ?? 0, [1, 6]))

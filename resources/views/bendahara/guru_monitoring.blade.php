@@ -57,7 +57,12 @@
     <div class="p-6 border-b border-outline-variant/30 flex flex-col md:flex-row justify-between items-center gap-4">
         <h2 class="text-lg font-bold text-on-surface">Rekap Kehadiran Guru</h2>
         
-        <form action="{{ route('bendahara.guru-monitoring') }}" method="GET" class="flex items-center gap-2">
+        <div class="flex items-center gap-3">
+            <a href="{{ route('bendahara.laporan-guru') }}" class="bg-primary/10 text-primary hover:bg-primary hover:text-white px-4 py-2 rounded-lg text-sm font-bold transition-colors flex items-center gap-2">
+                <span class="material-symbols-outlined text-[18px]">menu_book</span>
+                Lihat Jurnal Harian
+            </a>
+            <form action="{{ route('bendahara.guru-monitoring') }}" method="GET" class="flex items-center gap-2">
             <select name="bulan" class="bg-surface-container border border-outline-variant/50 text-on-surface text-sm rounded-lg focus:ring-primary focus:border-primary p-2 w-32">
                 @php
                     $months = [
@@ -81,6 +86,7 @@
                 Filter
             </button>
         </form>
+        </div>
     </div>
 
     <div class="overflow-x-auto">

@@ -279,6 +279,10 @@ Route::middleware(['auth'])->prefix('bendahara')->name('bendahara.')->group(func
     Route::post('/keuangan/tagihan', [\App\Http\Controllers\Bendahara\KeuanganController::class, 'storeTagihan'])->name('keuangan.tagihan.store');
     Route::put('/keuangan/tagihan/{id}', [\App\Http\Controllers\Bendahara\KeuanganController::class, 'updateTagihan'])->name('keuangan.tagihan.update');
     Route::post('/keuangan/pembayaran', [\App\Http\Controllers\Bendahara\KeuanganController::class, 'bayarTagihan'])->name('keuangan.pembayaran.store');
+
+    // Laporan / Jurnal Guru (Reused from Admin Controller)
+    Route::get('/laporan-guru', [\App\Http\Controllers\Admin\LaporanGuruController::class, 'index'])->name('laporan-guru');
+    Route::get('/laporan-guru/{id}', [\App\Http\Controllers\Admin\LaporanGuruController::class, 'show'])->name('laporan-guru.show');
 });
 
 // =============================================

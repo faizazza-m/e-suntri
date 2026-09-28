@@ -17,7 +17,7 @@
         </div>
         
         {{-- Filter Form --}}
-        <form action="{{ route('laporan-guru') }}" method="GET" class="flex gap-2 w-full md:w-auto">
+        <form action="{{ url()->current() }}" method="GET" class="flex gap-2 w-full md:w-auto">
             <select name="waktu" class="px-4 py-2 text-sm rounded-xl border border-outline-variant/30 bg-white/60 backdrop-blur-md shadow-sm focus:ring-primary focus:border-primary transition-colors" onchange="this.form.submit()">
                 <option value="">-- Semua Waktu --</option>
                 <option value="minggu" {{ request('waktu') == 'minggu' ? 'selected' : '' }}>Minggu Ini</option>
@@ -152,7 +152,9 @@
         document.getElementById('detailMateri').textContent = "Memuat...";
         document.getElementById('detailIsi').textContent = "Sedang mengambil data jurnal...";
         
-        fetch(`/admin/laporan-guru/${id}`)
+        let fetchUrl = '{{ url()->current() }}' + '/' + id;
+        
+        fetch(fetchUrl)
             .then(res => res.json())
             .then(data => {
                 document.getElementById('detailGuruName').textContent = data.guru.name;
