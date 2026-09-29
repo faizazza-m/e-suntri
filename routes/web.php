@@ -196,6 +196,11 @@ Route::middleware(['auth', \App\Http\Middleware\PreventBackHistory::class])->gro
 
     Route::get('/laporan-guru', [\App\Http\Controllers\Admin\LaporanGuruController::class, 'index'])->name('laporan-guru');
     Route::get('/laporan-guru/{id}', [\App\Http\Controllers\Admin\LaporanGuruController::class, 'show'])->name('laporan-guru.show');
+
+    // SPK Santri Teladan
+    Route::get('/spk', [\App\Http\Controllers\Admin\SpkController::class, 'index'])->name('spk');
+    Route::post('/spk/kriteria', [\App\Http\Controllers\Admin\SpkController::class, 'updateKriteria'])->name('spk.kriteria.update');
+    Route::post('/spk/penilaian', [\App\Http\Controllers\Admin\SpkController::class, 'savePenilaian'])->name('spk.penilaian.save');
 });
 
 // =============================================
