@@ -190,9 +190,6 @@ Route::middleware(['auth', \App\Http\Middleware\PreventBackHistory::class])->gro
     Route::get('/ppdb/students/{id}', [\App\Http\Controllers\Admin\PpdbAdminController::class, 'showStudent'])->name('admin.ppdb.students.show');
     Route::post('/ppdb/students/{id}/status', [\App\Http\Controllers\Admin\PpdbAdminController::class, 'updateStudentStatus'])->name('admin.ppdb.students.status');
 
-    Route::get('/prestasi', function () {
-        return view('admin.prestasi');
-    })->name('prestasi');
 
     Route::get('/laporan-guru', [\App\Http\Controllers\Admin\LaporanGuruController::class, 'index'])->name('laporan-guru');
     Route::get('/laporan-guru/{id}', [\App\Http\Controllers\Admin\LaporanGuruController::class, 'show'])->name('laporan-guru.show');
