@@ -37,10 +37,18 @@ class DashboardController extends Controller
         $hadirCount     = Kehadiran::whereDate('tanggal', $today)->where('status', 'hadir')->count();
         $hadirHariIni   = $totalSantri > 0 ? round(($hadirCount / $totalSantri) * 100, 1) : 0;
         $setoranHariIni = Setoran::whereDate('tanggal', $today)->count();
-        $santriIzin     = Perizinan::whereDate('tanggal_mulai', '<=', $today)
+        $perizinanApproved = Perizinan::whereDate('tanggal_mulai', '<=', $today)
                             ->whereDate('tanggal_selesai', '>=', $today)
-                            ->where('status', 'disetujui')->count();
-        $santriSakit    = Kehadiran::whereDate('tanggal', $today)->where('status', 'sakit')->count();
+                            ->where('status', 'disetujui')->get();
+        $kehadiranSakit = Kehadiran::whereDate('tanggal', $today)->where('status', 'sakit')->get();
+        $kehadiranIzin = Kehadiran::whereDate('tanggal', $today)->where('status', 'izin')->get();
+
+        $santriIzin = collect()->merge($kehadiranIzin->pluck('santri_id'))
+                               ->merge($perizinanApproved->where('jenis', '!=', 'sakit')->pluck('santri_id'))
+                               ->unique()->count();
+        $santriSakit = collect()->merge($kehadiranSakit->pluck('santri_id'))
+                                ->merge($perizinanApproved->where('jenis', 'sakit')->pluck('santri_id'))
+                                ->unique()->count();
         $tagihanPending = Tagihan::where('status', 'belum')->count();
 
         // ── Chart Hafalan Bulanan (12 bulan terakhir) ─────────────────
@@ -168,14 +176,19 @@ class DashboardController extends Controller
         // ── Data Detail Kehadiran untuk Modal ──────────────────────────
         $kehadiranHariIni = Kehadiran::with('santri.kelas')->whereDate('tanggal', $today)->get();
         $hadirList = $kehadiranHariIni->where('status', 'hadir')->pluck('santri')->filter();
-        $sakitList = $kehadiranHariIni->where('status', 'sakit')->pluck('santri')->filter();
-        
         $izinRecords = Perizinan::with('santri.kelas')
             ->whereDate('tanggal_mulai', '<=', $today)
             ->whereDate('tanggal_selesai', '>=', $today)
             ->where('status', 'disetujui')
             ->get();
-        $izinList = $izinRecords->pluck('santri')->filter();
+            
+        $sakitList = $kehadiranHariIni->where('status', 'sakit')->pluck('santri')->filter()
+            ->merge($izinRecords->where('jenis', 'sakit')->pluck('santri')->filter())
+            ->unique('id');
+            
+        $izinList = $kehadiranHariIni->where('status', 'izin')->pluck('santri')->filter()
+            ->merge($izinRecords->where('jenis', '!=', 'sakit')->pluck('santri')->filter())
+            ->unique('id');
 
         $allActiveSantri = Santri::with('kelas')->where('status', 'aktif')->get();
         $recordedIds = collect()
