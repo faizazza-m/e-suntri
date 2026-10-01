@@ -295,14 +295,32 @@
                     </div>
                 </div>
 
-                {{-- Alpha / Belum Dicatat --}}
+                {{-- Alpha --}}
                 <div class="space-y-3">
+                    <h4 class="text-sm font-bold text-red-600 flex items-center gap-2">
+                        <span class="material-symbols-outlined text-[18px]">person_off</span>
+                        Alpha ({{ $alphaList->count() }})
+                    </h4>
+                    <div class="bg-red-50 rounded-xl border border-red-100 p-3 max-h-60 overflow-y-auto">
+                        @forelse($alphaList as $s)
+                        <div class="py-1.5 border-b border-red-100 last:border-0">
+                            <p class="text-sm font-bold text-red-900">{{ $s->nama }}</p>
+                            <p class="text-[10px] text-red-700">{{ $s->kelas->nama ?? 'Tanpa Kelas' }}</p>
+                        </div>
+                        @empty
+                        <p class="text-xs text-red-400 text-center py-2">Tidak ada santri alpha.</p>
+                        @endforelse
+                    </div>
+                </div>
+
+                {{-- Belum Dicatat --}}
+                <div class="space-y-3 mt-4">
                     <h4 class="text-sm font-bold text-gray-600 flex items-center gap-2">
                         <span class="material-symbols-outlined text-[18px]">help</span>
-                        Belum Dicatat / Alpha ({{ $alphaList->count() }})
+                        Belum Dicatat ({{ $belumDicatatList->count() }})
                     </h4>
                     <div class="bg-gray-100 rounded-xl border border-gray-200 p-3 max-h-60 overflow-y-auto">
-                        @forelse($alphaList as $s)
+                        @forelse($belumDicatatList as $s)
                         <div class="py-1.5 border-b border-gray-200 last:border-0">
                             <p class="text-sm font-bold text-on-surface">{{ $s->nama }}</p>
                             <p class="text-[10px] text-on-surface-variant">{{ $s->kelas->nama ?? 'Tanpa Kelas' }}</p>

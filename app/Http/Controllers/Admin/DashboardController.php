@@ -182,9 +182,11 @@ class DashboardController extends Controller
             ->merge($hadirList->pluck('id'))
             ->merge($sakitList->pluck('id'))
             ->merge($izinList->pluck('id'))
+            ->merge($kehadiranHariIni->where('status', 'alpha')->pluck('santri_id'))
             ->unique();
             
-        $alphaList = $allActiveSantri->whereNotIn('id', $recordedIds);
+        $alphaList = $kehadiranHariIni->where('status', 'alpha')->pluck('santri')->filter();
+        $belumDicatatList = $allActiveSantri->whereNotIn('id', $recordedIds);
 
         return view('admin.dashboard', compact(
             'totalSantri', 'hadirHariIni', 'setoranHariIni',
@@ -193,7 +195,7 @@ class DashboardController extends Controller
             'hafalanPekanan', 'maxPekanan',
             'hafalanHarian', 'maxHarian',
             'activities', 'agendas', 'santriSakitGlobal',
-            'hadirList', 'sakitList', 'izinList', 'alphaList'
+            'hadirList', 'sakitList', 'izinList', 'alphaList', 'belumDicatatList'
         ));
     }
 
