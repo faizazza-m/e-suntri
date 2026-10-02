@@ -143,7 +143,7 @@
     </main>
 
     {{-- Bottom Navigation --}}
-    <nav class="fixed bottom-0 left-0 w-full z-50 bg-white/75 backdrop-blur-lg border-t border-white/40 shadow-nav grid grid-cols-5 items-center px-1 py-2 pb-safe">
+    <nav class="fixed bottom-0 left-0 w-full z-50 bg-white/95 backdrop-blur-md border-t border-gray-100 shadow-[0_-4px_20px_-2px_rgba(0,0,0,0.05)] grid grid-cols-5 items-center px-2 py-2 pb-safe">
         @php
             $navItems = [
                 ['route' => 'wali.home',      'icon' => 'home',         'label' => 'Beranda'],
@@ -156,12 +156,12 @@
         @foreach($navItems as $item)
             @php $isActive = request()->routeIs($item['route']); @endphp
             <a href="{{ route($item['route']) }}"
-               class="relative flex flex-col items-center justify-center w-full h-full transition-all duration-200 group
+               class="relative flex flex-col items-center justify-center w-full h-full min-w-0 transition-all duration-200 group
                    {{ $isActive ? 'text-primary' : 'text-gray-400 hover:text-gray-600' }}">
                 <div class="relative flex items-center justify-center w-14 h-8 rounded-full mb-1 transition-colors {{ $isActive ? 'bg-primary-container' : 'bg-transparent group-hover:bg-gray-100' }}">
                     <span class="material-symbols-outlined text-[24px]" style="{{ $isActive ? 'font-variation-settings: \'FILL\' 1;' : '' }}">{{ $item['icon'] }}</span>
                 </div>
-                <span class="text-[10px] w-full text-center px-0.5 {{ $isActive ? 'font-bold text-primary' : 'font-medium' }}">{{ $item['label'] }}</span>
+                <span class="text-[10px] w-full text-center truncate px-1 font-medium {{ $isActive ? 'text-primary font-bold' : '' }}">{{ $item['label'] }}</span>
             </a>
         @endforeach
     </nav>

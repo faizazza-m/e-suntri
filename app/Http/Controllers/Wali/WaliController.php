@@ -216,6 +216,23 @@ class WaliController extends Controller
         return back()->with('success', 'Pengajuan izin berhasil dikirim dan sedang menunggu persetujuan.');
     }
 
+    public function riwayatSetoran()
+    {
+        $wali = WaliSantri::where('user_id', Auth::id())->first();
+        if (!$wali) abort(403, 'Akses ditolak.');
+
+        $activeSantri = Santri::with('kelas')->where('id', $wali->santri_id)->first();
+        if (!$activeSantri) abort(404, 'Data Santri tidak ditemukan.');
+
+        // Ambil semua riwayat setoran
+        $setorans = \App\Models\Setoran::where('santri_id', $activeSantri->id)
+            ->orderBy('tanggal', 'desc')
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+        return view('wali.riwayat_setoran', compact('activeSantri', 'setorans'));
+    }
+
     public function progres()
     {
         $wali = WaliSantri::where('user_id', Auth::id())->first();

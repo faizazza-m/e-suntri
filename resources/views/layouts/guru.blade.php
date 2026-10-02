@@ -191,7 +191,7 @@
 </div>
 
 {{-- ===================== BOTTOM NAV (Mobile) ===================== --}}
-<nav class="lg:hidden fixed bottom-0 inset-x-0 z-30 bg-white border-t border-outline-variant/20 shadow-2xl flex safe-bottom">
+<nav class="lg:hidden fixed bottom-0 left-0 w-full z-50 bg-white/95 backdrop-blur-md border-t border-gray-100 shadow-[0_-4px_20px_-2px_rgba(0,0,0,0.05)] grid grid-cols-5 items-center px-2 py-2 pb-safe">
     @php
         $mobileItems = [
             ['route'=>'guru.dashboard','icon'=>'dashboard',    'label'=>'Beranda'],
@@ -204,12 +204,12 @@
     @foreach($mobileItems as $item)
     @php $active = request()->routeIs($item['route']); @endphp
     <a href="{{ route($item['route']) }}"
-       class="flex-1 flex flex-col items-center justify-center py-2 gap-0.5 relative {{ $active ? 'text-primary' : 'text-on-surface-variant' }}">
-        @if($active)
-        <span class="absolute top-0 left-1/2 -translate-x-1/2 w-10 h-0.5 bg-primary rounded-b-full"></span>
-        @endif
-        <span class="material-symbols-outlined text-[22px]" style="{{ $active ? "font-variation-settings:'FILL' 1;" : '' }}">{{ $item['icon'] }}</span>
-        <span class="text-[10px] font-{{ $active ? 'bold' : 'medium' }}">{{ $item['label'] }}</span>
+       class="relative flex flex-col items-center justify-center w-full h-full min-w-0 transition-all duration-200 group
+           {{ $active ? 'text-primary' : 'text-gray-400 hover:text-gray-600' }}">
+        <div class="relative flex items-center justify-center w-14 h-8 rounded-full mb-1 transition-colors {{ $active ? 'bg-primary-container text-primary' : 'bg-transparent group-hover:bg-gray-100' }}">
+            <span class="material-symbols-outlined text-[24px]" style="{{ $active ? "font-variation-settings:'FILL' 1;" : '' }}">{{ $item['icon'] }}</span>
+        </div>
+        <span class="text-[10px] w-full text-center truncate px-1 font-medium {{ $active ? 'text-primary font-bold' : '' }}">{{ $item['label'] }}</span>
     </a>
     @endforeach
 </nav>

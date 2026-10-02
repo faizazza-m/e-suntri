@@ -91,7 +91,7 @@
 <section class="clean-card bg-white overflow-hidden mt-2">
     <div class="p-4 border-b border-gray-100 flex justify-between items-center bg-gray-50/50">
         <h3 class="text-[15px] font-bold text-on-surface">Setoran Terkini</h3>
-        <span onclick="alert('Fitur riwayat lengkap sedang dalam tahap pengembangan.')" class="text-[12px] text-primary cursor-pointer font-bold hover:underline">Lihat Semua</span>
+        <a href="{{ route('wali.progres.setoran') }}" class="text-[12px] text-primary cursor-pointer font-bold hover:underline">Lihat Semua</a>
     </div>
     <div class="overflow-x-auto">
         <table class="w-full text-left">
