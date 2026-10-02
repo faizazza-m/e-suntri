@@ -234,7 +234,7 @@ class WaliController extends Controller
         
         // 2. Setoran Terkini (5 terakhir)
         $setorans = \App\Models\Setoran::where('santri_id', $activeSantri->id)
-            ->orderBy('created_at', 'desc')
+            ->orderBy('tanggal', 'desc')
             ->take(5)
             ->get();
             

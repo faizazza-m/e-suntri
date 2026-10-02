@@ -121,7 +121,7 @@
                             <span class="text-[11px] font-medium text-gray-500 mt-0.5">Juz {{ $setoran->juz }}</span>
                         </div>
                     </td>
-                    <td class="px-4 py-3.5 text-[12px] font-medium text-gray-600">{{ \Carbon\Carbon::parse($setoran->created_at)->translatedFormat('d F Y') }}</td>
+                    <td class="px-4 py-3.5 text-[12px] font-medium text-gray-600">{{ \Carbon\Carbon::parse($setoran->tanggal)->translatedFormat('d F Y') }}</td>
                     <td class="px-4 py-3.5">
                         <span class="px-2.5 py-1 {{ $nilaiClass }} rounded-md text-[10px] font-bold">{{ $setoran->nilai }}</span>
                     </td>
