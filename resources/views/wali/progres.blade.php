@@ -80,7 +80,7 @@
                 </div>
             </div>
         </div>
-        <button class="w-full py-3.5 rounded-[14px] text-white font-bold text-[14px] flex items-center justify-center gap-2 bg-primary hover:bg-primary-container hover:text-primary transition-colors shadow-sm">
+        <button onclick="alert('Fitur Rapor Digital sedang dalam tahap pengembangan.')" class="w-full py-3.5 rounded-[14px] text-white font-bold text-[14px] flex items-center justify-center gap-2 bg-primary hover:bg-primary-container hover:text-primary transition-colors shadow-sm">
             <span>Lihat Rapor Digital</span>
             <span class="material-symbols-outlined text-[18px]">open_in_new</span>
         </button>
@@ -91,7 +91,7 @@
 <section class="clean-card bg-white overflow-hidden mt-2">
     <div class="p-4 border-b border-gray-100 flex justify-between items-center bg-gray-50/50">
         <h3 class="text-[15px] font-bold text-on-surface">Setoran Terkini</h3>
-        <span class="text-[12px] text-primary cursor-pointer font-bold hover:underline">Lihat Semua</span>
+        <span onclick="alert('Fitur riwayat lengkap sedang dalam tahap pengembangan.')" class="text-[12px] text-primary cursor-pointer font-bold hover:underline">Lihat Semua</span>
     </div>
     <div class="overflow-x-auto">
         <table class="w-full text-left">
@@ -121,7 +121,7 @@
                             <span class="text-[11px] font-medium text-gray-500 mt-0.5">Juz {{ $setoran->juz }}</span>
                         </div>
                     </td>
-                    <td class="px-4 py-3.5 text-[12px] font-medium text-gray-600">{{ \Carbon\Carbon::parse($setoran->created_at)->format('d M Y') }}</td>
+                    <td class="px-4 py-3.5 text-[12px] font-medium text-gray-600">{{ \Carbon\Carbon::parse($setoran->created_at)->translatedFormat('d F Y') }}</td>
                     <td class="px-4 py-3.5">
                         <span class="px-2.5 py-1 {{ $nilaiClass }} rounded-md text-[10px] font-bold">{{ $setoran->nilai }}</span>
                     </td>
@@ -152,7 +152,7 @@
             @php
                 $color = str_replace(['bg-surface-container-highest', 'bg-primary-fixed-dim', 'bg-primary-fixed', 'bg-primary'], ['bg-gray-100', 'bg-primary/40', 'bg-primary/70', 'bg-primary'], $cell['color']);
             @endphp
-            <div class="aspect-square {{ $color }} rounded-[4px] hover:scale-105 transition-transform cursor-default shadow-sm" title="{{ \Carbon\Carbon::parse($cell['date'])->format('d M') }}: {{ ucfirst($cell['status']) }}"></div>
+            <div class="aspect-square {{ $color }} rounded-[4px] hover:scale-105 transition-transform cursor-default shadow-sm" title="{{ \Carbon\Carbon::parse($cell['date'])->translatedFormat('d M') }}: {{ ucfirst($cell['status']) }}"></div>
             @endforeach
         </div>
         <div class="flex justify-between items-center text-[10px] font-bold text-gray-400">

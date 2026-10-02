@@ -91,12 +91,13 @@ class WaliController extends Controller
 
             // Notifikasi: Gabungan Setoran Terakhir, Tagihan Belum Lunas, & Pengumuman Terbaru
             $latestSetorans = \App\Models\Setoran::where('santri_id', $activeSantri->id)
+                ->where('created_at', '>=', now()->subMonth())
                 ->orderBy('created_at', 'desc')
                 ->take(2)->get()->map(function($item) {
                     return [
                         'icon' => 'check_circle',
                         'iconClass' => 'text-primary bg-primary-container',
-                        'title' => 'Setoran Disetujui',
+                        'title' => 'Sudah Setoran Hafalan/Murojaah',
                         'desc' => "Telah menyetorkan Surat {$item->surah} (Nilai: {$item->nilai}).",
                         'time' => optional($item->created_at)->diffForHumans() ?? 'Baru saja',
                         'read' => false,
@@ -121,6 +122,7 @@ class WaliController extends Controller
                 });
 
             $latestPengumumans = \App\Models\Pengumuman::whereIn('target', ['semua', 'wali'])
+                ->where('published_at', '>=', now()->subMonth())
                 ->orderBy('published_at', 'desc')
                 ->take(2)->get()->map(function($item) {
                     return [
@@ -136,6 +138,7 @@ class WaliController extends Controller
 
             $latestIzin = \App\Models\Perizinan::where('santri_id', $activeSantri->id)
                 ->whereIn('status', ['disetujui', 'ditolak'])
+                ->where('updated_at', '>=', now()->subMonth())
                 ->orderBy('updated_at', 'desc')
                 ->take(1)->get()->map(function($item) {
                     $statusText = $item->status == 'disetujui' ? 'Disetujui' : 'Ditolak';

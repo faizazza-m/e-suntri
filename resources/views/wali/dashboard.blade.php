@@ -26,9 +26,6 @@
                 <h2 class="text-base font-bold text-on-surface leading-tight">{{ $santri->nama }}</h2>
                 <p class="text-[12px] font-medium text-gray-500 mt-0.5">Kelas {{ $santri->kelas->nama ?? '-' }} - {{ $santri->kelas->julukan ?? '-' }}</p>
             </div>
-            <button class="w-8 h-8 rounded-full bg-gray-50 flex items-center justify-center text-gray-500 hover:bg-gray-100 transition-colors">
-                <span class="material-symbols-outlined text-sm">expand_more</span>
-            </button>
         </div>
         <div class="mt-2 inline-flex items-center gap-1.5 px-2 py-1 rounded-md bg-primary-container text-primary">
             <span class="material-symbols-outlined text-[14px]">mosque</span>
